@@ -12,13 +12,13 @@ namespace GiftTracker.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
 
-    { 
+    {
         private UserRepository _userRepository;
         public UserController(UserRepository userRepo)
         {
             _userRepository = userRepo;
         }
-        
+
         [HttpGet]
         public IActionResult GetAllUsers()
         {
@@ -28,6 +28,17 @@ namespace GiftTracker.Controllers
                 return Ok(result);
             }
             else return NotFound("No users");
+        }
+
+        [HttpGet("Id")]
+        public IActionResult GetUserById(Guid Id)
+        {
+            var result = _userRepository.GetUserById(Id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else return NotFound($"User with id ${Id} not found.");
         }
     }
 }
