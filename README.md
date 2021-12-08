@@ -9,4 +9,3 @@
 https://figma.com/file/Xw4hMvIy2iQk9IOhTNFyJq/Gift-Tracker?node-id=8%3A297
 ## ERD
 https://dbdiagram.io/d/61aec8d08c901501c0e3ba92
-
