@@ -11,7 +11,6 @@ INSERT INTO ExchangePartners
 		Colors, Sizes)
 VALUES ((Select Id from Users where FirstName = 'John' AND LastName = 'Maple') , 'Kay', 'Walton', 'kw@example.com', 'https://storage.googleapis.com/gift_tracker_images/Avatars/K.png',
 		'1970-01-01', '1234 SomewhereElse', 'Another Fine City', 'AL', '54321', 'Unknown', 'Small');
+INSERT INTO Occasions ( OccasionCreatorId, OccasionName, OccasionDate, OccasionBudget)
+VALUES ((Select Id from Users where FirstName = 'John' AND LastName = 'Maple'), 'Christmas', '12-25-2021', '500.00');
 
-
-
-Select Id from Users where FirstName = 'John' AND LastName = 'Maple';

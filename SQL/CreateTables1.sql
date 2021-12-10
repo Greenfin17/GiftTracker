@@ -6,25 +6,9 @@ IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Interests
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ExchangePartners') DELETE from ExchangePartners;
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Users') DELETE from Users;
 
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ExchangePartners')
-ALTER TABLE dbo.ExchangePartners
-DROP CONSTRAINT FK_ExchangePartners_Users;
-
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Interests')
-ALTER TABLE dbo.Interests
-DROP CONSTRAINT FK_Interests_ExchangePartners;
-
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'WishListItems')
-ALTER TABLE dbo.WishListItems
-	DROP CONSTRAINT FK_WishListItems_Occasions;
-
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
-ALTER TABLE dbo.ReceiveItems
-	DROP CONSTRAINT FK_ReceiveItems_ExchangePartners;
-
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
-ALTER TABLE dbo.ReceiveItems
-	DROP CONSTRAINT FK_ReceiveItems_Occasions;
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems')
+ALTER TABLE dbo.GiveItems
+	DROP CONSTRAINT FK_GiveItems_Occasions;
 
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems')
 ALTER TABLE dbo.GiveItems
@@ -34,10 +18,29 @@ IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems
 ALTER TABLE dbo.GiveItems
 	DROP CONSTRAINT FK_GiveItems_WishListItems;
 
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems')
-ALTER TABLE dbo.GiveItems
-	DROP CONSTRAINT FK_GiveItems_Occasions;
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
+ALTER TABLE dbo.ReceiveItems
+	DROP CONSTRAINT FK_ReceiveItems_ExchangePartners;
 
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
+ALTER TABLE dbo.ReceiveItems
+	DROP CONSTRAINT FK_ReceiveItems_Occasions;
+
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'WishListItems')
+ALTER TABLE dbo.WishListItems
+	DROP CONSTRAINT FK_WishListItems_Occasions;
+
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Interests')
+ALTER TABLE dbo.Interests
+DROP CONSTRAINT FK_Interests_ExchangePartners;
+
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Occasions')
+ALTER TABLE dbo.Occasions
+	DROP CONSTRAINT FK_Occasions_Users;
+
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ExchangePartners')
+ALTER TABLE dbo.ExchangePartners
+DROP CONSTRAINT FK_ExchangePartners_Users;
 
 DROP TABLE IF EXISTS dbo.Users;
 	CREATE TABLE dbo.Users
@@ -48,7 +51,7 @@ DROP TABLE IF EXISTS dbo.Users;
 	LastName varchar(50),
 	EmailAddress varchar(100),
 	ImageURL varchar(500),	
-)
+);
 
 
 DROP TABLE IF EXISTS DBO.ExchangePartners;
@@ -69,7 +72,20 @@ CREATE TABLE dbo.ExchangePartners
 	Sizes varchar(50)
 	CONSTRAINT FK_ExchangePartners_Users FOREIGN KEY (CreatedById)
 		REFERENCES dbo.Users (Id)
-)
+);
+
+DROP TABLE IF EXISTS Occasions;
+CREATE TABLE dbo.Occasions
+(
+	Id uniqueidentifier NOT NULL Primary Key default(newid()),
+	OccasionCreatorId uniqueidentifier NOT NULL,
+	OccasionName varchar(50),
+	OccasionDate date,
+	OccasionLocation varchar(100),
+	OccasionBudget decimal
+	CONSTRAINT FK_Occasions_Users FOREIGN KEY (OccasionCreatorId)
+		REFERENCES dbo.Users (Id)
+);
 
 DROP TABLE IF EXISTS dbo.Interests;
 CREATE TABLE dbo.Interests
@@ -79,19 +95,7 @@ CREATE TABLE dbo.Interests
 	Description varchar(300)
 	CONSTRAINT FK_Interests_ExchangePartners FOREIGN KEY (ExchangePartnerId)
 		REFERENCES dbo.ExchangePartners (Id)
-)
-DROP TABLE IF EXISTS Occasions;
-CREATE TABLE dbo.Occasions
-(
-	Id uniqueidentifier NOT NULL Primary Key default(newid()),
-	OccasionCreatorId uniqueidentifier NOT NULL,
-	OccasionName varchar(50),
-	OccasionDate date,
-	OccasionLocation varchar(100),
-	Budget decimal
-	CONSTRAINT FK_Occasions_Users FOREIGN KEY (OccasionCreatorId)
-		REFERENCES dbo.Users (Id)
-)
+);
 
 DROP TABLE IF EXISTS dbo.WishListItems;
 CREATE TABLE dbo.WishListItems
@@ -105,7 +109,7 @@ CREATE TABLE dbo.WishListItems
 		REFERENCES dbo.Occasions (Id),
 	CONSTRAINT FK_WishListItems_Users FOREIGN KEY (OwnerId)
 		REFERENCES dbo.Users (Id)
-)
+);
 
 DROP TABLE IF EXISTS ReceiveItems;
 CREATE TABLE ReceiveItems
@@ -121,7 +125,7 @@ CREATE TABLE ReceiveItems
 		REFERENCES dbo.Occasions (Id),
 	CONSTRAINT FK_ReceiveItems_ExchangePartners FOREIGN KEY (GiverId)
 		REFERENCES dbo.ExchangePartners (Id)
-)
+);
 
 DROP TABLE IF EXISTS GiveItems;
 CREATE TABLE GiveItems
@@ -143,7 +147,7 @@ CREATE TABLE GiveItems
 		REFERENCES dbo.ExchangePartners (Id),
 	CONSTRAINT FK_GiveItems_WishListItems FOREIGN KEY (WishListItemId)
 		REFERENCES dbo.WishListItems (Id)
-)
+);
 
 
 	
