@@ -30,6 +30,10 @@ IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'WishListI
 ALTER TABLE dbo.WishListItems
 	DROP CONSTRAINT FK_WishListItems_Occasions;
 
+IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'WishListItems')
+ALTER TABLE dbo.WishListItems
+	DROP CONSTRAINT FK_WishListItems_ExchangePartners
+
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'Interests')
 ALTER TABLE dbo.Interests
 DROP CONSTRAINT FK_Interests_ExchangePartners;
@@ -107,8 +111,8 @@ CREATE TABLE dbo.WishListItems
 	ItemURL varchar(800)
 	CONSTRAINT FK_WishListItems_Occasions FOREIGN KEY (OccasionId)
 		REFERENCES dbo.Occasions (Id),
-	CONSTRAINT FK_WishListItems_Users FOREIGN KEY (OwnerId)
-		REFERENCES dbo.Users (Id)
+	CONSTRAINT FK_WishListItems_ExchangePartners FOREIGN KEY (OwnerId)
+		REFERENCES dbo.ExchangePartners (Id)
 );
 
 DROP TABLE IF EXISTS ReceiveItems;
