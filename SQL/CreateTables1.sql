@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS dbo.Users;
 	FirstName varchar(50),
 	LastName varchar(50),
 	EmailAddress varchar(100),
-	ImageURL varchar(500),	
+	ProfilePicURL varchar(500),	
 );
 
 

@@ -1,4 +1,4 @@
-INSERT INTO Users (FirstName, LastName, EmailAddress, ImageURL)
+INSERT INTO Users (FirstName, LastName, EmailAddress, ProfilePicURL)
 	VALUES ('John', 'Greenfin', 'jg@example.com', 'https://lh3.googleusercontent.com/ogw/ADea4I6GAr2cGlYwYJcMMnzuDKYC02NXtgl1_itqo7IncA=s83-c-mo');
 
 INSERT INTO ExchangePartners 

@@ -15,7 +15,7 @@ namespace GiftTracker.Models
         public string ImageURL { get; set; }
         public DateTime Birthday { get; set; }
         public string Street { get; set; }
-        public string State { get; set; }
+        public string PostalState { get; set; }
         public string Zip { get; set; }
         public string Colors { get; set; }
         public string sizes { get; set; }

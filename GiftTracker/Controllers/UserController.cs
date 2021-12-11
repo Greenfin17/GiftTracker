@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GiftTracker.DataAccess;
+using GiftTracker.Models;
 
 namespace GiftTracker.Controllers
 {
@@ -39,6 +40,39 @@ namespace GiftTracker.Controllers
                 return Ok(result);
             }
             else return NotFound($"User with id ${Id} not found.");
+        }
+        [HttpPost]
+        public IActionResult AddUser(User userObj)
+        {
+            var result = _userRepository.AddUser(userObj);
+            if (!result.Equals(Guid.Empty))
+            {
+                return Created($"/api/users/${result}", result);
+            }
+
+            else return BadRequest($"User ${userObj.FirstName} ${userObj.LastName} not added.");
+        }
+
+        [HttpPut]
+        public IActionResult UpdateUser(Guid userId, User userObj)
+        {
+            var result = _userRepository.UpdateUser(userId, userObj);
+            if (result)
+            {
+                return Ok($"User with id ${userId} has been updated");
+            }
+
+            else return BadRequest($"User with id ${userId} not updated.");
+        }
+        [HttpDelete("Id")]
+        public IActionResult DeleteUser(Guid userId)
+        {
+            var result = _userRepository.DeleteUser(userId);
+            if (result)
+            {
+                return Ok($"User with Id ${userId} was deleted.");
+            }
+            else return BadRequest($"User with Id ${userId} not deleted");
         }
     }
 }
