@@ -38,5 +38,16 @@ namespace GiftTracker.Controllers
             }
             else return NotFound($"Exchange partner with Id ${partnerId} not found.");
         }
+
+        [HttpPost]
+        public IActionResult AddPartner(ExchangePartner partnerObj)
+        {
+            var result = _exchangePartnerRepository.AddExchangePartner(partnerObj);
+            if (!result.Equals(Guid.Empty))
+            {
+                return Created($"/api/exchangePartners/${result}", result);
+            }
+            else return BadRequest($"Exchange partner ${partnerObj.FirstName} ${partnerObj.LastName} not added.");
+        }
     }
 }

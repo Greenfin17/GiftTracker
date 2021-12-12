@@ -68,10 +68,6 @@ CREATE TABLE dbo.ExchangePartners
 	EmailAddress varchar(60),
 	ImageURL varchar(500),
 	Birthday date,
-	Street varchar(50),
-	City varchar(30),
-	PostalState varchar(2),
-	Zip varchar (11),
 	Colors varchar (50),
 	Sizes varchar(50)
 	CONSTRAINT FK_ExchangePartners_Users FOREIGN KEY (CreatedById)
