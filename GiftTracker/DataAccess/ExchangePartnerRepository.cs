@@ -86,5 +86,24 @@ namespace GiftTracker.DataAccess
             }
             return returnVal;
         }
+
+        internal bool DeletePartner(Guid partnerId)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"DELETE FROM ExchangePartners
+                        OUTPUT Deleted.Id
+                        WHERE Id = @Id";
+            var parameter = new
+            {
+                Id = partnerId
+            };
+            var result = db.Query(sql, parameter);
+            if (result.Count() > 0)
+            {
+                returnVal = true;
+            }
+            return returnVal;
+        }
     }
 }

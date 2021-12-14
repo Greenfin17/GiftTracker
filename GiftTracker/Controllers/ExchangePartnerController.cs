@@ -49,5 +49,28 @@ namespace GiftTracker.Controllers
             }
             else return BadRequest($"Exchange partner ${partnerObj.FirstName} ${partnerObj.LastName} not added.");
         }
+
+        [HttpPut("partnerId")]
+        public IActionResult UpdatePartner(Guid partnerId, ExchangePartner partnerObj)
+        {
+            var result = _exchangePartnerRepository.UpdateExchangePartner(partnerId, partnerObj);
+            if (result)
+            {
+                return Ok($"Exchange partner with id ${partnerId} has been updated");
+            }
+            else return BadRequest($"Exchange partner with id ${partnerId} not updated.");
+        }
+
+        [HttpDelete("partnerId")]
+        public IActionResult DeletePartner(Guid partnerId)
+        {
+            var result = _exchangePartnerRepository.DeletePartner(partnerId);
+            if (result)
+            {
+                return Ok($"Exchange partner with Id ${partnerId} was deleted.");
+            }
+            else return BadRequest($"Exchange partner with Id ${partnerId} not deleted");
+
+        }
     }
 }

@@ -92,6 +92,7 @@ namespace GiftTracker.DataAccess
             bool returnVal = false;
             using var db = new SqlConnection(_connectionString);
             var sql = @"DELETE from Users 
+                        OUTPUT Deleted.Id
                         WHERE Id = @Id";
             var parameter = new
             {
