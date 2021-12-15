@@ -8,10 +8,10 @@ namespace GiftTracker.Models
     public class Occasion
     {
         public Guid Id { get; set; }
-        public Guid OccasionCreator { get; set; }
+        public Guid OccasionCreatorId { get; set; }
         public string OccasionName { get; set; }
         public DateTime OccasionDate { get; set; }
-        public string OccasionLocasio { get; set; }
-        public decimal Budget { get; set; }
+        public string OccasionLocation { get; set; }
+        public decimal OccasionBudget { get; set; }
     }
 }

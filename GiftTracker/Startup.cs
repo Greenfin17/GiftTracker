@@ -25,6 +25,9 @@ namespace GiftTracker
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<UserRepository>();
             services.AddTransient<ExchangePartnerRepository>();
+            services.AddTransient<InterestRepository>();
+            services.AddTransient<OccasionRepository>();
+            services.AddTransient<WishListItemRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                            .AddJwtBearer(options =>

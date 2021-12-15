@@ -92,6 +92,7 @@ CREATE TABLE dbo.Interests
 (
 	Id uniqueidentifier NOT NULL Primary Key default(newid()),
 	ExchangePartnerId uniqueidentifier NOT NULL,
+	InterestName varchar(100),
 	Description varchar(300)
 	CONSTRAINT FK_Interests_ExchangePartners FOREIGN KEY (ExchangePartnerId)
 		REFERENCES dbo.ExchangePartners (Id)

@@ -31,15 +31,15 @@ namespace GiftTracker.Controllers
             else return NotFound("No users");
         }
 
-        [HttpGet("Id")]
-        public IActionResult GetUserById(Guid Id)
+        [HttpGet("id")]
+        public IActionResult GetUserById(Guid id)
         {
-            var result = _userRepository.GetUserById(Id);
+            var result = _userRepository.GetUserById(id);
             if (result != null)
             {
                 return Ok(result);
             }
-            else return NotFound($"User with id ${Id} not found.");
+            else return NotFound($"User with id ${id} not found.");
         }
         [HttpPost]
         public IActionResult AddUser(User userObj)

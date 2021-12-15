@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +13,7 @@ namespace GiftTracker.DataAccess
         readonly string _connectionString;
         public InterestRepository(IConfiguration config)
         {
-            _connectionString = config.GetConnectionString("GifTracker");
+            _connectionString = config.GetConnectionString("GiftTracker");
         }
 
         internal IEnumerable<Interest> GetAllInterests()
@@ -46,6 +45,64 @@ namespace GiftTracker.DataAccess
             var result = db.Query<Interest>(sql, parameter);
             return result;
 
+        }
+        internal Guid AddInterest(Interest interestObj)
+        {
+            using var db = new SqlConnection(_connectionString);
+            Guid id = new Guid();
+            var sql = @"INSERT INTO Interests (ExchangePartnerId, InterestName, Description)
+                        OUTPUT Inserted.Id
+                        VALUES (@ExchangePartnerId, @InterestName, @Description)";
+
+            id = db.ExecuteScalar<Guid>(sql, interestObj);
+            if (!id.Equals(Guid.Empty))
+            {
+                interestObj.Id = id;
+            }
+            return id;
+        }
+
+
+        internal bool UpdateInterest(Guid interestId, Interest interestObj)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"UPDATE Interests
+                        SET Id = @Id,
+                            ExchangePartnerId = @ExchangePartnerId,
+                            InterestName = @InterestName,
+                            Description = @Description
+                        OUTPUT Inserted.*
+                        WHERE Id = @Id";
+            var parameters = new
+            {
+                Id = interestId,
+                ExchangePartnerId = interestObj.ExchangePartnerId,
+                InterestName = interestObj.InterestName,
+                Description = interestObj.Description
+            };
+
+            var result = db.Query<Interest>(sql, parameters);
+            if (result.Any())
+            {
+                returnVal = true;
+            }
+            return returnVal;
+        }
+
+        internal bool DeleteInterest(Guid interestId)
+        {
+            var returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"DELETE FROM INTERESTS
+                        Output Deleted.Id
+                        WHERE Id = @Id";
+            var result = db.Query<Guid>(sql, new { Id = interestId });
+            if (result.Any())
+            {
+                returnVal = true;
+            }
+            return returnVal;
         }
     }
 }

@@ -43,7 +43,7 @@ namespace GiftTracker.DataAccess
         internal Guid AddUser(User userObj)
         {
             using var db = new SqlConnection(_connectionString);
-            Guid id = new Guid();
+            Guid id = new();
             var sql = @"INSERT INTO Users (FireBaseUID, FirstName, LastName, EmailAddress, ProfilePicURL)
                         OUTPUT Inserted.Id
                         VALUES
@@ -80,7 +80,7 @@ namespace GiftTracker.DataAccess
             };
 
             var result = db.Query<User>(sql, parameters);
-            if (result.Count() > 0 )
+            if (result.Any())
             {
                 returnVal = true;
             }
@@ -99,7 +99,7 @@ namespace GiftTracker.DataAccess
                 Id = userId
             };
             var result = db.Query(sql, parameter);
-            if (result.Count() > 0)
+            if (result.Any())
             {
                 returnVal = true;
             }
