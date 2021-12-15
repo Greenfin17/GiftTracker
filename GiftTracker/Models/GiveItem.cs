@@ -12,7 +12,7 @@ namespace GiftTracker.Models
         public Guid RecipientId { get; set; }
         public Guid WishListItemId { get; set; }
         public string Description { get; set; }
-        public string MerchantURL { get; set; }
+        public string MerchantItemURL { get; set; }
         public decimal Price { get; set; }
         public Boolean Purchased { get; set; }
         public Boolean Wrapped { get;  set; }

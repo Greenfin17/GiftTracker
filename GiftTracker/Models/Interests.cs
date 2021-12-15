@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GiftTracker.Models
 {
-    public class Interests
+    public class Interest
     {
         public Guid Id { get; set;}
         public Guid ExchangePartnerId { get; set; }
