@@ -11,6 +11,9 @@ INSERT INTO ExchangePartners
 VALUES ((Select Id from Users where FirstName = 'John' AND LastName = 'Greenfin') , 'Kay', 'Walton', 'kw@example.com', 'https://storage.googleapis.com/gift_tracker_images/Avatars/K.png',
 		'1970-01-01', 'Unknown', 'Small');
 
+INSERT INTO Interests  ( ExchangePartnerId, InterestName, Description )
+VALUES ((Select Id from ExchangePartners where FirstName = 'Andrew' and LastName = 'Walton'), 'Cooking', 'Andrew enjoys cooking with spices. Is vegan.');
+
 INSERT INTO Occasions ( OccasionCreatorId, OccasionName, OccasionDate, OccasionBudget)
 VALUES ((Select Id from Users where FirstName = 'John' AND LastName = 'Greenfin'), 'Christmas', '12-25-2021', '500.00');
 
@@ -25,5 +28,9 @@ VALUES ((SELECT Id FROM Occasions WHERE OccasionDate = '12-25-2021'), (SELECT Id
 INSERT INTO WishListItems ( OccasionId, OwnerId, Description, ItemURL )
 VALUES ((SELECT Id FROM Occasions WHERE OccasionDate = '12-25-2021'), (SELECT Id FROM ExchangePartners WHERE FirstName = 'Andrew' AND LastName = 'Walton'),
 		'Golf shorts (not too long over the knee... Target sells good ones), black jeans or dark chinos, 32 waist. length 30-32. Tapered or slim', '');
+
+		INSERT INTO ReceiveItems ( OccasionId, GiverId, Description, ItemURL, Remarks, Thanked)
+VALUES ((SELECT Id FROM Occasions WHERE OccasionDate = '12-25-2021'), (SELECT Id FROM ExchangePartners WHERE FirstName = 'Kay' AND LastName = 'Walton'),
+		'Black Levi Jeans','no URL', 'Always glad to receive black jeans', 1);
 
 

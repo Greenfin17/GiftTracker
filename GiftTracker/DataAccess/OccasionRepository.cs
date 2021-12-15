@@ -30,12 +30,22 @@ namespace GiftTracker.DataAccess
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * FROM Occasions
                         WHERE Id = @Id";
-            var parameter = new
-            {
-                Id = occasionId
-            };
-            var result = db.QueryFirstOrDefault<Occasion>(sql, parameter);
+            var result = db.QueryFirstOrDefault<Occasion>(sql, new { Id = occasionId } );
             return result;
+        }
+
+        internal bool OccasionExists(Guid occasionId)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT * FROM Occasions
+                        WHERE Id = @Id";
+            var result = db.QueryFirstOrDefault<Occasion>(sql, new { Id = occasionId } );
+            if (result != null)
+            {
+                returnVal = true;
+            }
+            return returnVal;
         }
 
         internal IEnumerable<Occasion> GetOccasionsByCreatorId(Guid creatorId)

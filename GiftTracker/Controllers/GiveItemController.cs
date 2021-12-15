@@ -23,6 +23,17 @@ namespace GiftTracker.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{itemId}")]
+        public IActionResult GetGiveItemById(Guid itemId)
+        {
+            var result = _giveItemRepository.GetGiveItemById(itemId);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else return NotFound($"Give item with id {itemId} not found.");
+        }
+
        [HttpGet("occasions/{occasionId}/exchangePartners/{recipientId}")]
 
         public IActionResult GetGiveItemsByRecipientAndOccasion(Guid recipientId, Guid occasionId)

@@ -26,18 +26,27 @@ namespace GiftTracker.DataAccess
             return users;
         }
 
-        internal User GetUserById(Guid UserId)
+        internal User GetUserById(Guid userId)
         {
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * from Users
                         WHERE ID = @Id";
-            var parameter = new
-            {
-                Id = UserId 
-            };
-
-            var result = db.QueryFirstOrDefault<User>(sql, parameter);
+            var result = db.QueryFirstOrDefault<User>(sql, new { Id = userId } );
             return result;
+        }
+        
+        internal bool UserExists(Guid userId)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT * from Users
+                        WHERE ID = @Id";
+            var result = db.QueryFirstOrDefault<User>(sql, new { Id = userId } );
+            if (result != null)
+            {
+                returnVal = true;
+            }
+            return returnVal;
         }
 
         internal Guid AddUser(User userObj)

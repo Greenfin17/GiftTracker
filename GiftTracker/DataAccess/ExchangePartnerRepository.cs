@@ -34,6 +34,20 @@ namespace GiftTracker.DataAccess
             return partnerObj;
         }
 
+        internal bool ExchangePartnerExists(Guid partnerId)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT * FROM ExchangePartners
+                        WHERE Id = @Id";
+            var partnerObj = db.QueryFirstOrDefault<ExchangePartner>(sql, new { Id = partnerId });
+            if (partnerObj != null)
+            {
+                returnVal = true;
+            }
+            return returnVal;
+        }
+
         internal Guid AddExchangePartner(ExchangePartner partnerObj)
         {
             using var db = new SqlConnection(_connectionString);
