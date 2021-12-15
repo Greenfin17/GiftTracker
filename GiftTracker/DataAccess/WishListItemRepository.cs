@@ -11,7 +11,6 @@ namespace GiftTracker.DataAccess
     public class WishListItemRepository
     {
         readonly string _connectionString;
-
         public WishListItemRepository(IConfiguration config)
         {
             _connectionString = config.GetConnectionString("GiftTracker");
@@ -20,8 +19,8 @@ namespace GiftTracker.DataAccess
         internal IEnumerable<WishListItem> GetAllWishListItems()
         {
             using var db = new SqlConnection(_connectionString);
-            var wishLIstItems = db.Query<WishListItem>(@"SELECT * FROM WishListItems");
-            return wishLIstItems;
+            var wishListItems = db.Query<WishListItem>(@"SELECT * FROM WishListItems");
+            return wishListItems;
         }
 
         internal WishListItem GetWishListItemById(Guid itemId)

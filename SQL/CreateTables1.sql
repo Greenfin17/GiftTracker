@@ -146,8 +146,6 @@ CREATE TABLE GiveItems
 		REFERENCES dbo.Occasions (Id),
 	CONSTRAINT FK_GiveItems_ExchangePartners FOREIGN KEY (RecipientId)
 		REFERENCES dbo.ExchangePartners (Id),
-	CONSTRAINT FK_GiveItems_WishListItems FOREIGN KEY (WishListItemId)
-		REFERENCES dbo.WishListItems (Id)
 );
 
 
