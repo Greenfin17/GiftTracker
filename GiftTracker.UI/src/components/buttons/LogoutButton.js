@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import signOut from '../../helpers/auth/signOut';
+import { signOutUser } from '../../helpers/auth/auth';
 
 const LogoutButton = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    signOut().then(() => {
+    signOutUser().then(() => {
       navigate('/');
     });
   };

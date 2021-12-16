@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import signIn from '../../helpers/auth/signIn';
+import { signInUser } from '../../helpers/auth/auth';
 
 const LoginButton = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    signIn();
+    signInUser();
     navigate('/');
   };
 

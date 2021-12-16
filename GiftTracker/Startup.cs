@@ -30,21 +30,22 @@ namespace GiftTracker
             services.AddTransient<WishListItemRepository>();
             services.AddTransient<GiveItemRepository>();
             services.AddTransient<ReceiveItemRepository>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+          /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                            .AddJwtBearer(options =>
                            {
                                options.IncludeErrorDetails = true;
-                               options.Authority = "https://securetoken.google.com/lll-emporium";
+                               options.Authority = "https://securetoken.google.com/gifttracker";
                                options.TokenValidationParameters = new TokenValidationParameters
                                {
                                    ValidateLifetime = true,
                                    ValidateAudience = true,
                                    ValidateIssuer = true,
-                                   ValidAudience = "lll-emporium",
-                                   ValidIssuer = "https://securetoken.google.com/lll-emporium"
+                                   ValidAudience = "gifttracker",
+                                   ValidIssuer = "https://securetoken.google.com/gifttracker"
                                };
                            });
+          */
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

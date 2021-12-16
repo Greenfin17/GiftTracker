@@ -34,6 +34,15 @@ namespace GiftTracker.DataAccess
             var result = db.QueryFirstOrDefault<User>(sql, new { Id = userId } );
             return result;
         }
+
+        internal User GetUserByFirebaseUID(Guid firebaseUId)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT * from Users
+                        WHERE FireBaseUID = @FireBaseUId";
+            var result = db.QueryFirstOrDefault<User>(sql, new { Id = firebaseUId} );
+            return result;
+        }
         
         internal bool UserExists(Guid userId)
         {

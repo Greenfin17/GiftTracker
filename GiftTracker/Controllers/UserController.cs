@@ -41,6 +41,17 @@ namespace GiftTracker.Controllers
             }
             else return NotFound($"User with id ${id} not found.");
         }
+        [HttpGet("uid/{firebaseUId}")]
+        public IActionResult GetUserByFirebaseUId(Guid uid)
+        {
+            var result = _userRepository.GetUserById(uid);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else return NotFound($"User with id ${uid} not found.");
+        }
+
         [HttpPost]
         public IActionResult AddUser(User userObj)
         {
