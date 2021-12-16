@@ -16,7 +16,8 @@ const App = () => {
       if (userObj) {
         console.warn(userObj);
         userObj.getIdToken().then((token) => sessionStorage.setItem('token', token));
-        getUserByFirebaseUId(userObj.email).then((response) => {
+        debugger;
+        getUserByFirebaseUId(userObj.uid).then((response) => {
           if (response !== '')
           setUser(response);
           else {

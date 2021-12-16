@@ -10,6 +10,7 @@ const getUserById = (userId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 const getUserByFirebaseUId = (uid) => new Promise((resolve, reject) => {
+  debugger;
   axios.get(`${apiURL}/api/users/uid/${uid}`)
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));
@@ -36,7 +37,6 @@ const addUserWithGoogleObject = (googleObject) => {
       emailAddress: googleObject.email,
       profilePicURL: googleObject.photoURL
     };
-    debugger;
     addUser(userInfo);
   }
 }
