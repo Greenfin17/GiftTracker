@@ -18,11 +18,9 @@ const getUserByFirebaseUId = (uid) => new Promise((resolve, reject) => {
 const addUser = (userObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/users`, userObj)
     .then((response) => {
-      debugger;
       resolve(response.data);
     })
     .catch((error) => {
-      debugger;
       console.warn(error);
       reject(error)
     });
@@ -32,12 +30,13 @@ const addUserWithGoogleObject = (googleObject) => {
   console.warn(googleObject);
   if (googleObject) {
     const userInfo = {
-      FirstName: googleObject.displayName.split(' ')[0],
-      LastName: googleObject.displayName.split(' ')[1],
-      FireBaseUID: googleObject.uid,
-      EmailAddress: googleObject.email,
-      ProfilePicURL: googleObject.photoURL
+      firstName: googleObject.displayName.split(' ')[0],
+      lastName: googleObject.displayName.split(' ')[1],
+      fireBaseUID: googleObject.uid,
+      emailAddress: googleObject.email,
+      profilePicURL: googleObject.photoURL
     };
+    debugger;
     addUser(userInfo);
   }
 }

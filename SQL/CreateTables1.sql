@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS dbo.Users;
 	CREATE TABLE dbo.Users
 (
 	Id uniqueidentifier NOT NULL Primary Key default(newid()),
-	FireBaseUID uniqueidentifier,
+	FireBaseUID varchar(100),
 	FirstName varchar(50),
 	LastName varchar(50),
 	EmailAddress varchar(100),
