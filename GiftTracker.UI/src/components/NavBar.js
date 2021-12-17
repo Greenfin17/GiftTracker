@@ -9,22 +9,33 @@ import {
   Navbar,
   Nav,
   NavItem,
+  Dropdown,
+  DropdownMenu, 
+  DropdownItem,
+  DropdownToggle,
 } from 'reactstrap';
 import LoginButton from './buttons/LoginButton';
-import LogoutButton from './buttons/LogoutButton';
+// import LogoutButton from './buttons/LogoutButton';
+import accountIcon from '../resources/icons/noun_account_862174.svg';
+import { signOutUser } from '../helpers/auth/auth';
 
 const NavBar = ({
   user,
+  setUser
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [dropDownOpen, setDropDownOpen] = useState(false);
   const toggle = () => {
     setIsOpen(!isOpen);
   };
 
+  const toggleDropDown = () => {
+    setDropDownOpen(!dropDownOpen);
+  }
+
   return (
     <div>
-      <Navbar light expand='md'>
+      <Navbar light expand='md' className='gt-navbar'>
         <Link className='navbar-brand' to='/' >Gift Tracker</Link>
         <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -35,9 +46,23 @@ const NavBar = ({
               <NavItem>
                 { user && <Link className='nav-link' to='/occasions'>Occasions</Link> }
               </NavItem>
+            { user && <Dropdown  toggle={toggleDropDown} nav inNavbar isOpen={dropDownOpen} onMouseOver={() => setDropDownOpen(true)}
+                                onMouseLeave={() => setDropDownOpen(false)}>
+              <DropdownToggle nav>
+                <img src={accountIcon} className='gt-account-icon' alt='Account menu'/>
+              </DropdownToggle>
+              <DropdownMenu className='gt-profile-dropdown' end>
+                <DropdownItem>
+                  <Link className='nav-link' to='/profile'>Profile</Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link className='nav-link' to='/shared-workouts'
+                  onClick={() => signOutUser(setUser)}>Sign Out</Link>
+                </DropdownItem>
+              </DropdownMenu>
+              </Dropdown> }
             </Nav>
-            <LoginButton />
-            <LogoutButton />
+            { !user && <LoginButton setUser={setUser} /> }
           </Collapse>
       </Navbar>
     </div>
@@ -46,7 +71,7 @@ const NavBar = ({
 
 NavBar.propTypes = {
   user: PropTypes.any,
-  setSearchTerms: PropTypes.func
+  setUser: PropTypes.func
 };
 
 export default NavBar;

@@ -5,6 +5,7 @@ import './styles/index.scss';
 import App from './App/index';
 import reportWebVitals from './reportWebVitals';
 import { firebaseConfig } from './helpers/apiKeys';
+import 'bootstrap/dist/css/bootstrap.css';
 
 initializeApp(firebaseConfig);
 

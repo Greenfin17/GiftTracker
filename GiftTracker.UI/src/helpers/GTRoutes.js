@@ -1,7 +1,12 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from '../views/Home';
+// import Profile from '../views/Profile';
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   const routeChecker = (values) => (user
@@ -15,16 +20,18 @@ PrivateRoute.propTypes = {
   user: PropTypes.any
 };
 
-const Routes = ({
+const GTRoutes = ({
   user,
 }) => (
+  <>
     <Routes>
-      <Route exact path='/' component={() => <Home user={user} />} />
+      <Route path='/' element={<Home user={user} />} />
     </Routes>
+  </>
 );
 
-Routes.propTypes = {
+GTRoutes.propTypes = {
   user: PropTypes.any,
 };
 
-export default Routes;
+export default GTRoutes;

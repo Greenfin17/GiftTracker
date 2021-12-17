@@ -1,21 +1,28 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { signInUser } from '../../helpers/auth/auth';
 
-const LoginButton = () => {
+const LoginButton = ({
+  setUser
+}) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    signInUser();
+    signInUser(setUser);
     navigate('/');
   };
 
   return (
     <div>
-      <button name='google-auth' className='btn btn-danger'
-        onClick={handleClick}>GOOGLE LOGIN
-      </button>
+      <div name='google-auth' className='gt-login'
+        onClick={handleClick}>Google Login
+      </div>
     </div>
   );
+};
+
+LoginButton.propTypes = {
+  setUser: PropTypes.func
 };
 
 export default LoginButton;

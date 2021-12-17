@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { debugErrorMap } from 'firebase/auth';
 import { giftTrackerConfig} from '../apiKeys';
 
 const apiURL = giftTrackerConfig.apiUrl;
@@ -10,7 +9,6 @@ const getUserById = (userId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 const getUserByFirebaseUId = (uid) => new Promise((resolve, reject) => {
-  debugger;
   axios.get(`${apiURL}/api/users/uid/${uid}`)
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));

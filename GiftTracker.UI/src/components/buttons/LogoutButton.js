@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom';
 import { signOutUser } from '../../helpers/auth/auth';
 
-const LogoutButton = () => {
+const LogoutButton = ({
+  setUser 
+}) => {
   const navigate = useNavigate();
   const handleClick = () => {
     signOutUser().then(() => {
+      setUser(false);
       navigate('/');
     });
   };
@@ -19,5 +23,9 @@ const LogoutButton = () => {
     </div>
   );
 };
+
+LogoutButton.propTypes = {
+  setUser: PropTypes.func
+}
 
 export default LogoutButton;

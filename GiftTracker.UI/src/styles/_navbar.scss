@@ -1,7 +1,8 @@
 // _navbar.scss
 
 .navbar {
-  background-color: transparent;
+  // background-color: transparent;
+  background-color: #bebdff;
 
   .navbar-brand {
     font-size: 1.6rem;
@@ -9,6 +10,7 @@
   }
   
   ul {
+    list-style: none;;
     margin-inline-start: auto;
     margin-right: 2% !important;
     font-size: 1.4rem;
@@ -22,5 +24,19 @@
 
   button {
     margin: 5px 0 5px;
+  }
+
+  .gt-login {
+    margin: 0 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  .gt-account-icon {
+    height: 2rem;
+  }
+  
+  .gt-profile-dropdown {
+    right: -10%;
   }
 }

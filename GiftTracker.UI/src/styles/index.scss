@@ -1,5 +1,6 @@
 // @import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import 'navbar';
+@import 'home';
 
 body {
   margin: 0;
@@ -13,4 +14,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  height: 100vh;
+  background-image: url('../resources/images/Christmas\ Gifts.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
 }
