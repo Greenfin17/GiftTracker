@@ -16,17 +16,17 @@ const getUserByFirebaseUId = (uid) => new Promise((resolve, reject) => {
 
 const addUser = (userObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/users`, userObj)
-    .then((response) => {
-      resolve(response.data);
-    })
-    .catch((error) => {
-      console.warn(error);
-      reject(error)
-    });
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
 });
 
-const addUserWithGoogleObject = (googleObject) => {
-  console.warn(googleObject);
+const updateUser = (userId, userObj) => new Promise((resolve, reject) => {
+  axios.put(`${apiURL}/api/users/${userId}`, userObj)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
+const addUserWithGoogleObject = (googleObject) => new Promise((resolve, reject) => {
   if (googleObject) {
     const userInfo = {
       firstName: googleObject.displayName.split(' ')[0],
@@ -35,13 +35,17 @@ const addUserWithGoogleObject = (googleObject) => {
       emailAddress: googleObject.email,
       profilePicURL: googleObject.photoURL
     };
-    addUser(userInfo);
+    addUser(userInfo)
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
   }
-}
+});
+
 
 export {
   getUserById,
   getUserByFirebaseUId,
   addUser,
+  updateUser,
   addUserWithGoogleObject
 };

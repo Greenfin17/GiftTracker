@@ -31,15 +31,15 @@ namespace GiftTracker.Controllers
             else return NotFound("No users");
         }
 
-        [HttpGet("id")]
-        public IActionResult GetUserById(Guid id)
+        [HttpGet("{userId}")]
+        public IActionResult GetUserById(Guid userId)
         {
-            var result = _userRepository.GetUserById(id);
+            var result = _userRepository.GetUserById(userId);
             if (result != null)
             {
                 return Ok(result);
             }
-            else return NotFound($"User with id ${id} not found.");
+            else return NotFound($"User with id ${userId} not found.");
         }
         [HttpGet("uid/{uid}")]
         public IActionResult GetUserByFirebaseUId(string uid)
@@ -64,18 +64,18 @@ namespace GiftTracker.Controllers
             else return BadRequest($"User ${userObj.FirstName} ${userObj.LastName} not added.");
         }
 
-        [HttpPut]
+        [HttpPut("{userId}")]
         public IActionResult UpdateUser(Guid userId, User userObj)
         {
             var result = _userRepository.UpdateUser(userId, userObj);
-            if (result)
+            if (result != null)
             {
-                return Ok($"User with id ${userId} has been updated");
+                return Ok(result);
             }
 
             else return BadRequest($"User with id ${userId} not updated.");
         }
-        [HttpDelete("Id")]
+        [HttpDelete("{userId}")]
         public IActionResult DeleteUser(Guid userId)
         {
             var result = _userRepository.DeleteUser(userId);

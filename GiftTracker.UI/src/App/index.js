@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';
 import NavBar from '../components/NavBar';
 import GTRoutes from '../helpers/GTRoutes';
 
@@ -11,7 +10,7 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <NavBar user={user} setUser={setUser} />
-        <GTRoutes user={user} />
+        <GTRoutes user={user} setUser={setUser} />
       </div>
     </BrowserRouter>
   );

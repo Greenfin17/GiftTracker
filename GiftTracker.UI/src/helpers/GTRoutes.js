@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Home from '../views/Home';
-// import Profile from '../views/Profile';
+import Profile from '../views/Profile';
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   const routeChecker = (values) => (user
@@ -17,21 +17,26 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.func,
-  user: PropTypes.any
+  user: PropTypes.any,
+  setUser: PropTypes.func
 };
 
 const GTRoutes = ({
   user,
+  setUser
 }) => (
   <>
     <Routes>
       <Route path='/' element={<Home user={user} />} />
+      <Route path='/profile' element={<Profile user={user}
+        setUser={setUser} />} />
     </Routes>
   </>
 );
 
 GTRoutes.propTypes = {
   user: PropTypes.any,
+  setUser: PropTypes.func
 };
 
 export default GTRoutes;

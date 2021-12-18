@@ -74,9 +74,8 @@ namespace GiftTracker.DataAccess
             return id;
         }
 
-        internal bool UpdateUser(Guid userId, User userObj)
+        internal User UpdateUser(Guid userId, User userObj)
         {
-            bool returnVal = false;
             using var db = new SqlConnection(_connectionString);
             var sql = @"UPDATE Users
                             SET Id = @Id,
@@ -97,12 +96,8 @@ namespace GiftTracker.DataAccess
                 ProfilePicURL = userObj.ProfilePicUrl
             };
 
-            var result = db.Query<User>(sql, parameters);
-            if (result.Any())
-            {
-                returnVal = true;
-            }
-            return returnVal;
+            var result = db.QuerySingleOrDefault<User>(sql, parameters);
+            return result;
         }
 
         internal bool DeleteUser(Guid userId)
