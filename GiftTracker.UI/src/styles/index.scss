@@ -4,6 +4,7 @@
 @import './profile/profile';
 @import 'form';
 @import 'gtModal';
+@import 'people';
 
 body {
   margin: 0;
@@ -25,4 +26,11 @@ code {
   background-repeat: no-repeat;
   background-size: cover;
 
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2em;
+  margin: 10px 5px 0;
+  color: white;
 }

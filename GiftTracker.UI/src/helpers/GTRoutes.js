@@ -7,6 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import Home from '../views/Home';
 import Profile from '../views/Profile';
+import People from '../views/People';
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   const routeChecker = (values) => (user
@@ -30,6 +31,8 @@ const GTRoutes = ({
       <Route path='/' element={<Home user={user} />} />
       <Route path='/profile' element={<Profile user={user}
         setUser={setUser} />} />
+      <Route path='/people' element={<People user={user} />} />
+      <Route path='/occasions' element={<Home user={user} />} />
     </Routes>
   </>
 );
