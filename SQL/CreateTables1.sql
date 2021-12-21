@@ -14,10 +14,6 @@ IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems
 ALTER TABLE dbo.GiveItems
 	DROP CONSTRAINT FK_GiveItems_ExchangePartners;
 
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems')
-ALTER TABLE dbo.GiveItems
-	DROP CONSTRAINT FK_GiveItems_WishListItems;
-
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
 ALTER TABLE dbo.ReceiveItems
 	DROP CONSTRAINT FK_ReceiveItems_ExchangePartners;
@@ -50,7 +46,7 @@ DROP TABLE IF EXISTS dbo.Users;
 	CREATE TABLE dbo.Users
 (
 	Id uniqueidentifier NOT NULL Primary Key default(newid()),
-	FireBaseUID uniqueidentifier,
+	FireBaseUID varchar(100),
 	FirstName varchar(50),
 	LastName varchar(50),
 	EmailAddress varchar(100),

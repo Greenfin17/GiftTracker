@@ -34,6 +34,15 @@ namespace GiftTracker.DataAccess
             var result = db.QueryFirstOrDefault<User>(sql, new { Id = userId } );
             return result;
         }
+
+        internal User GetUserByFirebaseUID(string firebaseUID)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT * from Users
+                        WHERE FireBaseUID = @FireBaseUID";
+            var result = db.QueryFirstOrDefault<User>(sql, new { FireBaseUID = firebaseUID} );
+            return result;
+        }
         
         internal bool UserExists(Guid userId)
         {
@@ -65,9 +74,8 @@ namespace GiftTracker.DataAccess
             return id;
         }
 
-        internal bool UpdateUser(Guid userId, User userObj)
+        internal User UpdateUser(Guid userId, User userObj)
         {
-            bool returnVal = false;
             using var db = new SqlConnection(_connectionString);
             var sql = @"UPDATE Users
                             SET Id = @Id,
@@ -88,12 +96,8 @@ namespace GiftTracker.DataAccess
                 ProfilePicURL = userObj.ProfilePicUrl
             };
 
-            var result = db.Query<User>(sql, parameters);
-            if (result.Any())
-            {
-                returnVal = true;
-            }
-            return returnVal;
+            var result = db.QuerySingleOrDefault<User>(sql, parameters);
+            return result;
         }
 
         internal bool DeleteUser(Guid userId)

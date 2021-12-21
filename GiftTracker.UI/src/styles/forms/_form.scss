@@ -1,0 +1,49 @@
+// _form.scss
+
+.form-outer-div {
+
+  .form-heading {
+    text-align: center;
+  }
+
+  .x-out {
+    float: right;
+    font-size: 1em;
+    cursor: pointer;
+    width: 20px;
+    height: auto;
+    text-align: center;
+    &:hover {
+      background-color: blue;
+      color: white;
+    }
+  }
+
+  label {
+    margin: 5px 0 3px;
+    width: 90%;
+  }
+
+  input {
+    width: 90%;
+  }
+
+  .button-div {
+    margin: 1em 0 0 0;
+  }
+
+  button {
+    border-radius: 5px;
+    margin: 5px 5px 5px 0;
+  }
+
+  .close-button {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .submit-button {
+    background-color: blue;
+    color: white;
+  }
+}
