@@ -66,28 +66,29 @@ const People = ({
       <div className='page-title'>
         People
       </div>
-      <div className='partner-div'>
-        <ul className='partner-list'>
-          { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
-              className='partner-list-line' >
-              <span><img src={partner.imageURL} alt='Gift Exchange Partner'
-                        className='partner-icon-image'/></span>
-              <span>{partner.firstName} {partner.lastName}</span>
-                <FontAwesomeIcon className='edit-icon' icon={faEdit} 
-                  onClick={() => handleEditClick(partner)}/>
-                <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                  onClick={() => handleDeleteClick(partner)}/> </li>) : <div>No exchange partners</div> }
-        </ul>
-        <div className='button-div'>
-          <button className='add-partner-btn' onClick = {handleAddPartnerClick}>Add Exchange Partner</button>
-        </div>
-        <GTModal className='gt-modal' isOpen={showModal}>
-          <GTModalContent className='modal-content'>
-            <ExchangePartnerForm user={user} partner={activeObject} setExchangePartners={setExchangePartners}
-              closeModal={closeModal}></ExchangePartnerForm>
-          </GTModalContent>
-        </GTModal>
-      </div>
+      { user &&
+        <div className='partner-div'>
+          <ul className='partner-list'>
+            { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
+                className='partner-list-line' >
+                <span><img src={partner.imageURL} alt='Gift Exchange Partner'
+                          className='partner-icon-image'/></span>
+                <span>{partner.firstName} {partner.lastName}</span>
+                  <FontAwesomeIcon className='edit-icon' icon={faEdit} 
+                    onClick={() => handleEditClick(partner)}/>
+                  <FontAwesomeIcon icon={faTrash} className='delete-icon'
+                    onClick={() => handleDeleteClick(partner)}/> </li>) : <div>No exchange partners</div> }
+          </ul>
+          <div className='button-div'>
+            <button className='add-partner-btn' onClick = {handleAddPartnerClick}>Add Exchange Partner</button>
+          </div>
+          <GTModal className='gt-modal' isOpen={showModal}>
+            <GTModalContent className='modal-content'>
+              <ExchangePartnerForm user={user} partner={activeObject} setExchangePartners={setExchangePartners}
+                closeModal={closeModal}></ExchangePartnerForm>
+            </GTModalContent>
+          </GTModal>
+        </div> }
     </div>
   );
 };

@@ -6,6 +6,7 @@ import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
+import OccasionSummaryCard from '../components/cards/OccasionCard';
 import OccasionForm from '../components/forms/OccasionForm';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -66,16 +67,12 @@ const Occasions = ({
       <div className='page-title'>
          Occasions
       </div>
+      { user &&
       <div className='occasion-div'>
         <ul className='occasion-list'>
           { occasionList ? occasionList?.map((occasion) => <li key={occasion.id}
               className='occasion-list-line' >
-              <div className='occasion-list-data'>
-                <div className='occasion-title'>{occasion.occasionName}</div>
-                <div className='occasion-date'>{occasion.occasionDate.substring(0,10)}</div>
-                <div className='occasion-location'>{occasion.occasionLocation}</div>
-                <div className='occasion-budget'>${occasion.occasionBudget}</div>
-              </div>
+              <OccasionSummaryCard occasion={occasion} />
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                   onClick={() => handleEditClick(occasion)}/>
                 <FontAwesomeIcon icon={faTrash} className='delete-icon'
@@ -90,7 +87,7 @@ const Occasions = ({
               setOccasionList={setOccasionList} closeModal={closeModal} />
           </GTModalContent>
         </GTModal>
-      </div>
+      </div> }
     </div>
   );
 };
