@@ -30,7 +30,7 @@ namespace GiftTracker
             services.AddTransient<WishListItemRepository>();
             services.AddTransient<GiveItemRepository>();
             services.AddTransient<ReceiveItemRepository>();
-          /*  services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                            .AddJwtBearer(options =>
                            {
@@ -45,7 +45,7 @@ namespace GiftTracker
                                    ValidIssuer = "https://securetoken.google.com/gifttracker"
                                };
                            });
-          */
+          
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
