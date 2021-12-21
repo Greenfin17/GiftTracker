@@ -14,10 +14,6 @@ IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems
 ALTER TABLE dbo.GiveItems
 	DROP CONSTRAINT FK_GiveItems_ExchangePartners;
 
-IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'GiveItems')
-ALTER TABLE dbo.GiveItems
-	DROP CONSTRAINT FK_GiveItems_WishListItems;
-
 IF EXISTS (SELECT * FROM Information_schema.TABLES WHERE TABLE_NAME = 'ReceiveItems')
 ALTER TABLE dbo.ReceiveItems
 	DROP CONSTRAINT FK_ReceiveItems_ExchangePartners;

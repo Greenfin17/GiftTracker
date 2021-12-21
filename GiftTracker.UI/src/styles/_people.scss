@@ -2,10 +2,37 @@
 
 .partner-div {
   background-color: white;
-  width: 80%;
+  width: 60%;
   margin: 10px auto 5px;
+  border-radius: 5px;
+}
+
+.partner-list {
+  list-style-type: none;
+  padding-left: .5rem;
 }
 
 .partner-list-line {
  margin: 5px; 
+}
+
+.partner-icon-image {
+  height: 30px;
+  width: 30px;
+  margin: 0 10px 0 0;
+}
+
+.edit-icon {
+  margin: 0 3px 0 10px;
+  cursor: pointer;
+}
+
+.delete-icon {
+  margin: 0 3px;
+  cursor: pointer;
+}
+
+.add-partner-btn {
+  margin: 5px;
+  border-radius: 5px;
 }
