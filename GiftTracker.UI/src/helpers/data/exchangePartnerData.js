@@ -3,8 +3,8 @@ import { giftTrackerConfig} from '../apiKeys';
 
 const apiURL = giftTrackerConfig.apiUrl;
 
-const getExchangePartners = () => new Promise((resolve, reject) => {
-  axios.get(`${apiURL}/api/exchangePartners`)
+const getExchangePartners = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/users/${userId}/exchangePartners`)
     .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });

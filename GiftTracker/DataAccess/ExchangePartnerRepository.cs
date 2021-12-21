@@ -39,8 +39,8 @@ namespace GiftTracker.DataAccess
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * FROM ExchangePartners
                         WHERE CreatedById = @CreatedById";
-            var partnerObj = db.Query<ExchangePartner>(sql, new { CreatedById = creatorId});
-            return partnerObj;
+            var partnerList = db.Query<ExchangePartner>(sql, new { CreatedById = creatorId});
+            return partnerList;
         }
 
         internal bool ExchangePartnerExists(Guid partnerId)

@@ -39,7 +39,7 @@ namespace GiftTracker.Controllers
             else return NotFound($"Exchange partner with Id ${partnerId} not found.");
         }
 
-        [HttpGet("/api/user/{userId}/exchangePartners")]
+        [HttpGet("/api/users/{userId}/exchangePartners")]
         public IActionResult GetPartnersByCreatorId (Guid userId){
             var result = _exchangePartnerRepository.GetPartnersByCreatorId(userId);
             // OK if no results

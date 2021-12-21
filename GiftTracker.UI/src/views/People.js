@@ -26,16 +26,18 @@ const People = ({
 
   useEffect(() => {
     let mounted = true;
-    getExchangePartners().then((partnerList) => {
-      if (mounted && partnerList?.length > 0) {
-        setExchangePartners(partnerList);
-      }
-    })
+    if (user) {
+      getExchangePartners(user.id).then((partnerList) => {
+        if (mounted && partnerList?.length > 0) {
+          setExchangePartners(partnerList);
+        }
+      });
+    }
     return () => {
       mounted = false;
       return mounted;
     };
-  }, []);
+  }, [user]);
             
   const handleEditClick = (partner) => { 
     setActiveObject(partner);
@@ -43,9 +45,7 @@ const People = ({
   };
 
   const handleDeleteClick = (partner) => {
-    debugger;
     deleteExchangePartner(partner.id).then((wasDeleted) => {
-      debugger;
       if (wasDeleted) {
         getExchangePartners().then((partnerList) => setExchangePartners(partnerList));
       }
