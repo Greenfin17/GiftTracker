@@ -78,7 +78,7 @@ CREATE TABLE dbo.Occasions
 	OccasionName varchar(50),
 	OccasionDate date,
 	OccasionLocation varchar(100),
-	OccasionBudget decimal
+	OccasionBudget decimal(12,2),
 	CONSTRAINT FK_Occasions_Users FOREIGN KEY (OccasionCreatorId)
 		REFERENCES dbo.Users (Id)
 );

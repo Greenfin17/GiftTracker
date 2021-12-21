@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getExchangePartners, addExchangePartner, updateExchangePartner } from '../../helpers/data/exchangePartnerData';
+import { getExchangePartnersByUserId, addExchangePartner, updateExchangePartner } from '../../helpers/data/exchangePartnerData';
 const ExchangePartnerForm = ({
   user,
   partner,
@@ -50,7 +50,6 @@ const ExchangePartnerForm = ({
   const handleSubmit = () => {
     console.warn('submit');
     // if we are adding a new exchange partner
-    debugger;
     if (!partner.id && user.id) {
       let newPartnerProfile = {
         createdById: user.id,
@@ -61,16 +60,15 @@ const ExchangePartnerForm = ({
         birthday: partnerProfile.birthday || '' ,
         colors: partnerProfile.colors || '',
         sizes: partnerProfile.sizes || '',
-
       };
       
-    addExchangePartner(newPartnerProfile).then(() => getExchangePartners().then((partnerList) =>
+    addExchangePartner(newPartnerProfile).then(() => getExchangePartnersByUserId(user.id).then((partnerList) =>
       setExchangePartners(partnerList)))
     }
     else {
       updateExchangePartner(partner.id, partnerProfile).then((wasUpdated) => {
         if (wasUpdated) {
-          getExchangePartners().then((partnerList) => setExchangePartners(partnerList));
+          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
           }
         });
     }
