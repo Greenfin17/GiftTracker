@@ -56,7 +56,7 @@ const NavBar = ({
                   <Link className='nav-link' to='/profile'>Profile</Link>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link className='nav-link' to='/shared-workouts'
+                  <Link className='nav-link' to='/'
                   onClick={() => signOutUser(setUser)}>Sign Out</Link>
                 </DropdownItem>
               </DropdownMenu>
