@@ -170,17 +170,17 @@ const GiveItemForm = ({
                   label='price' onChange={handleChange} />
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='purchased' value={itemProfile.purchased}
-                    label='purchased' onChange={handleChange} />
+                   checked={itemProfile.purchased} label='purchased' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='purchased'>Purchased</label>
         </div>
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='wrapped' value={itemProfile.wrapped}
-                    label='wrapped' onChange={handleChange} />
+                  checked={itemProfile.wrapped} label='wrapped' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='wrapped'>Wrapped</label>
         </div>
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='shipped' value={itemProfile.shipped}
-                    label='shipped' onChange={handleChange} />
+                    checked={itemProfile.shipped} label='shipped' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='shipped'>Shipped</label>
         </div>
         <label className='input-label' htmlFor='reaction'>Reaction</label>
