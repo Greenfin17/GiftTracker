@@ -138,7 +138,7 @@ const GiveItemForm = ({
     if (item.id === undefined) {
       setDefaultRecipient({
         value: null,
-        label: 'Select a Recipient'
+        label: 'Select a recipient...'
       });
     }
     closeModal();
