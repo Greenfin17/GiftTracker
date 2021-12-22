@@ -115,7 +115,6 @@ const GiveItemForm = ({
       recipientId: recipientId
     };
     // no item so this is a new gift
-    debugger;
     if (!item.id) {
       addGiveItem(submitObj).then((result) => {
         if (result) {
@@ -124,7 +123,6 @@ const GiveItemForm = ({
         }
       });
     } else {
-      debugger;
       updateGiveItem(item.id, itemProfile).then((result) => {
         if (result) {
           getGiveItemsByOccasionId(occasionId)
@@ -137,10 +135,12 @@ const GiveItemForm = ({
   };
 
   const handleCloseModal = () => {
-    setDefaultRecipient({
-      value: null,
-      label: 'Select a Recipient'
-    });
+    if (item.id === null || item.id === '') {
+      setDefaultRecipient({
+        value: null,
+        label: 'Select a Recipient'
+      });
+    }
     closeModal();
   }
 
