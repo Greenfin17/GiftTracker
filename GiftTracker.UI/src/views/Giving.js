@@ -9,11 +9,9 @@ import {
 // import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import GiveItemForm from '../components/forms/GiveItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
-import { getGiveItemsByOccasionId } from '../helpers/data/givingData';
+import { getGiveItemsByOccasionId, deleteGiveItem } from '../helpers/data/givingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
- 
-
 
 
 const Giving = ({
@@ -36,8 +34,7 @@ const Giving = ({
     wrapped: false,
     shipped: false,
     reaction: ''
-  })
-
+  });
 
   useEffect(() => {
     const optionsArr =  [];
@@ -83,8 +80,12 @@ const Giving = ({
     setShowModal(true);
   }
   
-  const handleDeleteClick = () => {
-    console.warn('delete');
+  const handleDeleteClick = (item) => {
+    deleteGiveItem(item.id).then((wasDeleted) => {
+      if (wasDeleted.status === 200) {
+        getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
+        }
+    });
   }
   
   const closeModal = () => {
@@ -115,10 +116,12 @@ const Giving = ({
               <td className='giving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
               <td className='giving-list-recipient'>
                 {item.recipientFirstName} {item.recipientLastName}</td>
+                <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                   onClick={() => handleEditClick(item)}/>
                 <FontAwesomeIcon icon={faTrash} className='delete-icon'
                   onClick={() => handleDeleteClick(item)}/> 
+                </td>
             </tr>)}
             </tbody>
           </table> </> :  <> { givingList && <div className='giving-empty-message'>No Gifts!</div> } </> }

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { getExchangePartnersByUserId } from '../../helpers/data/exchangePartnerData';
-import { getGiveItemsByOccasionId, addGiveItem } from '../../helpers/data/givingData';
+import { getGiveItemsByOccasionId, addGiveItem, updateGiveItem } from '../../helpers/data/givingData';
 
 const GiveItemForm = ({
   user,
   item,
   occasionId,
   setGivingList,
-  closeModal
+  closeModal,
 }) => {
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
   const [recipientOptions, setRecipientOptions] = useState({});
   const [recipientId, setRecipientId] = useState(emptyGuid);
+  const [defaultRecipient, setDefaultRecipient] = useState(false);
   const [itemProfile, setItemProfile] = useState({
     occasionId: occasionId,
     recipientId: item.recipientId || emptyGuid, 
@@ -27,8 +28,6 @@ const GiveItemForm = ({
     shipped: item.shipped || false,
     reaction: item.reaction || ''
   });
-  const [defaultRecipient, setDefaultRecipient] = useState({});
-
 
   useEffect(() => {
     let mounted = true;
@@ -66,7 +65,7 @@ const GiveItemForm = ({
         optionsArr.push(option);
       }
         if (mounted) setRecipientOptions(optionsArr);
-      })
+      });
     }
     return () => {
       mounted = false;
@@ -76,11 +75,15 @@ const GiveItemForm = ({
 
   useEffect(() => {
     let mounted = true;
-    if (item && mounted) {
+    if (item && item.recipientId != null && item.recipientId !== '' && mounted) {
       setDefaultRecipient({
         value: item.recipientId,
         label: `${item.recipientFirstName} ${item.recipientLastName}`
-      })
+      });
+    }
+    else {
+      setDefaultRecipient(false);
+      setRecipientId(emptyGuid);
     }
     return () => {
       mounted = false;
@@ -90,7 +93,6 @@ const GiveItemForm = ({
 
   const handleSelectClick = (e) => {
     setRecipientId(e.value);
-    console.warn(defaultRecipient);
     setItemProfile((prevState) => ({
       ...prevState,
       recipientId: e.value
@@ -106,25 +108,48 @@ const GiveItemForm = ({
 
   const handleSubmit = () => {
     console.warn('submit gift');
-    addGiveItem(itemProfile).then((result) => {
-      if (result) {
-        getGiveItemsByOccasionId(occasionId)
-        .then((itemsArr) => setGivingList(itemsArr));
-      }
+    const submitObj = {
+      ...itemProfile,
+      recipientId: recipientId
+    };
+    // no item so this is a new gift
+    if (!item.id) {
+      addGiveItem(submitObj).then((result) => {
+        if (result) {
+          getGiveItemsByOccasionId(occasionId)
+          .then((itemsArr) => setGivingList(itemsArr));
+        }
+      });
+    } else {
+      updateGiveItem(item.id, itemProfile).then((result) => {
+        if (result) {
+          getGiveItemsByOccasionId(occasionId)
+          .then((itemsArr) => setGivingList(itemsArr));
+        }
+      });
+    }
+    closeModal();
+    setDefaultRecipient(false);
+  };
+
+  const handleCloseModal = () => {
+    setDefaultRecipient({
+      value: null,
+      label: 'Select a Recipient'
     });
     closeModal();
-  };
+  }
 
   return (
     <div className='form-outer-div'>
       <div className='form-heading'>Edit Gift Item
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
-      <div className='form-recipient-select' key={item.id}>
+      <div className='form-recipient-select' key={defaultRecipient.value} >
           <Select options={recipientOptions} onChange={handleSelectClick}
             placeholder='Select a recipient...'
             name='recipientId'
-            defaultValue={{ value: item.recipientId, label: `${item.recipientFirstName} ${item.recipientLastName}` }} />
+            defaultValue={defaultRecipient} />
       </div>
       <div className='form-group'>
         <label className='input-label' htmlFor='itemName'>Gift Name</label>
@@ -134,7 +159,7 @@ const GiveItemForm = ({
             <input className='form-input' type='text' name='itemDescription' value={itemProfile.itemDescription}
                   label='description' onChange={handleChange} />
         <label className='input-label' htmlFor='merchantItemURL'>Merchant URL</label>
-            <input className='form-input' type='text' name='merchantItemURL' value={itemProfile.merchantURL}
+            <input className='form-input' type='text' name='merchantItemURL' value={itemProfile.merchantItemURL}
                   label='merchantURL' onChange={handleChange} />
         <label className='input-label' htmlFor='price'>Price</label>
             <input className='form-input' type='number' step='.01' name='price' value={itemProfile.price}
@@ -159,7 +184,7 @@ const GiveItemForm = ({
                   label='reaction' onChange={handleChange} />
       </div>
       <div className='button-div'>
-        <button className='close-button' onClick={closeModal}>Close</button>
+        <button className='close-button' onClick={handleCloseModal}>Close</button>
         <button className='submit-button' onClick={handleSubmit}
                 disabled={recipientId === emptyGuid}>Submit</button>
       </div>
@@ -176,7 +201,7 @@ GiveItemForm.propTypes = {
   item: PropTypes.object,
   occasionId: PropTypes.string,
   setGivingList: PropTypes.func,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
 };
 
 export default GiveItemForm;

@@ -18,7 +18,21 @@ const addGiveItem = (itemObj) => new Promise((resolve, reject) => {
     });
 });
 
+const updateGiveItem = (itemId, itemObj) => new Promise((resolve, reject) => {
+  axios.put(`${apiURL}/api/users/giveItems/${itemId}`, itemObj)
+    .then((wasUpdated) => resolve(wasUpdated))
+    .catch((error) => reject(error));
+});
+
+const deleteGiveItem = (itemId) => new Promise((resolve, reject) => {
+  axios.delete(`${apiURL}/api/users/giveItems/${itemId}`)
+    .then((wasDeleted) => resolve(wasDeleted))
+    .catch((error) => reject(error));
+});
+
 export {
   getGiveItemsByOccasionId,
-  addGiveItem
+  addGiveItem,
+  updateGiveItem,
+  deleteGiveItem
 };
