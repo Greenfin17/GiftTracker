@@ -76,7 +76,7 @@ const GiveItemForm = ({
 
   useEffect(() => {
     let mounted = true;
-    if (item && item.recipientId != null && item.recipientId !== '' && mounted) {
+    if (item && item.recipientId !== undefined && mounted) {
       setDefaultRecipient({
         value: item.recipientId,
         label: `${item.recipientFirstName} ${item.recipientLastName}`
@@ -135,7 +135,7 @@ const GiveItemForm = ({
   };
 
   const handleCloseModal = () => {
-    if (item.id === null || item.id === '') {
+    if (item.id === undefined) {
       setDefaultRecipient({
         value: null,
         label: 'Select a Recipient'
