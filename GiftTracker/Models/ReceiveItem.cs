@@ -10,10 +10,25 @@ namespace GiftTracker.Models
         public Guid Id { get; set; }
         public Guid OccasionId { get; set; }
         public Guid GiverId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string ItemName { get; set; }
+        public string ItemDescription { get; set; }
         public string ItemURL { get; set; }
         public string Remarks { get; set; }
         public Boolean Thanked { get; set; }
+    }
+
+    public class ReceiveItemWithDetail
+    {
+        public Guid Id { get; set; }
+        public Guid OccasionId { get; set; }
+        public Guid GiverId { get; set; }
+        public string GiverFirstName { get; set; }
+        public string GiverLastName { get; set; }
+        public string itemName { get; set; }
+        public string itemDescription { get; set; }
+        public string ItemURL { get; set; }
+        public string Remarks { get; set; }
+        public Boolean Thanked { get; set; }
+
     }
 }
