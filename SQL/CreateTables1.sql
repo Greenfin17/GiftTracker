@@ -135,7 +135,7 @@ CREATE TABLE GiveItems
 	ItemName varchar(100) NOT NULL,
 	ItemDescription varchar(300),
 	MerchantItemURL varchar(800),
-	Price decimal,
+	Price decimal(12,2),
 	Purchased bit,
 	Wrapped bit,
 	Shipped bit,

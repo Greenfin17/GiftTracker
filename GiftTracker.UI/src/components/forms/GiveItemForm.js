@@ -11,6 +11,7 @@ const GiveItemForm = ({
   setGivingList,
   closeModal,
 }) => {
+
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
   const [recipientOptions, setRecipientOptions] = useState({});
   const [recipientId, setRecipientId] = useState(emptyGuid);
@@ -80,6 +81,7 @@ const GiveItemForm = ({
         value: item.recipientId,
         label: `${item.recipientFirstName} ${item.recipientLastName}`
       });
+      setRecipientId(item.recipientId);
     }
     else {
       setDefaultRecipient(false);
@@ -113,6 +115,7 @@ const GiveItemForm = ({
       recipientId: recipientId
     };
     // no item so this is a new gift
+    debugger;
     if (!item.id) {
       addGiveItem(submitObj).then((result) => {
         if (result) {
@@ -121,6 +124,7 @@ const GiveItemForm = ({
         }
       });
     } else {
+      debugger;
       updateGiveItem(item.id, itemProfile).then((result) => {
         if (result) {
           getGiveItemsByOccasionId(occasionId)

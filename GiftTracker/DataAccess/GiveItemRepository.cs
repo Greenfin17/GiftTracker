@@ -143,7 +143,7 @@ namespace GiftTracker.DataAccess
                 itemObj.Shipped,
                 itemObj.Reaction
             };
-            var result = db.Query<WishListItem>(sql, parameters);
+            var result = db.Query<GiveItem>(sql, parameters);
             if (result.Any())
             {
                 returnVal = true;
