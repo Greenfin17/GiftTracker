@@ -58,6 +58,23 @@ namespace GiftTracker.DataAccess
             var result = db.Query<GiveItem>(sql, parameter);
             return result;
         }
+        internal IEnumerable<GiveItemWithDetail> GetGiveItemsWithDetailByOccasion(Guid occasionId)
+        {
+            var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT GI.Id, GI.OccasionId, GI.RecipientId, GI.WishListItemId,
+	                    GI.ItemName, GI.ItemDescription, GI.MerchantItemURL, GI.Price,
+	                    GI.Purchased, GI.Wrapped, GI.Shipped, GI.Reaction,
+	                    EP.FirstName as RecipientFirstName, EP.LastName as RecipientLastName FROM  GiveItems GI 
+                        JOIN ExchangePartners EP
+                        ON GI.RecipientId = EP.id
+                        WHERE OccasionId = @OccasionId";
+            var parameter = new
+            {
+                OccasionId = occasionId
+            };
+            var result = db.Query<GiveItemWithDetail>(sql, parameter);
+            return result;
+        }
         internal IEnumerable<GiveItem> GetGiveItemsByRecipient(Guid recipientId)
         {
             var db = new SqlConnection(_connectionString);
@@ -75,9 +92,19 @@ namespace GiftTracker.DataAccess
         {
             Guid id = new();
             var db = new SqlConnection(_connectionString);
-            var sql = @"INSERT INTO GiveItems (OccasionId, RecipientId, WishListItemId, Description, MerchantItemURL, Price, Purchased, Wrapped, Shipped, Reaction)
+            var sql = @"INSERT INTO GiveItems (OccasionId, RecipientId, WishListItemId, ItemName, ItemDescription, MerchantItemURL, Price, Purchased, Wrapped, Shipped, Reaction)
                         OUTPUT Inserted.id
-                        VALUES (@OccasionId, @RecipientId, @WishListItemId, @Description, @MerchantItemURL, @Price, @Purchased, @Wrapped, @Shipped, @Reaction)";
+                        VALUES (@OccasionId,
+                                @RecipientId,
+                                @WishListItemId,
+                                @ItemName,
+                                @ItemDescription,
+                                @MerchantItemURL,
+                                @Price,
+                                @Purchased,
+                                @Wrapped,
+                                @Shipped,
+                                @Reaction)";
             id = db.ExecuteScalar<Guid>(sql, itemObj);
             return id;
         }
@@ -91,7 +118,8 @@ namespace GiftTracker.DataAccess
                             OccasionId = @OccasionID,
                             RecipientId = @RecipientId,
                             WishListItemId = @WishListItemId,
-                            Description = @Description,
+                            ItemName = @ItemName,
+                            ItemDescription = @ItemDescription,
                             MerchantItemURL = @MerchantItemURL,
                             Price = @Price,
                             Purchased = @Purchased,
@@ -106,7 +134,8 @@ namespace GiftTracker.DataAccess
                 itemObj.OccasionId,
                 itemObj.RecipientId,
                 itemObj.WishListItemId,
-                itemObj.Description,
+                itemObj.ItemName,
+                itemObj.ItemDescription,
                 itemObj.MerchantItemURL,
                 itemObj.Price,
                 itemObj.Purchased,

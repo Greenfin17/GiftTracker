@@ -48,6 +48,15 @@ namespace GiftTracker.Controllers
             var result = _giveItemRepository.GetGiveItemsByOccasion(occasionId);
             return Ok(result);
         }
+        
+        [HttpGet("details/occasions/{occasionId}")]
+        public IActionResult GetGiveItemsWithDetailByOccasion(Guid occasionId)
+        {
+            var result = _giveItemRepository.GetGiveItemsWithDetailByOccasion(occasionId);
+            return Ok(result);
+
+        }
+
 
         [HttpGet("exchangePartners/{recipientId}")]
         public IActionResult GetGiveItemsByRecipient(Guid recipientId)

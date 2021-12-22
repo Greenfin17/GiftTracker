@@ -73,17 +73,17 @@ const OccasionForm = ({
       </div>
       <div className='form-group'>
         <label className='input-label' htmlFor='name'>Occasion Name</label>
-            <span className='partner-input-span'><input className='form-input' type='text' name='occasionName' value={occasionProfile.occasionName}
-                  label='name' onChange={handleChange} /></span>
+          <input className='form-input' type='text' name='occasionName' value={occasionProfile.occasionName}
+                label='name' onChange={handleChange} />
         <label className='input-label' htmlFor='date'>Occasion Date</label>
-            <span className='partner-input-span'><input className='form-input' type='date' name='occasionDate' value={occasionProfile.occasionDate.substring(0,10)}
-                  label='date' onChange={handleChange} /></span>
+          <input className='form-input' type='date' name='occasionDate' value={occasionProfile.occasionDate.substring(0,10)}
+                label='date' onChange={handleChange} />
         <label className='input-label' htmlFor='location'>Occasion Location (if applicable)</label>
-            <span className='partner-input-span'><input className='form-input' type='text' name='occasionLocation' value={occasionProfile.occasionLocation}
-                  label='location' onChange={handleChange} /></span>
+            <input className='form-input' type='text' name='occasionLocation' value={occasionProfile.occasionLocation}
+                  label='location' onChange={handleChange} />
         <label className='input-label' htmlFor='budget'>Occasion Budget</label>
-            <span className='partner-input-span'><input className='form-input' type='number' step='.01' name='occasionBudget' value={occasionProfile.occasionBudget}
-                  label='budget' onChange={handleChange} /></span>
+            <input className='form-input' type='number' step='.01' name='occasionBudget' value={occasionProfile.occasionBudget}
+                  label='budget' onChange={handleChange} />
       </div>
       <div className='button-div'>
         <button className='close-button' onClick={closeModal}>Close</button>

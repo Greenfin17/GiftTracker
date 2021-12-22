@@ -61,6 +61,10 @@ const People = ({
     setShowModal(false);
   };
 
+  const handleImageError = () => {
+    console.warn('image error');
+  };
+
   return (
     <div className='people-view'>
       <div className='page-title'>
@@ -72,7 +76,7 @@ const People = ({
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
                 <span><img src={partner.imageURL} alt='Gift Exchange Partner'
-                          className='partner-icon-image'/></span>
+                          className='partner-icon-image' onError={handleImageError} /></span>
                 <span>{partner.firstName} {partner.lastName}</span>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                     onClick={() => handleEditClick(partner)}/>
