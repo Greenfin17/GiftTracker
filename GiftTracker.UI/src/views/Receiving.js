@@ -7,33 +7,28 @@ import {
   GTModalContent
 } from '../components/ModalElements';
 // import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import GiveItemForm from '../components/forms/GiveItemForm';
+import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
-import { getGiveItemsByOccasionId, deleteGiveItem } from '../helpers/data/givingData';
+import { getReceiveItemsByOccasionId, deleteReceiveItem } from '../helpers/data/receivingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
-const Giving = ({
+const Receiving = ({
   user
 }) => {
-  const [givingList, setGivingList] = useState(false);
+  const [receivingList, setReceivingList] = useState(false);
   const [occasionOptions, setOccasionOptions] = useState([]);
   const [occasionId, setOccasionId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
     occasionId: '',
-    recipientId: '',
-    wishListItemId: '',
+    giverId: '',
     itemName: '',
     itemDescription: '',
-    merchantItemURL: '',
-    price: 0,
-    purchased: false,
-    wrapped: false,
-    shipped: false,
-    reaction: ''
+    itemURL: '',
+    remarks: '',
   });
 
   useEffect(() => {
@@ -59,11 +54,11 @@ const Giving = ({
 
   const handleSelectClick = (e) => {
     setOccasionId(e.value);
-    getGiveItemsByOccasionId(e.value)
+    getReceiveItemsByOccasionId(e.value)
       .then((itemsArr) => {
-        setGivingList(itemsArr);
+        setReceivingList(itemsArr);
       })
-      .catch(() => setGivingList([]));
+      .catch(() => setReceivingList([]));
   };
 
   const handleAddGiftClick = () => {
@@ -78,12 +73,13 @@ const Giving = ({
   const handleEditClick = (item) => {
     setActiveObject(item);
     setShowModal(true);
-  }
+  };
   
   const handleDeleteClick = (item) => {
-    deleteGiveItem(item.id).then((wasDeleted) => {
+    deleteReceiveItem(item.id).then((wasDeleted) => {
       if (wasDeleted.status === 200) {
-        getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
+        getReceiveItemsByOccasionId(occasionId)
+          .then((receivingArr) => setReceivingList(receivingArr));
         }
     });
   }
@@ -93,29 +89,29 @@ const Giving = ({
   };
 
   return (
-    <div className='giving-view'>
+    <div className='receiving-view'>
       <div className='page-title'>
-         Giving
+         Receiving
       </div>
-      { user && <div className='giving-div'>
-        <div className='giving-select-occasion'>
+      { user && <div className='receiving-div'>
+        <div className='receiving-select-occasion'>
           <Select options={occasionOptions} onChange={handleSelectClick}
             placeholder='Select Occasion...'/>
         </div> 
-        <div className='giving-list-outer-div'>
-          { givingList && givingList.length > 0 ? <>
-          <table className='giving-list'>
+        <div className='receiving-list-outer-div'>
+          { receivingList && receivingList.length > 0 ? <>
+          <table className='receiving-list'>
             <thead>
             <tr className='table-header'>
-              <th className='giving-list-gift-header'>Gift</th>
-              <th className='giving-list-recipient-header'>Recipient</th>
+              <th className='receiving-list-gift-header'>Gift</th>
+              <th className='receiving-list-from-header'>Sender</th>
             </tr>
             </thead>
             <tbody>
-            { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
-              <td className='giving-list-recipient'>
-                {item.recipientFirstName} {item.recipientLastName}</td>
+            { receivingList.map((item) => <tr key={item.id}>
+              <td className='receiving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
+              <td className='receiving-list-from'>
+                {item.giverFirstName} {item.giverLastName} </td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                   onClick={() => handleEditClick(item)}/>
@@ -124,15 +120,15 @@ const Giving = ({
                 </td>
             </tr>)}
             </tbody>
-          </table> </> :  <> { givingList && <div className='giving-empty-message'>No Gifts!</div> } </> }
+          </table> </> :  <> { receivingList && <div className='receiving-empty-message'>No Gifts!</div> } </> }
           { occasionId && 
           <div className='button-div'>
-            <button className='add-give-item-btn' onClick ={handleAddGiftClick}>Add Gift</button>
+            <button className='add-receive-item-btn' onClick ={handleAddGiftClick}>Add Gift</button>
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                setGivingList={setGivingList} closeModal={closeModal} />
+              <ReceiveItemForm user={user} item={activeObject} setReceivingList={setReceivingList}
+                occasionId={occasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>
@@ -141,8 +137,8 @@ const Giving = ({
   );
 };
 
-Giving.propTypes = {
+Receiving.propTypes = {
   user: PropTypes.any
 };
 
-export default Giving
+export default Receiving;

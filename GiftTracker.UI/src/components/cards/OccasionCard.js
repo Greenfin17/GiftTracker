@@ -5,7 +5,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD'
 });
 
-const OccasionCard = ({
+const OccasionSummaryCard = ({
   occasion
 }) => (
     <div className='occasion-list-data'>
@@ -16,8 +16,8 @@ const OccasionCard = ({
     </div>
 );
 
-OccasionCard.propTypes = {
+OccasionSummaryCard.propTypes = {
   occasion: PropTypes.object
 };
 
-export default OccasionCard;
+export default OccasionSummaryCard;

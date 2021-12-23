@@ -38,7 +38,7 @@ namespace GiftTracker.DataAccess
         internal IEnumerable<ReceiveItem> GetReceiveItemsByRecipientId(Guid recipId)
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT RI.Id, OccasionId, GiverId, Description, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemNameDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
                         JOIN Occasions OC 
                     	ON RI.OccasionId = OC.ID
                         JOIN Users US on OccasionCreatorId = US.Id
@@ -52,10 +52,26 @@ namespace GiftTracker.DataAccess
             return result;
         }
 
+        internal IEnumerable<ReceiveItemWithDetail> GetReceiveItemsWithDetailByOccasionId(Guid occasionId)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, EP.FirstName as GiverFirstName, EP.LastName as GiverLastName,
+                        ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+                        JOIN ExchangePartners EP on GiverId = EP.Id
+                        WHERE OccasionId = @OccasionId";
+
+            var parameters = new
+            {
+                OccasionId = occasionId
+            };
+            var result = db.Query<ReceiveItemWithDetail>(sql, parameters);
+            return result;
+        }
+
         internal IEnumerable<ReceiveItem> GetReceiveItemsByOccasionAndReceipientId( Guid recipId, Guid occasionId)
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT RI.Id, OccasionId, GiverId, Description, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
                         JOIN Occasions OC 
                     	ON RI.OccasionId = OC.ID
                         JOIN Users US on OccasionCreatorId = US.Id
@@ -72,7 +88,7 @@ namespace GiftTracker.DataAccess
         internal IEnumerable<ReceiveItem> GetReceiveItemsBySenderAndReceipientId( Guid recipId, Guid giverId)
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT RI.Id, OccasionId, GiverId, Description, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
                         JOIN Occasions OC 
                     	ON RI.OccasionId = OC.ID
                         JOIN Users US on OccasionCreatorId = US.Id
@@ -90,9 +106,9 @@ namespace GiftTracker.DataAccess
         {
             Guid id = new();
             using var db = new SqlConnection(_connectionString);
-            var sql = @"INSERT INTO ReceiveItems(OccasionId, GiverId, Description, ItemURL, Remarks, Thanked)
+            var sql = @"INSERT INTO ReceiveItems(OccasionId, GiverId, ItemName, ItemDescription, ItemURL, Remarks, Thanked)
                         OUTPUT Inserted.Id
-                        VALUES(@OccasionId, @GiverId, @Description, @ItemURL, @Remarks, @Thanked)";
+                        VALUES(@OccasionId, @GiverId, @ItemName, @ItemDescription, @ItemURL, @Remarks, @Thanked)";
             id = db.ExecuteScalar<Guid>(sql, itemObj);
             return id;
         }
@@ -104,7 +120,8 @@ namespace GiftTracker.DataAccess
             var sql = @"UPDATE ReceiveItems
                         SET OccasionId = @OccasionId,
                             GiverId = @GiverId,
-                            Description = @Description,
+                            ItemName = @ItemName,
+                            ItemDescription = @ItemDescription,
                             ItemURL = @ItemURL,
                             Remarks = @Remarks,
                             Thanked = @Thanked
@@ -115,7 +132,8 @@ namespace GiftTracker.DataAccess
                 Id = itemId,
                 itemObj.OccasionId,
                 itemObj.GiverId,
-                itemObj.Description,
+                itemObj.ItemName,
+                itemObj.ItemDescription,
                 itemObj.ItemURL,
                 itemObj.Remarks,
                 itemObj.Thanked
