@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getPartnerWishListItems, addWishListItem, updateWishListItem } from '../../helpers/data/wishListData';
+import {
+  getPartnerWishListItems,
+  addWishListItem,
+  updateWishListItem
+} from '../../helpers/data/wishListData';
 const WishListItemForm = ({
   ownerId,
   item,
@@ -33,7 +37,7 @@ const WishListItemForm = ({
       mounted = false;
       return mounted;
     }
-  }, [occasionId, item ]);
+  }, [occasionId, ownerId, item]);
 
   const handleChange = (e) => {
     setItemProfile((prevState) => ({

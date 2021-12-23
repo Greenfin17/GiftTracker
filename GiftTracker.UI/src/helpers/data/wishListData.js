@@ -21,8 +21,15 @@ const updateWishListItem = (itemId, itemObj) => new Promise((resolve, reject) =>
     .catch((error) => reject(error));
 });
 
+const deleteWishListItem = (itemId) => new Promise((resolve, reject) => {
+  axios.delete(`${apiURL}/api/exchangePartners/wishListItems/${itemId}`)
+    .then((wasDeleted) => resolve(wasDeleted))
+    .catch((error) => reject(error));
+});
+
 export{
   getPartnerWishListItems,
   addWishListItem,
-  updateWishListItem
+  updateWishListItem,
+  deleteWishListItem
 };

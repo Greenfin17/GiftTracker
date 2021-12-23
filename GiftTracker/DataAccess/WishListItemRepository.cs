@@ -65,7 +65,7 @@ namespace GiftTracker.DataAccess
                         SET Id = @Id,
                             OccasionId = @OccasionId,
                             OwnerId = @OwnerId,
-                            Name = @Name
+                            Name = @Name,
                             Description = @Description,
                             ItemURL = @ItemURL
                         OUTPUT Inserted.*

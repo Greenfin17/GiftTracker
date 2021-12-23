@@ -10,17 +10,10 @@ import {
 } from '../components/ModalElements';
 import WishListItemForm from '../components/forms/WishListItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
-import { getPartnerWishListItems } from '../helpers/data/wishListData';
+import { getPartnerWishListItems, deleteWishListItem } from '../helpers/data/wishListData';
 import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
-
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-/*
-import {
-  GTModal,
-  GTModalContent
-} from '../components/ModalElements';
-*/
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const UserLists = ({
   user,
@@ -37,7 +30,7 @@ const UserLists = ({
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
-    occasionId: '',
+    occasionId: emptyGuid,
     ownerId: partnerId || emptyGuid, 
     name: '',
     description: '',
@@ -107,14 +100,25 @@ const UserLists = ({
     setOccasionId(e.value);
   };
 
-  const handleItemClick = (item) => {
-    setActiveObject(item)
-  };
-
   const handleAddItemClick = () => {
-    console.warn('add item');
     setActiveObject({});
     setShowModal(true);
+  };
+
+  const handleEditClick = (item) => {
+    setActiveObject(item);
+    setShowModal(true);
+  };
+
+  const handleDeleteClick = (item) => {
+    deleteWishListItem(item.id)
+      .then(() => getPartnerWishListItems(partnerId, occasionId))
+      .then((itemList) => {
+        if (itemList.length > 0 ){
+          setWishListItems(itemList);
+        } else setWishListItems([]);
+      })
+      .catch(() => setWishListItems([]));
   };
   
   const closeModal = () => {
@@ -135,10 +139,15 @@ const UserLists = ({
         <div className='wish-list-div'>
           <ul className='wish-item-list'>
             { wishListItems.length  ? wishListItems?.map((item) => <li key={item.id}
-                className='wish-list-line' onClick={() => handleItemClick(item)} >
+                className='wish-list-line'>
                 <div>{item.name}</div>
                 <div>{item.description}</div>
                 <div>{item.itemURL}</div>
+                <span>
+                <FontAwesomeIcon className='edit-icon' icon={faEdit} 
+                  onClick={() => handleEditClick(item)}/>
+                <FontAwesomeIcon icon={faTrash} className='delete-icon'
+                  onClick={() => handleDeleteClick(item)}/></span>
               </li>) :  occasionId && <div>Nothing on this list</div> }
           </ul>
         </div>
