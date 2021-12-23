@@ -1,0 +1,28 @@
+.lists-view {
+    .lists-div {
+    background-color: white;
+    width: 60%;
+    margin: 10px auto 5px;
+    border-radius: 5px;
+    }
+  
+  .button-div {
+    margin: 1em 5px 5px 5px;
+  }
+
+  button {
+    border-radius: 5px;
+    margin: 5px 5px 5px 0;
+  }
+
+  table.lists-list {
+    width: 100%;
+    margin: .2rem .2rem 0 .4rem;
+  }
+  .lists-list-gift-header {
+    margin: 5px;
+  }
+  .lists-list-recipient-header {
+    margin: 5px;
+  }
+}

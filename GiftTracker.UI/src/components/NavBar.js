@@ -52,6 +52,9 @@ const NavBar = ({
               <NavItem>
                 { user && <Link className='nav-link' to='/giving '>Giving</Link> }
               </NavItem>
+              <NavItem>
+                { user && <Link className='nav-link' to='/lists'>Lists</Link> }
+              </NavItem>
             { user && <Dropdown  toggle={toggleDropDown} nav inNavbar isOpen={dropDownOpen} onMouseOver={() => setDropDownOpen(true)}
                                 onMouseLeave={() => setDropDownOpen(false)}>
               <DropdownToggle nav>

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-// import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getReceiveItemsByOccasionId, deleteReceiveItem } from '../helpers/data/receivingData';

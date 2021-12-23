@@ -78,7 +78,7 @@ const Giving = ({
   const handleEditClick = (item) => {
     setActiveObject(item);
     setShowModal(true);
-  }
+  };
   
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
@@ -86,7 +86,7 @@ const Giving = ({
         getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
         }
     });
-  }
+  };
   
   const closeModal = () => {
     setShowModal(false);
