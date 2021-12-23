@@ -75,6 +75,7 @@ namespace GiftTracker.DataAccess
                 Id = itemId,
                 itemObj.OccasionId,
                 itemObj.OwnerId,
+                itemObj.Name,
                 itemObj.Description,
                 itemObj.ItemURL
             };

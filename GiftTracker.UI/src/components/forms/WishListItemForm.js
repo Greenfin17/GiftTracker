@@ -11,8 +11,8 @@ const WishListItemForm = ({
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
   
   const [itemProfile, setItemProfile] = useState({
-    occasionId: occasionId,
-    ownerId: item.ownerId || emptyGuid, 
+    occasionId: occasionId || emptyGuid,
+    ownerId: ownerId || emptyGuid, 
     name: item.name || '',
     description: item.description || '',
     itemURL: item.itemURL || '',
@@ -22,8 +22,8 @@ const WishListItemForm = ({
     let mounted = true;
     if (item && mounted) {
       setItemProfile ({
-        occasionId: occasionId,
-        ownerId: item.ownerId || emptyGuid, 
+        occasionId: occasionId || emptyGuid,
+        ownerId: ownerId || emptyGuid, 
         name: item.name || '',
         description: item.description || '',
         itemURL: item.itemURL || '',
@@ -48,14 +48,14 @@ const WishListItemForm = ({
     if (!item.id) {
       addWishListItem(itemProfile).then((result) => {
         if (result) {
-          getPartnerWishListItems(item.ownerId, occasionId)
+          getPartnerWishListItems(ownerId, occasionId)
             .then((itemList) => setWishListItems(itemList));
         }
       });
     } else {
       updateWishListItem(item.id, itemProfile).then((result) => {
         if (result) {
-          getPartnerWishListItems(item.ownerId, occasionId)
+          getPartnerWishListItems(ownerId, occasionId)
             .then((itemList) => setWishListItems(itemList));
         }
       });

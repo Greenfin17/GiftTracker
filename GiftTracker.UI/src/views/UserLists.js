@@ -113,6 +113,7 @@ const UserLists = ({
 
   const handleAddItemClick = () => {
     console.warn('add item');
+    setActiveObject({});
     setShowModal(true);
   };
   
