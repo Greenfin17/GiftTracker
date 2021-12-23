@@ -1,11 +1,12 @@
 // @import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import 'giftTracker';
 @import 'navbar';
 @import 'home';
-@import './forms/profileForm';
 @import './forms/form';
 @import 'gtModal';
 @import 'people';
 @import 'occasions';
+@import 'giving';
 
 body {
   margin: 0;

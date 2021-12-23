@@ -10,6 +10,7 @@ namespace GiftTracker.Models
         public Guid Id { get; set; }
         public Guid OccasionId { get; set; }
         public Guid GiverId { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public string ItemURL { get; set; }
         public string Remarks { get; set; }

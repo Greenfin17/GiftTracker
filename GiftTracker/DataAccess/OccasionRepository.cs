@@ -52,7 +52,8 @@ namespace GiftTracker.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * FROM Occasions
-                         WHERE OccasionCreatorId = @OccasionCreatorId";
+                         WHERE OccasionCreatorId = @OccasionCreatorId
+                         ORDER BY OccasionDate DESC";
             var parameter = new
             {
                 OccasionCreatorId = creatorId
