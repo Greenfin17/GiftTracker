@@ -126,7 +126,7 @@ namespace GiftTracker.Controllers
             else return BadRequest($"Receive item with id {itemId} was not found / not updated.");
         }
 
-        [HttpDelete("{itemID}")]
+        [HttpDelete("{itemId}")]
         public IActionResult DeleteReceiveItem(Guid itemId)
         {
             var result = _receiveItemRepository.DeleteReceiveItem(itemId);

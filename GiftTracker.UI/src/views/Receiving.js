@@ -73,12 +73,13 @@ const Receiving = ({
   const handleEditClick = (item) => {
     setActiveObject(item);
     setShowModal(true);
-  }
+  };
   
   const handleDeleteClick = (item) => {
     deleteReceiveItem(item.id).then((wasDeleted) => {
       if (wasDeleted.status === 200) {
-        getReceiveItemsByOccasionId(occasionId).then((receivingArr) => setReceivingList(receivingArr));
+        getReceiveItemsByOccasionId(occasionId)
+          .then((receivingArr) => setReceivingList(receivingArr));
         }
     });
   }
@@ -126,7 +127,8 @@ const Receiving = ({
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ReceiveItemForm item={activeObject} closeModal={closeModal} />
+              <ReceiveItemForm user={user} item={activeObject} setReceivingList={setReceivingList}
+                occasionId={occasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>

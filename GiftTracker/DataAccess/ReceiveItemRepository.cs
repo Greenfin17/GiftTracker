@@ -55,12 +55,10 @@ namespace GiftTracker.DataAccess
         internal IEnumerable<ReceiveItemWithDetail> GetReceiveItemsWithDetailByOccasionId(Guid occasionId)
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT RI.Id, OccasionId, GiverId, US.FirstName as GiverFirstName, US.LastName as GiverLastName,
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, EP.FirstName as GiverFirstName, EP.LastName as GiverLastName,
                         ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
-                        JOIN Occasions OC 
-                    	ON RI.OccasionId = OC.ID
-                        JOIN Users US on OccasionCreatorId = US.Id
-                        WHERE OC.Id = @OccasionId";
+                        JOIN ExchangePartners EP on GiverId = EP.Id
+                        WHERE OccasionId = @OccasionId";
 
             var parameters = new
             {
@@ -122,7 +120,7 @@ namespace GiftTracker.DataAccess
             var sql = @"UPDATE ReceiveItems
                         SET OccasionId = @OccasionId,
                             GiverId = @GiverId,
-                            ItemName = @ItemName
+                            ItemName = @ItemName,
                             ItemDescription = @ItemDescription,
                             ItemURL = @ItemURL,
                             Remarks = @Remarks,
