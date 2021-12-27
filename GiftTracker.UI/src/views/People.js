@@ -8,6 +8,7 @@ import {
   GTModalContent
 } from '../components/ModalElements';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Avatar from '../resources/avatars/L.png'
 
 const People = ({
   user
@@ -61,8 +62,9 @@ const People = ({
     setShowModal(false);
   };
 
-  const handleImageError = () => {
-    console.warn('image error');
+  const handleImageError = (e, partner) => {
+    console.warn(partner.imageURL);
+    // e.target.src='../resources/avatars/' + partner.firstName[0] + '.png'; 
   };
 
   return (
@@ -75,8 +77,9 @@ const People = ({
           <ul className='partner-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
-                <span><img src={partner.imageURL} alt='Gift Exchange Partner'
-                          className='partner-icon-image' onError={handleImageError} /></span>
+                <span><img src={partner.imageURL.length > 0 ? partner.imageURL 
+                            : `../resources/avatars/${partner.firstName[0]}.png`} alt='Gift Exchange Partner'
+                          className='partner-icon-image' onError={(e) => handleImageError(e, partner)} /></span>
                 <span>{partner.firstName} {partner.lastName}</span>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                     onClick={() => handleEditClick(partner)}/>
