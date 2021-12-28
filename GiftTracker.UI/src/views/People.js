@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getExchangePartnersByUserId, deleteExchangePartner } from '../helpers/data/exchangePartnerData';
 import ExchangePartnerForm from '../components/forms/ExchangePartnerForm';
+import { deleteInterestsByPartnerId } from '../helpers/data/interestData';
 import {
   GTModal,
   GTModalContent
@@ -46,12 +47,14 @@ const People = ({
   };
 
   const handleDeleteClick = (partner) => {
-    deleteExchangePartner(partner.id).then((wasDeleted) => {
-      if (wasDeleted) {
-        getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
-      }
+    deleteInterestsByPartnerId(partner.id).then(() => {
+      deleteExchangePartner(partner.id).then((wasDeleted) => {
+        if (wasDeleted) {
+          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
+        }
+      });
     });
-  }
+  };
 
   const handleAddPartnerClick = () => {
     setActiveObject({});
@@ -92,7 +95,7 @@ const People = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <ExchangePartnerForm user={user} partner={activeObject} setExchangePartners={setExchangePartners}
-                closeModal={closeModal}></ExchangePartnerForm>
+                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm>
             </GTModalContent>
           </GTModal>
         </div> }

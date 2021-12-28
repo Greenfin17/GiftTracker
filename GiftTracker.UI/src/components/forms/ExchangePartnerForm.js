@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { getExchangePartnersByUserId, addExchangePartner, updateExchangePartner } from '../../helpers/data/exchangePartnerData';
-import getExchangePartnerInterests from '../../helpers/data/interestData'
+import { getExchangePartnersByUserId,
+  addExchangePartner, 
+  updateExchangePartner,
+} from '../../helpers/data/exchangePartnerData';
+import { getPartnerInterests,
+  addInterest,
+  updateInterest,
+  deleteInterest
+} from '../../helpers/data/interestData'
 import PartnerInterestForm from './PartnerInterestForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -9,10 +16,32 @@ import {
   SecondaryGTModal,
   GTModalContent
 } from '../ModalElements';
+
+// can't use this in useEffect because we test for "mounted" in the useEffect
+const populateExchangePartnerLists = (partnerId, setInterestsList) => {
+  getPartnerInterests(partnerId).then((responseArr) =>{
+    if (responseArr.length > 0) {
+      const tempList = [];
+      responseArr.forEach((interest) => {
+        const tempObj = {
+          ...interest,
+          // we have to distinguish new interests from existing
+          newInterest: false
+        }
+        tempList.push(tempObj);
+      });
+      setInterestsList(tempList);
+    } else setInterestsList([]);
+  })
+  .catch(() => {
+    setInterestsList([]);
+  });
+}
 const ExchangePartnerForm = ({
   user,
   partner,
   setExchangePartners,
+  showModal,
   closeModal
 }) => {
   const [partnerProfile, setPartnerProfile] = useState({
@@ -29,10 +58,14 @@ const ExchangePartnerForm = ({
   const [interestsList, setInterestsList] = useState([]);
   const [showInterestModal, setShowInterestModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
+    newInterest: false,
+    edited: false,
+    deleted: false,
     exchangePartnerId: '',
     interestName: '',
     description: ''
   });
+  const [interestIndex, setInterestIndex] = useState(-1);
 
   const closeInterestModal = () => {
     setShowInterestModal(!showInterestModal);
@@ -63,10 +96,22 @@ const ExchangePartnerForm = ({
   useEffect(() => {
     let mounted = true;
     if (partner.id && mounted){
-      getExchangePartnerInterests(partner.id).then((responseArr) =>{
+      getPartnerInterests(partner.id).then((responseArr) =>{
         if (responseArr.length > 0 && mounted) {
-          setInterestsList(responseArr);
-        } else setInterestsList([]);
+          const tempList = [];
+          responseArr.forEach((interest) => {
+            const tempObj = {
+              ...interest,
+              // we have to distinguish new interests from existing
+              newInterest: false,
+              edited: false,
+            }
+            tempList.push(tempObj);
+          });
+          if (mounted) {
+            setInterestsList(tempList);
+          }
+        } else if (mounted) setInterestsList([]);
       })
       .catch(() => {
         if (mounted) setInterestsList([]);
@@ -76,7 +121,7 @@ const ExchangePartnerForm = ({
       mounted = false;
       return mounted;
     }
-  }, [partner.id])
+  }, [partner.id, showModal]);
 
   const handleChange = (e) => {
     setPartnerProfile((prevState) => ({
@@ -85,18 +130,48 @@ const ExchangePartnerForm = ({
     }));
   };
 
-  const handleEditClick = (interest) => {
+  const handleEditClick = (interest, index) => {
     setActiveObject(interest);
+    setInterestIndex(index);
+    setShowInterestModal(true);
     console.warn('edit');
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (index) => {
+    const tempList = [];
+    // copying to new array so that React sees the change.
+    for (let i = 0; i < interestsList.length; i += 1){
+      if (i === index) {
+        const tempObj = {
+          ...interestsList[i],
+          deleted: true
+        }
+        tempList.push(tempObj);
+      } else {
+        tempList.push(interestsList[i]);
+      }
+    }
+    setInterestsList(tempList);
     console.warn('delete');
   };
 
   const handleAddInterestClick = () => {
+    const newInterestObj = {
+      newInterest: true,
+      edited: false,
+      deleted: false,
+      exchangePartnerId: '',
+      interestName: '',
+      description: ''
+    };
+
+    setActiveObject(newInterestObj);
     console.warn('add interest');
     setShowInterestModal(true);
+  };
+
+  const handleCloseForm = () => {
+    closeModal();
   };
 
   const handleSubmit = () => {
@@ -114,15 +189,46 @@ const ExchangePartnerForm = ({
         sizes: partnerProfile.sizes || '',
       };
       
-    addExchangePartner(newPartnerProfile).then(() => getExchangePartnersByUserId(user.id).then((partnerList) =>
-      setExchangePartners(partnerList)))
-    }
-    else {
+      addExchangePartner(newPartnerProfile).then((newId) => {
+        interestsList.forEach((interest) => {
+          const tempInterestObj = {
+            exchangePartnerId: newId,
+            interestName: interest.interestName,
+            description: interest.description
+          }
+          addInterest(tempInterestObj);
+        });
+        getExchangePartnersByUserId(user.id).then((partnerList) =>
+          setExchangePartners(partnerList));
+      });
+    } else {
+      // updating only
       updateExchangePartner(partner.id, partnerProfile).then((wasUpdated) => {
         if (wasUpdated) {
-          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
-          }
-        });
+          interestsList.forEach((interest) => {
+            if (interest.newInterest) {
+              const tempObj = {
+                exchangePartnerId: partner.id,
+                interestName: interest.interestName,
+                description: interest.description
+              }
+              addInterest(tempObj);
+            } else if (interest.edited) {
+              const tempObj = {
+                id: interest.id,
+                exchangePartnerId: partner.id,
+                interestName: interest.interestName,
+                description: interest.description
+              }
+              updateInterest(interest.id, tempObj);
+            } else if (interest.deleted) {
+              deleteInterest(interest.id);
+            }
+          });
+          getExchangePartnersByUserId(user.id).then((partnerList) =>
+            setExchangePartners(partnerList));
+        }
+      });
     }
     closeModal();
   };
@@ -154,25 +260,29 @@ const ExchangePartnerForm = ({
         <label className='input-label' htmlFor='sizes'>Sizes</label>
           <input className='form-input' type='text' name='sizes' value={partnerProfile.sizes}
                 label='sizes' onChange={handleChange} />
-        <div className='partner-div'>
-          <ul className='partner-list'>
-        { interestsList.length ? interestsList?.map((interest) => <li key={interest.id}>
-            {interest.interestName}
+        <div className='interests-div'>
+          <div className='interests-heading'>Interests / Notes</div>
+          <ul className='interests-list'>
+        { interestsList.length ? interestsList?.map((interest, index) =>  !interest.deleted && <li key={index}>
+            <div className='interest-name'>
+              {interest.interestName}
+            </div>
+              <div className='list-icon-div'>
               <FontAwesomeIcon className='edit-icon' icon={faEdit} 
-                onClick={() => handleEditClick(interest)}/>
+                onClick={() => handleEditClick(interest, index)}/>
               <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                onClick={() => handleDeleteClick(interest)} /> </li>) : <div>No notes / interests</div> }
+                onClick={() => handleDeleteClick(index)} /></div> </li>) : <div>No notes / interests</div> }
           </ul>
         </div>
       </div>
       <div className='button-div'>
         <button className='add-interest-btn' onClick = {handleAddInterestClick}>Add Interest/Note</button>
-        <button className='close-button' onClick={closeModal}>Close</button>
+        <button className='close-button' onClick={handleCloseForm}>Close</button>
         <button className='submit-button' onClick={handleSubmit}>Submit</button>
       </div>
       <SecondaryGTModal className='gt-modal' isOpen={showInterestModal}>
         <GTModalContent className='modal-content'>
-          <PartnerInterestForm interest={activeObject} 
+          <PartnerInterestForm interest={activeObject} index={interestIndex}
             interestsList={interestsList} setInterestsList={setInterestsList}
             closeModal={closeInterestModal}></PartnerInterestForm>
         </GTModalContent>
@@ -185,6 +295,7 @@ ExchangePartnerForm.propTypes = {
   user: PropTypes.any,
   partner: PropTypes.object,
   setExchangePartners: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func
 };
 

@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 
 const PartnerInterestForm = ({
   interest,
+  index,
   interestsList,
   setInterestsList,
   closeModal,
   }) => {
  const [interestProfile, setInterestProfile] = useState({
    id: interest.id || '',
+   edit: interest.edited || false,
    interestName: interest.interestName || '',
    description: interest.description || ''
  });
@@ -19,6 +21,7 @@ const PartnerInterestForm = ({
    if (interest && mounted) {
     setInterestProfile({
       id: interest.id || '',
+      edited: interest.edited || false,
       interestName: interest.interestName || '',
       description: interest.description || ''
      })
@@ -27,7 +30,7 @@ const PartnerInterestForm = ({
      mounted = false;
      return mounted;
    }
- }, [interest]);
+ }, [interest, index]);
 
   const handleChange = (e) => {
     setInterestProfile((prevState) => ({
@@ -39,10 +42,24 @@ const PartnerInterestForm = ({
   const handleSubmit = () => {
     console.warn('handleSubmit');
     const tempList = interestsList;
-    if (!interest.id) {
-      tempList.push(interestProfile);
+    // adding a new note / interest
+    if (interest.newInterest) {
+      const tempObj = {
+        ...interestProfile,
+        newInterest: true,
+        edited: false,
+      };
+      tempList.push(tempObj);
+      setInterestsList(tempList);
+    } else {
+      tempList[index] = {
+        ...interestProfile,
+        newInterest: false,
+        edited: true,
+      };
       setInterestsList(tempList);
     }
+    closeModal();
   };
   
   return (
@@ -52,10 +69,10 @@ const PartnerInterestForm = ({
       </div>
       <label className='input-label' htmlFor='interestName'>Interest / Note Title</label>
         <input className='form-input' type='text' name='interestName' value={interestProfile.interestName}
-              label='firstName' onChange={handleChange} />
+              label='interestName' onChange={handleChange} />
       <label className='input-label' htmlFor='interestDescription'>Interest Description</label>
-        <input className='form-input' type='text' name='description' value={interestProfile.Description}
-              label='firstName' onChange={handleChange} />
+        <textarea className='form-textarea' type='textarea' name='description' value={interestProfile.description}
+              label='interestDescription' onChange={handleChange} />
       <div className='button-div'>
         <button className='close-button' onClick={closeModal}>Close</button>
         <button className='submit-button' onClick={handleSubmit}>Submit</button>
@@ -66,6 +83,7 @@ const PartnerInterestForm = ({
 
 PartnerInterestForm.propTypes = {
   interest: PropTypes.object,
+  index: PropTypes.number,
   interestsList: PropTypes.array,
   setInterestsList: PropTypes.func,
   closeModal: PropTypes.func

@@ -35,7 +35,7 @@ namespace GiftTracker.Controllers
             else return NotFound($"Interest with id ${interestId} not found.");
         }
 
-        [HttpGet("/api/exchangePartner/{partnerId}/interests")]
+        [HttpGet("/api/exchangePartners/{partnerId}/interests")]
         public IActionResult GetInterestByPartnerId(Guid partnerId)
         {
             var result = _interestRepository.GetInterestsByPartnerID(partnerId);
@@ -75,6 +75,14 @@ namespace GiftTracker.Controllers
                 return Ok($"Interest with id ${interestId} was deleted");
             }
             else return BadRequest($"Interest with id ${interestId} not found or not deleted");
+        }
+
+        [HttpDelete("/api/exchangePartners/{partnerId}/interests")]
+
+        public IActionResult DeleteInterestsByPartnerId(Guid partnerId)
+        {
+            var result = _interestRepository.DeleteInterestsByPartnerId(partnerId);
+            return Ok(result);
         }
     }
 }

@@ -1,0 +1,26 @@
+// _interests.scss
+
+.interests-div {
+  .interests-heading{
+    margin: 5px 0 2px 0;
+    font-size: 1rem;
+  }
+
+  .interests-list {
+    list-style-type: none;
+    padding-inline-start: 0;
+    width: 90%;
+  }
+  li {
+    display: flex;
+  }
+
+  .interest-name {
+    flex-basis: 70%;
+  }
+
+  .list-icon-div {
+    flex-basis: 30%;
+    text-align: right;
+  }
+}
