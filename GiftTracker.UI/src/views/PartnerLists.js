@@ -15,7 +15,7 @@ import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerDa
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const UserLists = ({
+const PartnerLists = ({
   user,
 }) => {
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
@@ -136,18 +136,20 @@ const UserLists = ({
               placeholder='Select an occasion...'
               defaultValue={defaultOccasionOption} />
         </div>
-        <div className='wish-list-div'>
-          <ul className='wish-item-list'>
+        <div className='list-div'>
+          <ul className='ul-list'>
             { wishListItems.length  ? wishListItems?.map((item) => <li key={item.id}
-                className='wish-list-line'>
-                <div>{item.name}</div>
-                <div>{item.description}</div>
-                <div>{item.itemURL}</div>
-                <span>
+                className='ul-list-line'>
+                <div className='list-data-div'>
+                  <div className='wish-list-title'>{item.name}</div>
+                  <div className='wish-list-description'>{item.description}</div>
+                  <div className='wish-list-url'>Link: <a href={item.itemURL}>{item.itemURL}</a></div>
+                </div>
+                <div className='list-icon-div'>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                   onClick={() => handleEditClick(item)}/>
                 <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                  onClick={() => handleDeleteClick(item)}/></span>
+                  onClick={() => handleDeleteClick(item)}/></div>
               </li>) :  occasionId && <div>Nothing on this list</div> }
           </ul>
         </div>
@@ -168,9 +170,9 @@ const UserLists = ({
   );
 };
 
-UserLists.propTypes = {
+PartnerLists.propTypes = {
   user: PropTypes.any,
   defaultOccasionId: PropTypes.string
 };
 
-export default UserLists;
+export default PartnerLists;

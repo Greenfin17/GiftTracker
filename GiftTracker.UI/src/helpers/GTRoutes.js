@@ -12,7 +12,7 @@ import Occasions from '../views/Occasions';
 import Giving from '../views/Giving';
 import Receiving from '../views/Receiving';
 import Lists from '../views/Lists';
-import UserLists from '../views/UserLists';
+import PartnerLists from '../views/PartnerLists';
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   const routeChecker = (values) => (user
@@ -41,8 +41,8 @@ const GTRoutes = ({
       <Route path='/giving' element={<Giving  user={user} />} />
       <Route path='/receiving' element={<Receiving user={user} />} />
       <Route path='/lists' element={<Lists user={user} />} />
-      <Route path='/lists/:partnerId' element={<UserLists user={user} />} />
-      <Route path='/lists/:partnerId/:defaultOccasionId' element={<UserLists user={user} />} />
+      <Route path='/lists/:partnerId' element={<PartnerLists user={user} />} />
+      <Route path='/lists/:partnerId/:defaultOccasionId' element={<PartnerLists user={user} />} />
     </Routes>
   </>
 );

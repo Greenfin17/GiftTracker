@@ -5,6 +5,7 @@
 
 .form-outer-div {
 
+
   .form-heading {
     text-align: center;
   }
@@ -63,7 +64,30 @@
     height: 1em;
     margin: 0 .2rem 0 0;
   }
-
 }
-@import './_giveItemForm';
-@import 'profileForm';
+
+.list-div {
+  .gt-ul-list {
+    list-style-type: none;
+    padding-inline-start: 0;
+    width: 90%;
+  }
+  
+  .list-heading{
+    margin: 5px 0 2px 0;
+    font-size: 1rem;
+  }
+
+  li {
+    display: flex;
+  }
+
+  .li-name {
+    flex-basis: 70%;
+  }
+
+  .list-icon-div {
+    flex-basis: 30%;
+    text-align: right;
+  }
+}

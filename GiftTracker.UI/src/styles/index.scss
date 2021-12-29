@@ -2,13 +2,13 @@
 @import 'giftTracker';
 @import 'navbar';
 @import 'home';
-@import './forms/form';
 @import 'gtModal';
+@import './forms/form';
+@import './lists/lists';
 @import 'people';
 @import 'occasions';
 @import 'giving';
 @import 'receiving';
-@import 'lists';
 
 body {
   margin: 0;

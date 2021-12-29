@@ -73,7 +73,7 @@ const WishListItemForm = ({
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Receive Item Form
+      <div className='form-heading'>Wish List Item Form
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
       <div className='form-group'>
@@ -81,7 +81,7 @@ const WishListItemForm = ({
             <input className='form-input' type='text' name='name' value={itemProfile.name}
                   label='name' onChange={handleChange} />
         <label className='input-label' htmlFor='description'>Item Description</label>
-            <input className='form-input' type='text' name='description' value={itemProfile.description}
+            <textarea className='form-textarea' type='textarea' name='description' value={itemProfile.description}
                   label='description' onChange={handleChange} />
         <label className='input-label' htmlFor='itemURL'>Gift URL link</label>
             <input className='form-input' type='text' name='itemURL' value={itemProfile.itemURL}

@@ -1,3 +1,6 @@
+// _lists.scss
+@import 'partnerLists';
+
 .lists-view {
     .lists-div {
     background-color: white;
@@ -24,5 +27,23 @@
   }
   .lists-list-recipient-header {
     margin: 5px;
+  }
+  .ul-list {
+    padding-inline-start: 0px;
+  }
+  
+  .ul-list-line {
+    display: flex;
+    flex-flow: wrap;
+    border-style: none none solid none;
+    border-width: 1px;
+  }
+  .list-data-div {
+    padding-left: 1rem;
+    flex-basis: 80%;
+  }
+
+  .list-icon-div {
+    flex-basis: 20%;
   }
 }

@@ -82,8 +82,8 @@ const Lists = ({
           <Select options={occasionOptions} onChange={handleSelectClick}
             placeholder='Select Occasion...'/>
         </div> 
-        <div className='partner-div'>
-          <ul className='partner-list'>
+        <div className='list-div'>
+          <ul className='ul-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' onClick={() => handlePartnerClick(partner)} >
                 <span ><img src={partner.imageURL} alt='Gift Exchange Partner'
