@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getExchangePartnersByUserId, deleteExchangePartner } from '../helpers/data/exchangePartnerData';
 import ExchangePartnerForm from '../components/forms/ExchangePartnerForm';
+import { deleteInterestsByPartnerId } from '../helpers/data/interestData';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Avatar from '../components/symbols/Avatar';
 
 const People = ({
   user
@@ -45,12 +47,14 @@ const People = ({
   };
 
   const handleDeleteClick = (partner) => {
-    deleteExchangePartner(partner.id).then((wasDeleted) => {
-      if (wasDeleted) {
-        getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
-      }
+    deleteInterestsByPartnerId(partner.id).then(() => {
+      deleteExchangePartner(partner.id).then((wasDeleted) => {
+        if (wasDeleted) {
+          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
+        }
+      });
     });
-  }
+  };
 
   const handleAddPartnerClick = () => {
     setActiveObject({});
@@ -61,9 +65,6 @@ const People = ({
     setShowModal(false);
   };
 
-  const handleImageError = () => {
-    console.warn('image error');
-  };
 
   return (
     <div className='people-view'>
@@ -75,13 +76,13 @@ const People = ({
           <ul className='partner-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
-                <span><img src={partner.imageURL} alt='Gift Exchange Partner'
-                          className='partner-icon-image' onError={handleImageError} /></span>
-                <span>{partner.firstName} {partner.lastName}</span>
+                <Avatar partner={partner} />
+                <div className='partner-name'>{partner.firstName} {partner.lastName}</div>
+                <div className='icon-div'>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                     onClick={() => handleEditClick(partner)}/>
                   <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                    onClick={() => handleDeleteClick(partner)}/> </li>) : <div>No exchange partners</div> }
+                    onClick={() => handleDeleteClick(partner)}/></div></li>) : <div>No exchange partners</div> }
           </ul>
           <div className='button-div'>
             <button className='add-partner-btn' onClick = {handleAddPartnerClick}>Add Exchange Partner</button>
@@ -89,7 +90,7 @@ const People = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <ExchangePartnerForm user={user} partner={activeObject} setExchangePartners={setExchangePartners}
-                closeModal={closeModal}></ExchangePartnerForm>
+                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm>
             </GTModalContent>
           </GTModal>
         </div> }

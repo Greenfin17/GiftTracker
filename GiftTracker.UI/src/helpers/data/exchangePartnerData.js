@@ -9,6 +9,13 @@ const getExchangePartnersByUserId = (userId) => new Promise((resolve, reject) =>
     .catch((error) => reject(error));
 });
 
+const getExchangePartnerByPartnerId = (partnerId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/exchangePartners/${partnerId}`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
+
 const addExchangePartner = (partnerObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/exchangePartners`, partnerObj)
     .then((response) => resolve(response.data))
@@ -29,6 +36,7 @@ const deleteExchangePartner = (partnerId) => new Promise((resolve, reject) => {
 
 export {
   getExchangePartnersByUserId,
+  getExchangePartnerByPartnerId,
   addExchangePartner,
   updateExchangePartner,
   deleteExchangePartner

@@ -50,9 +50,9 @@ namespace GiftTracker.DataAccess
         {
             Guid id = new();
             using var db = new SqlConnection(_connectionString);
-            var sql = @"INSERT INTO WishListItems (OccasionId, OwnerId, Description, ItemURL)
+            var sql = @"INSERT INTO WishListItems (OccasionId, OwnerId, Name, Description, ItemURL)
                         OUTPUT Inserted.Id
-                        VALUES (@OccasionId, @OwnerId, @Description, @ItemURL)";
+                        VALUES (@OccasionId, @OwnerId, @Name, @Description, @ItemURL)";
             id = db.ExecuteScalar<Guid>(sql, itemObj);
             return id;
         }
@@ -65,6 +65,7 @@ namespace GiftTracker.DataAccess
                         SET Id = @Id,
                             OccasionId = @OccasionId,
                             OwnerId = @OwnerId,
+                            Name = @Name,
                             Description = @Description,
                             ItemURL = @ItemURL
                         OUTPUT Inserted.*
@@ -74,6 +75,7 @@ namespace GiftTracker.DataAccess
                 Id = itemId,
                 itemObj.OccasionId,
                 itemObj.OwnerId,
+                itemObj.Name,
                 itemObj.Description,
                 itemObj.ItemURL
             };

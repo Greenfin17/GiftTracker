@@ -16,7 +16,7 @@ import {
 } from 'reactstrap';
 import LoginButton from './buttons/LoginButton';
 // import LogoutButton from './buttons/LogoutButton';
-import accountIcon from '../resources/icons/noun_account_862174.svg';
+import accountIcon from '../resources/icons/account.min.svg';
 import { signOutUser } from '../helpers/auth/auth';
 
 const NavBar = ({
@@ -51,6 +51,9 @@ const NavBar = ({
               </NavItem>
               <NavItem>
                 { user && <Link className='nav-link' to='/giving '>Giving</Link> }
+              </NavItem>
+              <NavItem>
+                { user && <Link className='nav-link' to='/lists'>Lists</Link> }
               </NavItem>
             { user && <Dropdown  toggle={toggleDropDown} nav inNavbar isOpen={dropDownOpen} onMouseOver={() => setDropDownOpen(true)}
                                 onMouseLeave={() => setDropDownOpen(false)}>

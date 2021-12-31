@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { getExchangePartnersByUserId } from '../../helpers/data/exchangePartnerData';
 import {
-  getGiveItemsByOccasionId,
   addGiveItem,
   updateGiveItem
 } from '../../helpers/data/givingData';
@@ -12,7 +11,9 @@ const GiveItemForm = ({
   user,
   item,
   occasionId,
+  recipientId,
   setGivingList,
+  getGiftsMethod,
   closeModal,
 }) => {
 
@@ -109,19 +110,20 @@ const GiveItemForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('submit gift');
     // no item so this is a new gift
     if (!item.id) {
       addGiveItem(itemProfile).then((result) => {
         if (result) {
-          getGiveItemsByOccasionId(occasionId)
+          debugger;
+          getGiftsMethod(occasionId, recipientId)
+          // getGiveItemsByOccasionId(occasionId)
           .then((itemsArr) => setGivingList(itemsArr));
         }
       });
     } else {
       updateGiveItem(item.id, itemProfile).then((result) => {
         if (result) {
-          getGiveItemsByOccasionId(occasionId)
+          getGiftsMethod(occasionId, recipientId)
           .then((itemsArr) => setGivingList(itemsArr));
         }
       });
@@ -204,6 +206,7 @@ GiveItemForm.propTypes = {
   item: PropTypes.object,
   occasionId: PropTypes.string,
   setGivingList: PropTypes.func,
+  getGiftsMethod: PropTypes.func,
   closeModal: PropTypes.func,
 };
 

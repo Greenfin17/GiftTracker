@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-// import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import GiveItemForm from '../components/forms/GiveItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getGiveItemsByOccasionId, deleteGiveItem } from '../helpers/data/givingData';
@@ -78,7 +76,7 @@ const Giving = ({
   const handleEditClick = (item) => {
     setActiveObject(item);
     setShowModal(true);
-  }
+  };
   
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
@@ -86,7 +84,7 @@ const Giving = ({
         getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
         }
     });
-  }
+  };
   
   const closeModal = () => {
     setShowModal(false);
@@ -132,7 +130,8 @@ const Giving = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                setGivingList={setGivingList} closeModal={closeModal} />
+                recipientId={null}
+                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>

@@ -100,6 +100,7 @@ CREATE TABLE dbo.WishListItems
 	Id uniqueidentifier NOT NULL Primary Key default(newid()),
 	OccasionId uniqueidentifier NOT NULL,
 	OwnerId uniqueidentifier NOT NULL,
+	Name varchar(100),
 	Description varchar(300),
 	ItemURL varchar(800)
 	CONSTRAINT FK_WishListItems_Occasions FOREIGN KEY (OccasionId)

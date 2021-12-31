@@ -104,5 +104,15 @@ namespace GiftTracker.DataAccess
             }
             return returnVal;
         }
+
+        internal int DeleteInterestsByPartnerId(Guid partnerId)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"DELETE FROM INTERESTS
+                        Output Deleted.Id
+                        WHERE ExchangePartnerId = @Id";
+            var result = db.Query<Guid>(sql, new { Id = partnerId });
+            return result.Count();
+        }
     }
 }
