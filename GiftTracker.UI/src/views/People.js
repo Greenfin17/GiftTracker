@@ -9,7 +9,7 @@ import {
   GTModalContent
 } from '../components/ModalElements';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import Avatar from '../resources/avatars/L.png'
+import Avatar from '../components/symbols/Avatar';
 
 const People = ({
   user
@@ -65,10 +65,6 @@ const People = ({
     setShowModal(false);
   };
 
-  const handleImageError = (e, partner) => {
-    console.warn(partner.imageURL);
-    // e.target.src='../resources/avatars/' + partner.firstName[0] + '.png'; 
-  };
 
   return (
     <div className='people-view'>
@@ -80,14 +76,13 @@ const People = ({
           <ul className='partner-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
-                <span><img src={partner.imageURL.length > 0 ? partner.imageURL 
-                            : `../resources/avatars/${partner.firstName[0]}.png`} alt='Gift Exchange Partner'
-                          className='partner-icon-image' onError={(e) => handleImageError(e, partner)} /></span>
-                <span>{partner.firstName} {partner.lastName}</span>
+                <Avatar partner={partner} />
+                <div className='partner-name'>{partner.firstName} {partner.lastName}</div>
+                <div className='icon-div'>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                     onClick={() => handleEditClick(partner)}/>
                   <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                    onClick={() => handleDeleteClick(partner)}/> </li>) : <div>No exchange partners</div> }
+                    onClick={() => handleDeleteClick(partner)}/></div></li>) : <div>No exchange partners</div> }
           </ul>
           <div className='button-div'>
             <button className='add-partner-btn' onClick = {handleAddPartnerClick}>Add Exchange Partner</button>

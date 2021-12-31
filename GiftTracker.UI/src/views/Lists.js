@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getExchangePartnersByUserId } from '../helpers/data/exchangePartnerData';
+import Avatar from '../components/symbols/Avatar';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 /*
@@ -63,10 +64,6 @@ const Lists = ({
     setOccasionId(e.value);
   };
 
-  const handleImageError = () => {
-    console.warn('image error');
-  };
-
   const handlePartnerClick = (partner) => {
     if (occasionId) navigate(`/lists/${partner.id}/${occasionId}`);
     else navigate(`/lists/${partner.id}`);
@@ -85,10 +82,9 @@ const Lists = ({
         <div className='list-div'>
           <ul className='ul-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
-                className='partner-list-line' onClick={() => handlePartnerClick(partner)} >
-                <span ><img src={partner.imageURL} alt='Gift Exchange Partner'
-                          className='partner-icon-image' onError={handleImageError} /></span>
-                <span>{partner.firstName} {partner.lastName}</span>
+                className='partner-list-line' onClick={() => handlePartnerClick(partner)}>
+                <Avatar partner={partner} />
+                <div className='partner-name'>{partner.firstName} {partner.lastName}</div>
               </li>) : <div>No exchange partners</div> }
           </ul>
         </div>
