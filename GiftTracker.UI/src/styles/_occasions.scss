@@ -19,9 +19,38 @@
 
 .occasion-list-data {
   margin: 5px 5px 5px 20px;
+  cursor: pointer;
 }
 
 .occasion-title {
   text-align: center;
   font-size: 2em;
+}
+
+.occasion-detail-ul {
+  padding: 5px;
+  li {
+    margin: 5px;
+  }
+
+  .gift-icon-outer-div {
+    flex-basis: 22%;
+  }
+
+  .partner-name {
+    flex-basis: 60%;
+    font-size: 1.1rem;
+  }
+  
+  .svg-icon {
+    height: 2rem;
+    width: auto
+  }
+
+  li.gift-status {
+    margin: 5px 1.5rem 5xp 5px;
+  }
+
+
+
 }

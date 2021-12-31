@@ -25,7 +25,6 @@ const ProfileForm = ({
   const handleSubmit = () => {
     if (user) {
       updateUser(user.id, userProfile).then((result) => {
-        console.warn(result);
         setUser(result);
         closeModal();
       });

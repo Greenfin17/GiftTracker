@@ -42,7 +42,6 @@ const OccasionForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('submit');
     // if we are adding a new occasion 
     if (!occasion.id && user.id) {
       let newOccasionProfile = {

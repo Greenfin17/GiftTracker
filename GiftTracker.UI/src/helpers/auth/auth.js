@@ -29,15 +29,10 @@ const signInUser = async (setUser) => {
         }
       })
       .catch((error) => {
-        console.warn(error); 
-        console.warn('Create new user');
         addUserWithGoogleObject(result.user).then(() => {
           getUserByFirebaseUId(result.user.uid).then((response) => {
             if (response !== '')
             setUser(response);
-            else {
-              console.warn('User not found');
-            }
           })
         });
       });

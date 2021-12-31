@@ -40,7 +40,6 @@ const PartnerInterestForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('handleSubmit');
     const tempList = interestsList;
     // adding a new note / interest
     if (interest.newInterest) {

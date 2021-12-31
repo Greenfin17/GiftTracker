@@ -134,7 +134,6 @@ const ExchangePartnerForm = ({
     setActiveObject(interest);
     setInterestIndex(index);
     setShowInterestModal(true);
-    console.warn('edit');
   };
 
   const handleDeleteClick = (index) => {
@@ -152,7 +151,6 @@ const ExchangePartnerForm = ({
       }
     }
     setInterestsList(tempList);
-    console.warn('delete');
   };
 
   const handleAddInterestClick = () => {
@@ -166,7 +164,6 @@ const ExchangePartnerForm = ({
     };
 
     setActiveObject(newInterestObj);
-    console.warn('add interest');
     setShowInterestModal(true);
   };
 
@@ -175,7 +172,6 @@ const ExchangePartnerForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('submit');
     // if we are adding a new exchange partner
     if (!partner.id && user.id) {
       let newPartnerProfile = {

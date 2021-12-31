@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
 import GiveItemForm from '../components/forms/GiveItemForm';
-import { getOccasionsByUserId } from '../helpers/data/occasionData';
-import { getGiveItemsByOccasionId, deleteGiveItem } from '../helpers/data/givingData';
+import { getOccasionById } from '../helpers/data/occasionData';
+import {
+  getGiveItemsByOccasionAndRecipientId,
+  deleteGiveItem
+} from '../helpers/data/givingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
 
 
-const Giving = ({
+const SingleEventPartnerGiving = ({
   user
 }) => {
+  const { occasionId, partnerId} = useParams();
+  const [occasion, setOccasion] = useState();
+  const [partner, setPartner] = useState();
   const [givingList, setGivingList] = useState(false);
-  const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
@@ -35,37 +40,65 @@ const Giving = ({
   });
 
   useEffect(() => {
-    const optionsArr =  [];
     let mounted = true;
-    if (user) {
-      getOccasionsByUserId(user.id).then((resultArr) => {
-        for (let i = 0; i < resultArr.length; i += 1) {
-          const option = {
-            value: resultArr[i].id,
-            label: `${resultArr[i].occasionName}: ${resultArr[i].occasionDate.substring(0, 10)}`
-          };
-          optionsArr.push(option);
+    if (occasionId) {
+      getOccasionById(occasionId).then((resultObj) => {
+        if (mounted) {
+          setOccasion(resultObj);
         }
-        if (mounted) setOccasionOptions(optionsArr);
-      })
+      });
+    };
+    return () => {
+      mounted = false;
+    }
+  }, [occasionId]);
+
+  useEffect(() => {
+    let mounted = true;
+    if ( user && occasionId && partnerId) {
+      getGiveItemsByOccasionAndRecipientId(occasionId, partnerId) 
+        .then((resultList) => {
+          if (mounted) {
+            setGivingList(resultList);
+          }
+        });
     }
     return () => {
       mounted = false;
       return mounted;
     }
-  }, [user]);
+  }, [user, occasionId, partnerId]);
 
-  const handleSelectClick = (e) => {
-    setOccasionId(e.value);
-    getGiveItemsByOccasionId(e.value)
-      .then((itemsArr) => {
-        setGivingList(itemsArr);
-      })
-      .catch(() => setGivingList([]));
-  };
+  useEffect(() => {
+    let mounted = true;
+    if (user && partnerId ) {
+      getExchangePartnerByPartnerId(partnerId).then((result) => {
+        if (mounted) {
+          setPartner(result);
+        }
+      });
+    }
+    return () => {
+      mounted = false;
+    }
+  }, [user, partnerId]);
 
   const handleAddGiftClick = () => {
-    setActiveObject({});
+    setActiveObject({
+      occasionId: occasionId,
+      recipientId: partnerId,
+      recipientFirstName: partner.firstName,
+      recipientLastName: partner.lastName,
+      wishListItemId: '',
+      itemName: '',
+      itemDescription: '',
+      merchantItemURL: '',
+      price: 0,
+      purchased: false,
+      wrapped: false,
+      shipped: false,
+      reaction: ''
+    });
     setShowModal(true);
   };
 
@@ -81,7 +114,7 @@ const Giving = ({
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
       if (wasDeleted.status === 200) {
-        getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
+        getGiveItemsByOccasionAndRecipientId(occasionId, partnerId).then((givingArr) => setGivingList(givingArr));
         }
     });
   };
@@ -95,12 +128,9 @@ const Giving = ({
       <div className='page-title'>
          Giving
       </div>
-      { user && <div className='giving-div'>
-        <div className='giving-select-occasion'>
-          <Select options={occasionOptions} onChange={handleSelectClick}
-            placeholder='Select Occasion...'/>
-        </div> 
+      { user && occasion && <div className='giving-div'>
         <div className='giving-list-outer-div'>
+          <div className='giving-heading'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]} </div> 
           { givingList && givingList.length > 0 ? <>
           <table className='giving-list'>
             <thead>
@@ -130,8 +160,8 @@ const Giving = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                recipientId={null}
-                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId} closeModal={closeModal} />
+                recipientId={partnerId}
+                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionAndRecipientId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>
@@ -140,8 +170,8 @@ const Giving = ({
   );
 };
 
-Giving.propTypes = {
+SingleEventPartnerGiving.propTypes = {
   user: PropTypes.any
 };
 
-export default Giving
+export default SingleEventPartnerGiving; 

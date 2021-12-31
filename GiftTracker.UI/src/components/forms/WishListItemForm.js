@@ -47,7 +47,6 @@ const WishListItemForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('submit wishlistItem');
     // no item so this is a new gift
     if (!item.id) {
       addWishListItem(itemProfile).then((result) => {

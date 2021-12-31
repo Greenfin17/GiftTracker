@@ -9,6 +9,12 @@ const getGiveItemsByOccasionId = (occasionId) => new Promise((resolve, reject) =
     .catch((error) => reject(error));
 });
 
+const getGiveItemsByOccasionAndRecipientId = (occasionId, recipientId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/users/giveItems/occasions/${occasionId}/exchangePartners/${recipientId}`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
 const addGiveItem = (itemObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/users/giveItems`, itemObj)
     .then((response) => resolve(response.data))
@@ -32,6 +38,7 @@ const deleteGiveItem = (itemId) => new Promise((resolve, reject) => {
 
 export {
   getGiveItemsByOccasionId,
+  getGiveItemsByOccasionAndRecipientId,
   addGiveItem,
   updateGiveItem,
   deleteGiveItem

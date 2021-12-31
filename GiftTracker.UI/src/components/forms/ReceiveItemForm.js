@@ -103,7 +103,6 @@ const ReceiveItemForm = ({
   };
 
   const handleSubmit = () => {
-    console.warn('submit gift');
     // no item so this is a new gift
     if (!item.id) {
       addReceiveItem(itemProfile).then((result) => {
