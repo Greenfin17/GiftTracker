@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import {
   GTModal,
@@ -13,9 +14,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
-const Giving = ({
+const GivingByRoute = ({
   user
 }) => {
+  const { occasionId } = useParams();
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
   const blankItem = {
     id: '',
@@ -33,7 +35,6 @@ const Giving = ({
   }
   const [givingList, setGivingList] = useState(false);
   const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState(emptyGuid);
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState(blankItem);
   const navigate = useNavigate();
@@ -59,14 +60,25 @@ const Giving = ({
     }
   }, [user]);
 
-  const handleSelectClick = (e) => {
-    setOccasionId(e.value);
-    getGiveItemsByOccasionId(e.value)
+  useEffect(() => {
+    let mounted = true;
+    if (user && occasionId) {
+      getGiveItemsByOccasionId(occasionId)
       .then((itemsArr) => {
         setGivingList(itemsArr);
       })
       .catch(() => setGivingList([]));
-  };
+
+    }
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [user, occasionId]);
+
+  const handleSelectClick = (e) => {
+    navigate(`/giving/${e.value}`);
+  }
 
   const handleAddGiftClick = () => {
     setActiveObject(blankItem);
@@ -75,7 +87,7 @@ const Giving = ({
 
   const handleGiftClick = (item) => {
     if (item !== void 0) {
-      navigate(`/giving/${item.id}`);
+      navigate(`/giving/sendGift/${item.id}`);
     }
   };
 
@@ -154,8 +166,8 @@ const Giving = ({
   );
 };
 
-Giving.propTypes = {
+GivingByRoute.propTypes = {
   user: PropTypes.any
 };
 
-export default Giving
+export default GivingByRoute

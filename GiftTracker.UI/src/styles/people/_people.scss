@@ -1,4 +1,6 @@
 // _people.scss
+@import 'singlePartner';
+
 .people-view {
   .partner-div {
     background-color: white;
@@ -19,6 +21,10 @@
   justify-content: space-between;
   }
 
+  .partner-list-avatar {
+    cursor: pointer;
+  }
+
   canvas {
     flex-basis: 10%;
     max-height: 50px;
@@ -26,9 +32,10 @@
     border-radius: 50%;
   }
 
-  .partner-name {
+  .partner-list-name {
     margin: 1rem 5px 0 5px;
     flex-basis: 60%;
+    cursor: pointer;
   }
 
   .edit-icon {

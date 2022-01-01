@@ -105,7 +105,13 @@ const SingleEventPartnerGiving = ({
 
   const handleGiftClick = (item) => {
     if (item !== void 0) {
-      navigate(`/giving/${item.id}`);
+      navigate(`/giving/sendGift/${item.id}`);
+    }
+  };
+
+  const handlePartnerClick = (item) => {
+    if (item !== void 0) {
+      navigate(`/people/${item.recipientId}`);
     }
   };
 
@@ -145,7 +151,7 @@ const SingleEventPartnerGiving = ({
             <tbody>
             { givingList.map((item) => <tr key={item.id}>
               <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
-              <td className='giving-list-recipient'>
+              <td className='giving-list-recipient' onClick={() => handlePartnerClick(item)}>
                 {item.recipientFirstName} {item.recipientLastName}</td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {
@@ -13,12 +13,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
-const Receiving = ({
+const ReceivingByRoute = ({
   user
 }) => {
+  const { occasionId } = useParams();
   const [receivingList, setReceivingList] = useState(false);
   const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
@@ -53,13 +53,25 @@ const Receiving = ({
   }, [user]);
 
   const handleSelectClick = (e) => {
-    setOccasionId(e.value);
-    getReceiveItemsByOccasionId(e.value)
-      .then((itemsArr) => {
-        setReceivingList(itemsArr);
-      })
-      .catch(() => setReceivingList([]));
+    navigate(`/receiving/${e.value}`);
   };
+
+  useEffect(() => {
+    let mounted = true;
+    if (user && occasionId){
+      getReceiveItemsByOccasionId(occasionId)
+        .then((itemsArr) => {
+          if (mounted) {
+            setReceivingList(itemsArr);
+          }
+        })
+        .catch(() => setReceivingList([]));
+      }
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [user, occasionId]);
 
   const handleAddGiftClick = () => {
     setActiveObject({});
@@ -145,8 +157,8 @@ const Receiving = ({
   );
 };
 
-Receiving.propTypes = {
+ReceivingByRoute.propTypes = {
   user: PropTypes.any
 };
 
-export default Receiving;
+export default ReceivingByRoute;

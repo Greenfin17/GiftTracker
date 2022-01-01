@@ -1,0 +1,68 @@
+
+.single-partner-outer-div {
+  background-color: white;
+  width: 60%;
+  margin: 25px auto 5px;
+  border-radius: 5px;
+
+  .single-partner-data-div {
+    padding: 2rem 1rem 2rem;
+  }
+
+  .single-partner-heading-div {
+    position: relative;
+  }
+
+  .single-partner-image {
+    margin: 5px;
+    text-align: center;
+  }
+
+  .single-partner-name {
+    text-align: center;
+  }
+
+  .single-partner-label {
+    font-weight: 500;
+    display: inline-block;
+    min-width: 8rem;
+  }
+  
+  .single-partner-data{
+    display: inline-block;
+  }
+  
+  .single-partner-imageURL {
+    max-width: 70%;
+    margin: 3px 0 3px 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .single-partner-interests-div {
+    margin: 5px 0 0 0;
+  }
+  
+  .single-partner-interests-heading {
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .interest-title {
+    font-weight: 500;
+  }
+
+  .interest-description {
+    margin: 0 0 5px 2rem;
+  }
+
+  .icon-div {
+    padding: 0 10px 10px 0;
+    text-align: right;
+  }
+
+  .edit-icon {
+    cursor: pointer;
+  }
+}

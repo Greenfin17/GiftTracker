@@ -9,13 +9,15 @@ import Home from '../views/Home';
 import Profile from '../views/Profile';
 import People from '../views/People';
 import Occasions from '../views/Occasions';
-import Giving from '../views/Giving';
-import Receiving from '../views/Receiving';
+//import Giving from '../views/Giving';
+import GivingByRoute from '../views/GivingByRoute';
+import ReceivingByRoute from '../views/ReceivingByRoute';
 import Lists from '../views/Lists';
 import PartnerLists from '../views/PartnerLists';
 import OccasionDetailView from '../views/OccasionDetail';
 import SingleEventPartnerGiving from '../views/SingleOccasionGiving';
 import SingleSendGift from '../views/SingleSendGift';
+import SinglePartner from '../views/SinglePartner';
 
 const PrivateRoute = ({ component: Component, user, ...rest }) => {
   const routeChecker = (values) => (user
@@ -41,14 +43,17 @@ const GTRoutes = ({
         setUser={setUser} />} />
       <Route path='/people' element={<People user={user} />} />
       <Route path='/occasions' element={<Occasions user={user} />} />
-      <Route path='/giving' element={<Giving  user={user} />} />
-      <Route path='/receiving' element={<Receiving user={user} />} />
+      <Route path='/giving' element={<GivingByRoute  user={user} />} />
+      <Route path='/giving/:occasionId' element={<GivingByRoute  user={user} />} />
+      <Route path='/receiving' element={<ReceivingByRoute user={user} />} />
+      <Route path='/receiving/:occasionId' element={<ReceivingByRoute user={user} />} />
       <Route path='/lists' element={<Lists user={user} />} />
       <Route path='/lists/:partnerId' element={<PartnerLists user={user} />} />
       <Route path='/lists/:partnerId/:defaultOccasionId' element={<PartnerLists user={user} />} />
       <Route path='/occasions/:occasionId' element={<OccasionDetailView user={user} />} />
       <Route path='/occasions/:occasionId/people/:partnerId' element={<SingleEventPartnerGiving user={user} />} />
-      <Route path='/giving/:itemId' element={<SingleSendGift user={user} />} />
+      <Route path='/giving/sendGift/:itemId' element={<SingleSendGift user={user} />} />
+      <Route path='/people/:partnerId' element={<SinglePartner user={user} />} />
     </Routes>
   </>
 );
