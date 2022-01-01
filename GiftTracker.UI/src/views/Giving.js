@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import {
   GTModal,
@@ -35,6 +36,7 @@ const Giving = ({
   const [occasionId, setOccasionId] = useState(emptyGuid);
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState(blankItem);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const optionsArr =  [];
@@ -71,9 +73,18 @@ const Giving = ({
     setShowModal(true);
   };
 
-  const handleGiftClick = (e) => {
-    console.warn(e);
+  const handleGiftClick = (item) => {
+    if (item !== void 0) {
+      navigate(`/giving/${item.id}`);
+    }
   };
+
+  const handlePersonClick = (item) => {
+    if (item) {
+      navigate(`/people/${item.id}`);
+    }
+    console.warn(item.id);
+  }
 
   const handleEditClick = (item) => {
     setActiveObject(item);
@@ -113,8 +124,8 @@ const Giving = ({
             </thead>
             <tbody>
             { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
-              <td className='giving-list-recipient'>
+              <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
+              <td className='giving-list-recipient' onClick={() => handlePersonClick(item)}>
                 {item.recipientFirstName} {item.recipientLastName}</td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 

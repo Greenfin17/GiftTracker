@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   GTModal,
@@ -38,6 +38,7 @@ const SingleEventPartnerGiving = ({
     shipped: false,
     reaction: ''
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     let mounted = true;
@@ -102,8 +103,10 @@ const SingleEventPartnerGiving = ({
     setShowModal(true);
   };
 
-  const handleGiftClick = (e) => {
-    console.warn(e);
+  const handleGiftClick = (item) => {
+    if (item !== void 0) {
+      navigate(`/giving/${item.id}`);
+    }
   };
 
   const handleEditClick = (item) => {
@@ -141,7 +144,7 @@ const SingleEventPartnerGiving = ({
             </thead>
             <tbody>
             { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
+              <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
               <td className='giving-list-recipient'>
                 {item.recipientFirstName} {item.recipientLastName}</td>
                 <td>
