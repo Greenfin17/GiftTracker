@@ -7,17 +7,6 @@ import {
   addGiveItem,
   updateGiveItem
 } from '../../helpers/data/givingData';
-/*
-const clearFields = (setFunction) => {
-  setFunction((prevState) => ({
-    ...prevState,
-    itemName: '',
-    itemDescription: '',
-    merchantItemURL: '',
-    price: 0,
-  }));
-};
-*/
 
 const GiveItemForm = ({
   user,
@@ -242,7 +231,6 @@ const GiveItemForm = ({
       addGiveItem(itemProfile).then((result) => {
         if (result) {
           getGiftsMethod(occasionId, partnerId)
-          // getGiveItemsByOccasionId(occasionId)
           .then((itemsArr) => {
             debugger;
            setGivingList(itemsArr);
