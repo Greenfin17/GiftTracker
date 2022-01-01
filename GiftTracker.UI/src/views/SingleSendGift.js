@@ -34,6 +34,8 @@ const SingleSendGift = ({
       { user && giveItem && <div className='single-gift-outer-div'>
         <div className='single-give-recipient-div'>To: {giveItem.recipientFirstName} {giveItem.recipientLastName}</div> 
         <div className='single-give-gift-type'>{ giveItem.wishListItemId === emptyGuid ? 'Surprise' : 'Wish List Item'}</div> 
+        <div className='single-give-gift-name'>{giveItem.itemName}</div> 
+        <div className='single-give-gift-description'>{giveItem.itemDescription}</div> 
       </div> }
     </div>
   )
