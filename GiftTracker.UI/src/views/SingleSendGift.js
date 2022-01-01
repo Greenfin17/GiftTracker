@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getGiveItemById } from '../helpers/data/givingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import emptyCartRed from '../resources/icons/empty-cart-red.min.svg';
 import {
   GTModal,
@@ -15,6 +15,10 @@ import wrapped from '../resources/icons/gift.min.svg';
 import wrappedGreen from '../resources/icons/gift-green.min.svg';
 import shipped from '../resources/icons/shipping.min.svg';
 import shippedGreen from '../resources/icons/shipping-green.min.svg';
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
 
 
 const SingleSendGift = ({
@@ -35,10 +39,6 @@ const SingleSendGift = ({
     setShowModal(false);
   };
   
-  const handleDeleteClick = () =>{
-    console.warn('delete');
-  };
-
   useEffect(() => {
     let mounted = true;
     if (user && itemId) {
@@ -61,12 +61,14 @@ const SingleSendGift = ({
         <div className='single-give-gift-data-div'>
           <div className='single-give-gift-name'><h2>{giveItem.itemName}</h2></div> 
           <div className='single-give-gift-description'>{giveItem.itemDescription}</div> 
-          <div className='single-give-recipient-div'>To: {giveItem.recipientFirstName} {giveItem.recipientLastName}</div> 
+          <div className='single-give-gift-recipient-div'>To: {giveItem.recipientFirstName} {giveItem.recipientLastName}</div> 
           <div className='single-give-gift-type'>{ giveItem.wishListItemId === emptyGuid ? 'Surprise Gift' 
             : 'Wish List Item' } </div> 
+          <div className='single-give-gift-price-div'>Price: {currencyFormatter.format(giveItem.price)}</div> 
           <div className='single-give-gift-URL'>Link: <a href={giveItem.merchantItemURL}>{giveItem.merchantItemURL}</a></div> 
+          <div className='single-give-gift-reaction'>Reaction: {giveItem.reaction}</div> 
           <div className='icon-div'>
-            <div className='status-icons-div'>
+            <div className='status-icon-div'>
               <img className='svg-icon' src={giveItem.purchased? purchasedGreen : emptyCartRed} alt='Purchased' />
               <img className='svg-icon' src={giveItem.wrapped? wrappedGreen : wrapped} alt='Wrapped' />
               <img className='svg-icon' src={giveItem.shipped? shippedGreen : shipped} alt='Shipped' />
@@ -74,8 +76,6 @@ const SingleSendGift = ({
             <div className='edit-icon-div'>
               <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                 onClick={() => handleEditClick(giveItem)}/>
-              <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                onClick={() => handleDeleteClick(giveItem)}/>
             </div>
           </div>
         </div>

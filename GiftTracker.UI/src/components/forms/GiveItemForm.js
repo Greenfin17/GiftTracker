@@ -233,7 +233,6 @@ const GiveItemForm = ({
         if (result) {
           getGiftsMethod(...getGiftsMethodArguments)
           .then((itemsArr) => {
-            debugger;
            setGivingList(itemsArr);
           });
         }
@@ -241,7 +240,6 @@ const GiveItemForm = ({
     } else {
       updateGiveItem(item.id, itemProfile).then((result) => {
         if (result) {
-          debugger;
           getGiftsMethod(...getGiftsMethodArguments)
           .then((itemsArr) => setGivingList(itemsArr));
         }

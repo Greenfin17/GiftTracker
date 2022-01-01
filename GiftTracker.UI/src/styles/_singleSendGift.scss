@@ -15,11 +15,24 @@
 
   .icon-div {
     margin: 10px 0 0px;
+    display: flex;
+  }
+
+  .status-icon-div {
+    flex-basis: 80%;
   }
   
   .svg-icon {
     height: 2rem;
     width: auto;
     margin: 0 2px;
+  }
+
+  .edit-icon-div {
+    flex-basis: 20%;
+  }
+
+  .edit-icon {
+    cursor: pointer;
   }
 }
