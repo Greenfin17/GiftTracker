@@ -144,7 +144,8 @@ const Giving = ({
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
                 partnerId={activeObject.recipientId} showModal={showModal}
-                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId} closeModal={closeModal} />
+                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId}
+                getGiftsMethodArguments={[occasionId]} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>
