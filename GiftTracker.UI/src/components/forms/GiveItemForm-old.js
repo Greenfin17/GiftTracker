@@ -8,14 +8,13 @@ import {
   updateGiveItem
 } from '../../helpers/data/givingData';
 
-const GiveItemForm = ({
+const GiveItemFormOld = ({
   user,
   item,
   occasionId,
   partnerId,
   setGivingList,
   getGiftsMethod,
-  getGiftsMethodArguments,
   showModal,
   closeModal,
 }) => {
@@ -231,7 +230,7 @@ const GiveItemForm = ({
     if (!item.id) {
       addGiveItem(itemProfile).then((result) => {
         if (result) {
-          getGiftsMethod(...getGiftsMethodArguments)
+          getGiftsMethod(occasionId, partnerId)
           .then((itemsArr) => {
            setGivingList(itemsArr);
           });
@@ -240,7 +239,7 @@ const GiveItemForm = ({
     } else {
       updateGiveItem(item.id, itemProfile).then((result) => {
         if (result) {
-          getGiftsMethod(...getGiftsMethodArguments)
+          getGiftsMethod(occasionId, recipientId)
           .then((itemsArr) => setGivingList(itemsArr));
         }
       });
@@ -320,16 +319,16 @@ const GiveItemForm = ({
 
 }
 
-GiveItemForm.propTypes = {
+
+GiveItemFormOld.propTypes = {
   user: PropTypes.any,
   item: PropTypes.object,
   occasionId: PropTypes.string,
   partnerId: PropTypes.string,
   setGivingList: PropTypes.func,
   getGiftsMethod: PropTypes.func,
-  getGiftsMethodArguments: PropTypes.array,
   showModal: PropTypes.bool,
   closeModal: PropTypes.func,
 };
 
-export default GiveItemForm;
+export default GiveItemFormOld;

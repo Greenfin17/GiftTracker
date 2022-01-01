@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import {
   GTModal,
@@ -15,15 +16,12 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 const Giving = ({
   user
 }) => {
-  const [givingList, setGivingList] = useState(false);
-  const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [activeObject, setActiveObject] = useState({
+  const emptyGuid = '00000000-0000-0000-0000-000000000000';
+  const blankItem = {
     id: '',
-    occasionId: '',
-    recipientId: '',
-    wishListItemId: '',
+    occasionId: emptyGuid,
+    recipientId: emptyGuid,
+    wishListItemId: emptyGuid,
     itemName: '',
     itemDescription: '',
     merchantItemURL: '',
@@ -32,7 +30,13 @@ const Giving = ({
     wrapped: false,
     shipped: false,
     reaction: ''
-  });
+  }
+  const [givingList, setGivingList] = useState(false);
+  const [occasionOptions, setOccasionOptions] = useState([]);
+  const [occasionId, setOccasionId] = useState(emptyGuid);
+  const [showModal, setShowModal] = useState(false);
+  const [activeObject, setActiveObject] = useState(blankItem);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const optionsArr =  [];
@@ -65,13 +69,22 @@ const Giving = ({
   };
 
   const handleAddGiftClick = () => {
-    setActiveObject({});
+    setActiveObject(blankItem);
     setShowModal(true);
   };
 
-  const handleGiftClick = (e) => {
-    console.warn(e);
+  const handleGiftClick = (item) => {
+    if (item !== void 0) {
+      navigate(`/giving/${item.id}`);
+    }
   };
+
+  const handlePersonClick = (item) => {
+    if (item) {
+      navigate(`/people/${item.id}`);
+    }
+    console.warn(item.id);
+  }
 
   const handleEditClick = (item) => {
     setActiveObject(item);
@@ -111,8 +124,8 @@ const Giving = ({
             </thead>
             <tbody>
             { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
-              <td className='giving-list-recipient'>
+              <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
+              <td className='giving-list-recipient' onClick={() => handlePersonClick(item)}>
                 {item.recipientFirstName} {item.recipientLastName}</td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
@@ -130,8 +143,9 @@ const Giving = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                recipientId={null}
-                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId} closeModal={closeModal} />
+                partnerId={activeObject.recipientId} showModal={showModal}
+                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId}
+                getGiftsMethodArguments={[occasionId]} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>

@@ -50,12 +50,13 @@ const OccasionDetailView = ({
  
 
   return (
-    <div className='page-view'>
+    <div className='page-view occasion-detail-view'>
       { occasion.occasionName && <div className='page-title'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]}</div>}
       { user && <div className='occasion-div'>
         <div className='list-div'>
           <ul className='occasion-detail-ul'>
-            { xPartners ? xPartners.map((xPartner) => <li key={xPartner.id} onClick={() => handleClick(xPartner)}>
+            { xPartners ? xPartners.map((xPartner) => <li key={xPartner.id}
+              className='gift-status' onClick={() => handleClick(xPartner)}>
               <GiftStatusIcons user={user} occasion={occasion} recipient={xPartner} />
               <div className='partner-name'>{xPartner.firstName} {xPartner.lastName}</div>
               </li>) : '' }</ul>

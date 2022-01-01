@@ -9,6 +9,12 @@ const getPartnerWishListItems = (partnerId, occasionId) => new Promise((resolve,
     .catch((error) => reject(error));
 });
 
+const getWishListItem = (itemId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/exchangePartners/wishListItems/${itemId}`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
 const addWishListItem = (itemObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/exchangePartners/wishListItems`, itemObj)
     .then((response) => resolve(response.data))
@@ -29,6 +35,7 @@ const deleteWishListItem = (itemId) => new Promise((resolve, reject) => {
 
 export{
   getPartnerWishListItems,
+  getWishListItem,
   addWishListItem,
   updateWishListItem,
   deleteWishListItem

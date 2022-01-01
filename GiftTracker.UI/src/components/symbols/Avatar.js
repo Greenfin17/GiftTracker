@@ -24,12 +24,15 @@ const defaultAvatar = (imageURL, canvas, context, partner, backgroundColor) => {
     canvas.height = 50;
     var img = new Image();
     if (imageURL.length > 0) {
-      img.onload = () => {
+       img.onload = () => {
         context.drawImage(img, 5, 5, 40, 40);
       }
+      context.beginPath();
+      context.arc(25, 25, 20, 0, Math.PI * 2, true);
+      context.clip();
+      context.closePath();
       img.onerror = (e) => {
         console.warn(e.path[0].src);
-
         drawAvatar(canvas, context, partner, backgroundColor);
       }
       img.src = imageURL;

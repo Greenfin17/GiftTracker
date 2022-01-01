@@ -6,14 +6,6 @@ import Select from 'react-select';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getExchangePartnersByUserId } from '../helpers/data/exchangePartnerData';
 import Avatar from '../components/symbols/Avatar';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-/*
-import {
-  GTModal,
-  GTModalContent
-} from '../components/ModalElements';
-*/
 
 const Lists = ({
   user

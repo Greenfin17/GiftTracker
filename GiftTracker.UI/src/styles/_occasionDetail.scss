@@ -1,0 +1,30 @@
+// _occasionDetail.scss
+
+.occasion-detail-view {
+
+  .occasion-detail-ul {
+    padding: 5px;
+  }
+  
+  li {
+    margin: 5px;
+  }
+
+  .gift-icon-outer-div {
+    flex-basis: 22%;
+  }
+
+  .partner-name {
+    flex-basis: 60%;
+    font-size: 1.1rem;
+  }
+  
+  .svg-icon {
+    height: 2rem;
+    width: auto
+  }
+
+  li.gift-status {
+    cursor: pointer;
+  }
+}

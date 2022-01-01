@@ -73,13 +73,18 @@ const Occasions = ({
           { occasionList ? occasionList?.map((occasion) => <li key={occasion.id}
               className='occasion-list-line' >
               <OccasionSummaryCard occasion={occasion} />
-                <FontAwesomeIcon className='edit-icon' icon={faEdit} 
-                  onClick={() => handleEditClick(occasion)}/>
-                <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                  onClick={() => handleDeleteClick(occasion)}/> </li>) : <div>No exchange occasions</div> }
+              <div className='occasion-list-icons'>
+                <div className='occasion-icon-group'>
+                  <FontAwesomeIcon className='edit-icon' icon={faEdit} 
+                    onClick={() => handleEditClick(occasion)}/>
+                  <FontAwesomeIcon icon={faTrash} className='delete-icon'
+                    onClick={() => handleDeleteClick(occasion)}/>
+                </div>
+              </div> 
+            </li>) : <div>No exchange occasions</div> }
           </ul>
         <div className='button-div'>
-          <button className='add-partner-btn' onClick = {handleAddOccasionClick}>Add Occasion</button>
+          <button className='add-occasion-btn' onClick = {handleAddOccasionClick}>Add Occasion</button>
         </div>
         <GTModal className='gt-modal' isOpen={showModal}>
           <GTModalContent className='modal-content'>
