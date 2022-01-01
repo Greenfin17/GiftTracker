@@ -17,26 +17,6 @@ import {
   GTModalContent
 } from '../ModalElements';
 
-// can't use this in useEffect because we test for "mounted" in the useEffect
-const populateExchangePartnerLists = (partnerId, setInterestsList) => {
-  getPartnerInterests(partnerId).then((responseArr) =>{
-    if (responseArr.length > 0) {
-      const tempList = [];
-      responseArr.forEach((interest) => {
-        const tempObj = {
-          ...interest,
-          // we have to distinguish new interests from existing
-          newInterest: false
-        }
-        tempList.push(tempObj);
-      });
-      setInterestsList(tempList);
-    } else setInterestsList([]);
-  })
-  .catch(() => {
-    setInterestsList([]);
-  });
-}
 const ExchangePartnerForm = ({
   user,
   partner,

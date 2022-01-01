@@ -50,7 +50,7 @@ const OccasionDetailView = ({
  
 
   return (
-    <div className='page-view'>
+    <div className='page-view occasion-detail-view'>
       { occasion.occasionName && <div className='page-title'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]}</div>}
       { user && <div className='occasion-div'>
         <div className='list-div'>

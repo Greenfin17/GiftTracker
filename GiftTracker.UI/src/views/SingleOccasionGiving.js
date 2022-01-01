@@ -19,7 +19,7 @@ import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerDa
 const SingleEventPartnerGiving = ({
   user
 }) => {
-  const { occasionId, partnerId} = useParams();
+  const { occasionId, partnerId } = useParams();
   const [occasion, setOccasion] = useState();
   const [partner, setPartner] = useState();
   const [givingList, setGivingList] = useState(false);
@@ -160,7 +160,7 @@ const SingleEventPartnerGiving = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                recipientId={partnerId}
+                partnerId={partnerId} showModal={showModal}
                 setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionAndRecipientId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>

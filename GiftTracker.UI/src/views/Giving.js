@@ -15,15 +15,12 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 const Giving = ({
   user
 }) => {
-  const [givingList, setGivingList] = useState(false);
-  const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [activeObject, setActiveObject] = useState({
+  const emptyGuid = '00000000-0000-0000-0000-000000000000';
+  const blankItem = {
     id: '',
-    occasionId: '',
-    recipientId: '',
-    wishListItemId: '',
+    occasionId: emptyGuid,
+    recipientId: emptyGuid,
+    wishListItemId: emptyGuid,
     itemName: '',
     itemDescription: '',
     merchantItemURL: '',
@@ -32,7 +29,12 @@ const Giving = ({
     wrapped: false,
     shipped: false,
     reaction: ''
-  });
+  }
+  const [givingList, setGivingList] = useState(false);
+  const [occasionOptions, setOccasionOptions] = useState([]);
+  const [occasionId, setOccasionId] = useState(emptyGuid);
+  const [showModal, setShowModal] = useState(false);
+  const [activeObject, setActiveObject] = useState(blankItem);
 
   useEffect(() => {
     const optionsArr =  [];
@@ -65,7 +67,7 @@ const Giving = ({
   };
 
   const handleAddGiftClick = () => {
-    setActiveObject({});
+    setActiveObject(blankItem);
     setShowModal(true);
   };
 
@@ -130,7 +132,7 @@ const Giving = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                recipientId={null}
+                partnerId={activeObject.recipientId} showModal={showModal}
                 setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>

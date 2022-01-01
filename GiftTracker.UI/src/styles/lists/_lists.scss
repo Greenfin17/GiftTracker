@@ -32,11 +32,10 @@
     padding-inline-start: 0px;
   }
   
-  .ul-list-line {
+  .partner-list-line {
     display: flex;
     flex-flow: wrap;
-    border-style: none none solid none;
-    border-width: 1px;
+    cursor: pointer;
   }
   .list-data-div {
     padding-left: 1rem;

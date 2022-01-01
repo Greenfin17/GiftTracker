@@ -4,53 +4,45 @@
   width: 60%;
   margin: 10px auto 5px;
   border-radius: 5px;
-}
 
-.occasion-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.occasion-list-line {
- margin: 5px 0;
- border: 1px solid black;
- border-radius: 5px;
-}
-
-.occasion-list-data {
-  margin: 5px 5px 5px 20px;
-  cursor: pointer;
-}
-
-.occasion-title {
-  text-align: center;
-  font-size: 2em;
-}
-
-.occasion-detail-ul {
-  padding: 5px;
-  li {
-    margin: 5px;
+  .add-occasion-btn {
+    margin: .5rem;
   }
 
-  .gift-icon-outer-div {
-    flex-basis: 22%;
+  .occasion-list {
+    list-style-type: none;
+    padding-left: 0;
   }
 
-  .partner-name {
-    flex-basis: 60%;
-    font-size: 1.1rem;
+  .occasion-list-line {
+    display: flex;
+    margin: 5px 0;
+    border: 1px solid blue;
+    border-radius: 5px;
+  }
+
+  .occasion-list-data {
+    margin: 5px 5px 5px 20px;
+    cursor: pointer;
+    flex-basis: 80%;
+  }
+
+  .occasion-title {
+    text-align: center;
+    font-size: 2em;
   }
   
-  .svg-icon {
-    height: 2rem;
-    width: auto
+  .occasion-list-icons {
+    flex-basis: 18%;
+    position: relative;
   }
 
-  li.gift-status {
+  .occasion-icon-group {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .edit-icon, .delete-icon {
     cursor: pointer;
   }
-
-
-
 }

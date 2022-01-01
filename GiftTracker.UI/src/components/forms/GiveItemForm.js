@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { getExchangePartnersByUserId } from '../../helpers/data/exchangePartnerData';
+import { getWishListItem, getPartnerWishListItems } from '../../helpers/data/wishListData';
 import {
   addGiveItem,
   updateGiveItem
 } from '../../helpers/data/givingData';
+/*
+const clearFields = (setFunction) => {
+  setFunction((prevState) => ({
+    ...prevState,
+    itemName: '',
+    itemDescription: '',
+    merchantItemURL: '',
+    price: 0,
+  }));
+};
+*/
 
 const GiveItemForm = ({
   user,
   item,
   occasionId,
-  recipientId,
+  partnerId,
   setGivingList,
   getGiftsMethod,
+  showModal,
   closeModal,
 }) => {
 
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
+  const [recipientId, setRecipientId] = useState(emptyGuid);
   const [recipientOptions, setRecipientOptions] = useState({});
+  const wishItemSelectRef = useRef();
+  const recipientSelectRef = useRef();
   const [defaultRecipient, setDefaultRecipient] = useState(false);
+  const [wishListOptions, setWishListOptions] = useState();
   const [itemProfile, setItemProfile] = useState({
     occasionId: occasionId,
     recipientId: item.recipientId || emptyGuid, 
@@ -33,6 +50,14 @@ const GiveItemForm = ({
     shipped: item.shipped || false,
     reaction: item.reaction || ''
   });
+  const [wishSelectProfile, setWishSelectProfile] = useState({
+    value: emptyGuid,
+    label: 'Surprise'
+  });
+
+  const [recipientSelectProfile, setRecipientSelectProfile] = useState(false);
+
+
 
   useEffect(() => {
     let mounted = true;
@@ -57,10 +82,13 @@ const GiveItemForm = ({
     }
   }, [user, occasionId, item ]);
 
+  // setup select for exchange partners
   useEffect(() => {
     let mounted = true;
     let optionsArr = [];
     if (user) {
+    wishItemSelectRef.current.clearValue();
+    recipientSelectRef.current.clearValue();
     getExchangePartnersByUserId(user.id).then((resultArr) => {
       for ( let i = 0; i < resultArr.length; i += 1){
         const option = {
@@ -76,30 +104,129 @@ const GiveItemForm = ({
       mounted = false;
       return false;
     }
-  }, [user]);
+  }, [user, showModal]);
 
+  // setup default exchange partner
   useEffect(() => {
     let mounted = true;
-    if (item && item.recipientId !== undefined && mounted) {
-      setDefaultRecipient({
-        value: item.recipientId,
-        label: `${item.recipientFirstName} ${item.recipientLastName}`
-      });
+    if (item && item.recipientId !== '' && item.recipientId !== emptyGuid && mounted) {
+      setItemProfile((prevState) => ({
+        ...prevState,
+        recipientId: item.recipientId
+      }));
+      // parallel state hook for select control
+      setRecipientSelectProfile((prevState) =>({
+        ...prevState,
+        recipientId: { value: item.recipientId, label: `${item.recipientFirstName} ${item.recipientLastName}`}
+      }))
     }
     else {
-      setDefaultRecipient(false);
+      setRecipientSelectProfile(false);
     }
     return () => {
       mounted = false;
       return mounted;
     }
-  }, [item])
+  }, [item, showModal])
+  
+  // setup select for wish list items
+  useEffect(() => {
+    let mounted = true;
+    let optionsArr = [];
+    wishItemSelectRef.current.clearValue();
+    if (recipientId !== emptyGuid && occasionId !== emptyGuid) {
+    getPartnerWishListItems(recipientId, occasionId).then((resultArr) => {
+        let option = {
+          value: emptyGuid,
+          label: 'Surpise gift'
+        };
+      optionsArr.push(option);
+      for ( let i = 0; i < resultArr.length; i += 1){
+        option = {
+          value: resultArr[i].id,
+          label: `${resultArr[i].name}`
+        };
+        optionsArr.push(option);
+      }
+        if (mounted) setWishListOptions(optionsArr);
+      });
+    }
+    return () => {
+      mounted = false;
+      return false;
+    }
+  }, [recipientId, occasionId, showModal]);
+  
+  // setup default wish list item in the select
+  useEffect(() => {
+    let mounted = true;
+    if (item && item.id !== '' && item.itemName !== '' 
+        && item.wishListItemId && item.wishListItemId !== emptyGuid && mounted) {
+      setWishSelectProfile({
+        wishListItemId: { value: item.wishListItemId, label: `${item.itemName}`}
+      });
+    } else if (item.id !== '' && item.Name !== '' && item.wishListItemId === emptyGuid) {
+      setWishSelectProfile({
+        wishListItemId: { value: emptyGuid, label: `Surprise`}
+      });
+    } else setWishSelectProfile(false);
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [recipientId, item]);
+
+  // setup recipientId, needed for wish list select  
+  useEffect(() => {
+    let mounted = true;
+    if (mounted){
+      setRecipientId(partnerId);
+    }
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [partnerId]);
 
   const handleSelectClick = (e) => {
-    setItemProfile((prevState) => ({
-      ...prevState,
-      recipientId: e.value
-    }));
+    // ref.current.clearValue clears e to null
+    if (e !== null){
+      setItemProfile((prevState) => ({
+        ...prevState,
+        recipientId: e.value
+      }));
+      setRecipientSelectProfile((prevState) => ({
+        ...prevState,
+        recipientId: { value: e.value, label: e.label }
+      }));
+      // setup new options for wish list select
+      setRecipientId(e.value);
+    }
+  };
+  
+  const handleSelectWishItemClick = (e) => {
+    // testing for null as this is triggered on load
+    if (e !== null) {
+      setItemProfile((prevState) => ({
+        ...prevState,
+        wishListItemId: e.value
+      }));
+      // control of the select resides with wishSelectProfile state hook
+      setWishSelectProfile((prevState) => ({
+        wishListItemId: { value: e.value, label: e.label}
+      }))
+      // populate form fields if we select a wish list item.
+      if (e.value !== emptyGuid) {
+        getWishListItem(e.value).then((itemObj) => {
+          setItemProfile((prevState) => ({
+            ...prevState,
+          itemName: itemObj.name,
+          itemDescription: itemObj.description,
+          merchantItemURL: itemObj.itemURL
+          }));
+        });
+      }
+    }
   };
   
   const handleChange = (e) => {
@@ -114,10 +241,12 @@ const GiveItemForm = ({
     if (!item.id) {
       addGiveItem(itemProfile).then((result) => {
         if (result) {
-          debugger;
-          getGiftsMethod(occasionId, recipientId)
+          getGiftsMethod(occasionId, partnerId)
           // getGiveItemsByOccasionId(occasionId)
-          .then((itemsArr) => setGivingList(itemsArr));
+          .then((itemsArr) => {
+            debugger;
+           setGivingList(itemsArr);
+          });
         }
       });
     } else {
@@ -129,10 +258,7 @@ const GiveItemForm = ({
       });
     }
     closeModal();
-    setDefaultRecipient({
-        value: null,
-        label: 'Select a recipient...'
-      });
+    setRecipientSelectProfile(false);
   };
 
   const handleCloseModal = () => {
@@ -147,14 +273,20 @@ const GiveItemForm = ({
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Edit Gift Item
+      <div className='form-heading'>Gift Item Form
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
       <div className='form-recipient-select' key={defaultRecipient.value} >
-          <Select options={recipientOptions} onChange={handleSelectClick}
+          <Select ref={recipientSelectRef} options={recipientOptions} onChange={handleSelectClick}
             placeholder='Select a recipient...'
             name='recipientId'
-            defaultValue={defaultRecipient} />
+            value={recipientSelectProfile.recipientId} />
+      </div>
+      <div className='form-wish-item-select' key={'wish_list_' + recipientId} >
+          <Select ref={wishItemSelectRef}  options={wishListOptions} onChange={handleSelectWishItemClick}
+            placeholder='Select a wish list item, (optional )...'
+            name='wishListItemId'
+            value={wishSelectProfile.wishListItemId} />
       </div>
       <div className='form-group'>
         <label className='input-label' htmlFor='itemName'>Gift Name</label>
@@ -205,8 +337,10 @@ GiveItemForm.propTypes = {
   user: PropTypes.any,
   item: PropTypes.object,
   occasionId: PropTypes.string,
+  partnerId: PropTypes.string,
   setGivingList: PropTypes.func,
   getGiftsMethod: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func,
 };
 

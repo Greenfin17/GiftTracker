@@ -72,7 +72,8 @@ namespace GiftTracker.DataAccess
 	                    EP.FirstName as RecipientFirstName, EP.LastName as RecipientLastName FROM  GiveItems GI 
                         JOIN ExchangePartners EP
                         ON GI.RecipientId = EP.id
-                        WHERE OccasionId = @OccasionId";
+                        WHERE OccasionId = @OccasionId
+                        ORDER BY EP.LastName, EP.FirstName, GI.ItemName";
             var parameter = new
             {
                 OccasionId = occasionId
