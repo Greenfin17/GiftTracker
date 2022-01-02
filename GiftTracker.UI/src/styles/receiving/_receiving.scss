@@ -1,7 +1,7 @@
-@import './singleSendGift';
+@import './singleReceiveGift';
 
-.giving-view {
-    .giving-div {
+.receiving-view {
+    .receiving-div {
     background-color: white;
     width: 60%;
     margin: 10px auto 5px;
@@ -17,19 +17,24 @@
     margin: 5px 5px 5px 0;
   }
 
-  table.giving-list {
+  table.receiving-list {
     width: 100%;
     margin: .2rem .2rem 0 .4rem;
   }
+  
+  .receiving-list-gift-header {
+    margin: 5px;
+  }
+ 
+  .receiving-list-from-header {
+    margin: 5px;
+  }
 
-  .giving-list-title {
+  .receiving-list-title {
     cursor: pointer;
   }
 
-  .giving-list-gift-header {
-    margin: 5px;
-  }
-  .giving-list-recipient-header {
-    margin: 5px;
+  .receiving-list-from {
+    cursor: pointer;
   }
 }

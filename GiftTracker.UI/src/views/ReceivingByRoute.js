@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-import ReceiveItemForm from '../components/forms/ReceiveItemForm';
+import ReceiveItemForm2 from '../components/forms/ReceiveItemForm2';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getReceiveItemsByOccasionId, deleteReceiveItem } from '../helpers/data/receivingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
-const Receiving = ({
+const ReceivingByRoute = ({
   user
 }) => {
+  const { occasionId } = useParams();
   const [receivingList, setReceivingList] = useState(false);
   const [occasionOptions, setOccasionOptions] = useState([]);
-  const [occasionId, setOccasionId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
@@ -28,6 +29,7 @@ const Receiving = ({
     itemURL: '',
     remarks: '',
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const optionsArr =  [];
@@ -51,22 +53,42 @@ const Receiving = ({
   }, [user]);
 
   const handleSelectClick = (e) => {
-    setOccasionId(e.value);
-    getReceiveItemsByOccasionId(e.value)
-      .then((itemsArr) => {
-        setReceivingList(itemsArr);
-      })
-      .catch(() => setReceivingList([]));
+    navigate(`/receiving/${e.value}`);
   };
+
+  useEffect(() => {
+    let mounted = true;
+    if (user && occasionId){
+      getReceiveItemsByOccasionId(occasionId)
+        .then((itemsArr) => {
+          if (mounted) {
+            setReceivingList(itemsArr);
+          }
+        })
+        .catch(() => setReceivingList([]));
+      }
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [user, occasionId]);
 
   const handleAddGiftClick = () => {
     setActiveObject({});
     setShowModal(true);
   };
 
-  const handleGiftClick = (e) => {
-    console.warn(e);
+  const handleGiftClick = (giftId) => {
+    if (giftId !== void 0) {
+      navigate(`/receiving/receiveGift/${giftId}`);
+    }
   };
+
+  const handlePartnerClick = (partnerId) => {
+    if (partnerId !== void 0) {
+      navigate(`/people/${partnerId}`);
+    }
+  }
 
   const handleEditClick = (item) => {
     setActiveObject(item);
@@ -107,8 +129,8 @@ const Receiving = ({
             </thead>
             <tbody>
             { receivingList.map((item) => <tr key={item.id}>
-              <td className='receiving-list-title'onClick={handleGiftClick}>{item.itemName} </td>
-              <td className='receiving-list-from'>
+              <td className='receiving-list-title'onClick={() => handleGiftClick(item.id)}>{item.itemName} </td>
+              <td className='receiving-list-from' onClick={() => handlePartnerClick(item.giverId)}>
                 {item.giverFirstName} {item.giverLastName} </td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
@@ -125,7 +147,10 @@ const Receiving = ({
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ReceiveItemForm user={user} item={activeObject} setReceivingList={setReceivingList}
+              <ReceiveItemForm2 user={user} item={activeObject}
+                getReceiveItemsMethod={getReceiveItemsByOccasionId}
+                getReceiveItemsMethodArguments={[occasionId]}
+                setReceivingList={setReceivingList}
                 occasionId={occasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
@@ -135,8 +160,8 @@ const Receiving = ({
   );
 };
 
-Receiving.propTypes = {
+ReceivingByRoute.propTypes = {
   user: PropTypes.any
 };
 
-export default Receiving;
+export default ReceivingByRoute;

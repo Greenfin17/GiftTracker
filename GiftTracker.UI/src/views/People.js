@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getExchangePartnersByUserId, deleteExchangePartner } from '../helpers/data/exchangePartnerData';
-import ExchangePartnerForm from '../components/forms/ExchangePartnerForm';
+import ExchangePartnerForm2 from '../components/forms/ExchangePartnerForm2';
 import { deleteInterestsByPartnerId } from '../helpers/data/interestData';
 import {
   GTModal,
@@ -25,6 +26,7 @@ const People = ({
     colors: '', 
     sizes: ''
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     let mounted = true;
@@ -40,6 +42,12 @@ const People = ({
       return mounted;
     };
   }, [user]);
+
+  const handlePartnerClick = (partner) => {
+    if (partner.id !== void 0) {
+      navigate(`/people/${partner.id}`);
+    }
+  }
             
   const handleEditClick = (partner) => { 
     setActiveObject(partner);
@@ -76,8 +84,10 @@ const People = ({
           <ul className='partner-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
-                <Avatar partner={partner} />
-                <div className='partner-name'>{partner.firstName} {partner.lastName}</div>
+                <div className='partner-list-avatar' onClick={() => handlePartnerClick(partner)} >
+                  <Avatar partner={partner} />
+                </div>
+                <div className='partner-list-name' onClick={() => handlePartnerClick(partner)}>{partner.firstName} {partner.lastName}</div>
                 <div className='icon-div'>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                     onClick={() => handleEditClick(partner)}/>
@@ -89,8 +99,9 @@ const People = ({
           </div>
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ExchangePartnerForm user={user} partner={activeObject} setExchangePartners={setExchangePartners}
-                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm>
+              <ExchangePartnerForm2 user={user} partner={activeObject} setExchangePartners={setExchangePartners}
+                getPartnersMethod={getExchangePartnersByUserId} getPartnersMethodArguments={[user.id]}
+                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm2>
             </GTModalContent>
           </GTModal>
         </div> }

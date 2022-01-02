@@ -6,11 +6,11 @@
 @import 'gtModal';
 @import './forms/form';
 @import './lists/lists';
-@import 'people';
+@import './people/people';
 @import 'occasions';
 @import 'occasionDetail';
-@import 'giving';
-@import 'receiving';
+@import './gifts/giving';
+@import './receiving/receiving';
 
 body {
   margin: 0;

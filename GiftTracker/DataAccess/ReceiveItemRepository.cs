@@ -35,10 +35,22 @@ namespace GiftTracker.DataAccess
             return result;
         }
 
+        internal ReceiveItemWithDetail GetReceiveItemWithDetailById(Guid id)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, EP.FirstName as GiverFirstName, EP.LastName as GiverLastName,
+                        ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+                        JOIN ExchangePartners EP on GiverId = EP.Id
+                        WHERE RI.Id = @Id";
+
+            var result = db.QueryFirstOrDefault<ReceiveItemWithDetail>(sql, new { Id = id });
+            return result;
+        }
+
         internal IEnumerable<ReceiveItem> GetReceiveItemsByRecipientId(Guid recipId)
         {
             using var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemNameDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
                         JOIN Occasions OC 
                     	ON RI.OccasionId = OC.ID
                         JOIN Users US on OccasionCreatorId = US.Id

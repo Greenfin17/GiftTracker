@@ -4,6 +4,12 @@ import { giftTrackerConfig} from '../apiKeys';
 
 const apiURL = giftTrackerConfig.apiUrl;
 
+const getReceiveItemById = (itemId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/users/receiveItems/receiveItemWithDetail/${itemId}`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
 const getReceiveItemsByOccasionId = (occasionId) => new Promise((resolve, reject) => {
   axios.get(`${apiURL}/api/users/receiveItemsWithDetail/occasions/${occasionId}`)
     .then((response) => resolve(response.data))
@@ -29,6 +35,7 @@ const deleteReceiveItem = (itemId) => new Promise((resolve, reject) => {
 });
 
 export {
+  getReceiveItemById,
   getReceiveItemsByOccasionId,
   addReceiveItem,
   updateReceiveItem,

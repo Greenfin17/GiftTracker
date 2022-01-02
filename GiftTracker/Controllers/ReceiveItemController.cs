@@ -43,6 +43,17 @@ namespace GiftTracker.Controllers
             }
             else return NotFound($"Receive item with id {itemId} not found.");
         }
+        
+        [HttpGet("receiveItemWithDetail/{itemId}")]
+         public IActionResult GetReceiveItemWithiDetailById(Guid itemId)
+        {
+            var result = _receiveItemRepository.GetReceiveItemWithDetailById(itemId);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else return NotFound($"Receive item with id {itemId} not found.");
+        }
 
         [HttpGet("/api/users/{recipientId}/receiveItems")]
         public IActionResult GetReceiveItemsByRecipientId(Guid recipientId)
