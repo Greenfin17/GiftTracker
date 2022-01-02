@@ -19,15 +19,15 @@ const ReceiveItemForm = ({
 }) => {
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
   const [giverOptions, setGiverOptions] = useState([]);
-  const [defaultGiver, setDefaultGiver] = useState(false);
-  
+  const [giverProfile, setGiverProfile] = useState(false);
   const [itemProfile, setItemProfile] = useState({
     occasionId: occasionId,
     giverId: item.giverId || emptyGuid, 
     itemName: item.itemName || '',
     itemDescription: item.itemDescription || '',
     itemURL: item.itemURL || '',
-    remarks: item.remarks || ''
+    remarks: item.remarks || '',
+    thanked: item.thanked || false
   });
   
   useEffect(() => {
@@ -51,19 +51,20 @@ const ReceiveItemForm = ({
 
   
   useEffect(() => {
+    // setup select for exchange partners
     let mounted = true;
     let optionsArr = [];
     if (user) {
-    getExchangePartnersByUserId(user.id).then((resultArr) => {
-      for ( let i = 0; i < resultArr.length; i += 1){
-        const option = {
-          value: resultArr[i].id,
-          label: `${resultArr[i].firstName} ${resultArr[i].lastName}`
-        };
-        optionsArr.push(option);
-      }
-        if (mounted) setGiverOptions(optionsArr);
-      });
+      getExchangePartnersByUserId(user.id).then((resultArr) => {
+        for ( let i = 0; i < resultArr.length; i += 1){
+          const option = {
+            value: resultArr[i].id,
+            label: `${resultArr[i].firstName} ${resultArr[i].lastName}`
+          };
+          optionsArr.push(option);
+        }
+          if (mounted) setGiverOptions(optionsArr);
+        });
     }
     return () => {
       mounted = false;
@@ -74,14 +75,14 @@ const ReceiveItemForm = ({
   
   useEffect(() => {
     let mounted = true;
-    if (item && item.giverId !== undefined && mounted) {
-      setDefaultGiver({
+    if (item && item.giverId !== undefined && item.giverId !== '' && mounted) {
+      setGiverProfile({
         value: item.giverId,
         label: `${item.giverFirstName} ${item.giverLastName}`
-      });
+      })
     }
     else {
-      setDefaultGiver(false);
+      setGiverProfile(false);
     }
     return () => {
       mounted = false;
@@ -97,10 +98,19 @@ const ReceiveItemForm = ({
   };
 
   const handleSelectClick = (e) => {
-    setItemProfile((prevState) => ({
-      ...prevState,
-      giverId: e.value
-    }));
+    if (e !== null){
+      setItemProfile((prevState) => ({
+        ...prevState,
+        giverId: e.value
+      }));
+      if (e.value !== undefined && e.label !== undefined){
+        setGiverProfile((prevState) => ({
+          ...prevState,
+          value: e.value,
+          label: e.label
+        }));
+      } else setGiverProfile(false);
+    }
   };
 
   const handleSubmit = () => {
@@ -113,8 +123,8 @@ const ReceiveItemForm = ({
         }
       });
     } else {
-      updateReceiveItem(item.id, itemProfile).then((result) => {
-        if (result) {
+      updateReceiveItem(item.id, itemProfile).then((wasUpdated) => {
+        if (wasUpdated) {
           getReceiveItemsMethod(...getReceiveItemsMethodArguments)
           .then((itemsArr) => {
             setReceivingList(itemsArr);
@@ -123,32 +133,23 @@ const ReceiveItemForm = ({
       });
     }
     closeModal();
-    setDefaultGiver({
-      value: null,
-      label: 'Select a gift giver...'
-    });
+    setGiverProfile(false);
   };
   
   const handleCloseModal = () => {
-    if (item.id === undefined) {
-      setDefaultGiver({
-        value: null,
-        label: 'Select a gift giver...'
-      });
-    }
     closeModal();
   };
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Receive Item Form
+      <div className='form-heading'>Receive Item Form3
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
-      <div className='form-recipient-select' key={defaultGiver.value} >
+      <div className='form-recipient-select'>
           <Select options={giverOptions} onChange={handleSelectClick}
             placeholder='Select a gift giver...'
             name='giverId'
-            defaultValue={defaultGiver} />
+            value={giverProfile || ''} />
       </div>
       <div className='form-group'>
         <label className='input-label' htmlFor='itemName'>Gift Name</label>

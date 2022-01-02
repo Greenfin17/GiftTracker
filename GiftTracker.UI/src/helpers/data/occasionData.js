@@ -17,19 +17,19 @@ const getOccasionsByUserId = (userId) => new Promise((resolve, reject) => {
 
 const updateOccasion = (occasionId, occasionObj) => new Promise((resolve, reject) => {
   axios.put(`${apiURL}/api/users/occasions/${occasionId}`, occasionObj)
-    .then((wasUpdated) => resolve(wasUpdated))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const addOccasion = (occasionObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/users/occasions`, occasionObj)
-    .then((response) => resolve(response))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const deleteOccasion = (occasionId) => new Promise((resolve, reject) => {
   axios.delete(`${apiURL}/api/users/occasions/${occasionId}`)
-    .then((response) => resolve(response))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 

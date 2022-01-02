@@ -93,7 +93,7 @@ namespace GiftTracker.Controllers
             var result = _giveItemRepository.UpdateGiveItem(itemId, itemObj);
             if (result)
             {
-                return Ok($"Give item with id {itemId} was updated.");
+                return Ok(result);
             }
             else return BadRequest($"Give item with id {itemId} was not found / not updated.");
         }
@@ -105,7 +105,7 @@ namespace GiftTracker.Controllers
             var result = _giveItemRepository.DeleteGiveItem(itemId);
             if (result)
             {
-                return Ok($"Give item with Id {itemId} was deleted");
+                return Ok(result);
             }
             else return BadRequest($"Give item with Id {itemId} not found / not deleted");
         }

@@ -122,7 +122,7 @@ const SingleEventPartnerGiving = ({
   
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
-      if (wasDeleted.status === 200) {
+      if (wasDeleted) {
         getGiveItemsByOccasionAndRecipientId(occasionId, partnerId).then((givingArr) => setGivingList(givingArr));
         }
     });

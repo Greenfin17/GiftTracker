@@ -24,13 +24,19 @@ const addExchangePartner = (partnerObj) => new Promise((resolve, reject) => {
 
 const updateExchangePartner = (partnerId, partnerObj) => new Promise((resolve, reject) => {
   axios.put(`${apiURL}/api/exchangePartners/${partnerId}`, partnerObj)
-    .then((wasUpdated) => resolve(wasUpdated))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const deleteExchangePartner = (partnerId) => new Promise((resolve, reject) => {
   axios.delete(`${apiURL}/api/exchangePartners/${partnerId}`)
-    .then((wasDeleted) => resolve(wasDeleted))
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
+const partnerHasData = (partnerId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/exchangePartners/${partnerId}/hasData`)
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
@@ -39,5 +45,6 @@ export {
   getExchangePartnerByPartnerId,
   addExchangePartner,
   updateExchangePartner,
-  deleteExchangePartner
+  deleteExchangePartner,
+  partnerHasData
 };

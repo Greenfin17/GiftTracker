@@ -6,7 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
 import { getPartnerInterests } from '../helpers/data/interestData';
 import Avatar from '../components/symbols/Avatar';
-import ExchangePartnerForm2 from '../components/forms/ExchangePartnerForm2';
+import ExchangePartnerForm from '../components/forms/ExchangePartnerForm';
 import {
   GTModal,
   GTModalContent
@@ -106,9 +106,9 @@ const SinglePartner = ({
             </div>
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ExchangePartnerForm2 user={user} partner={partner} setExchangePartners={setPartner}
+              <ExchangePartnerForm user={user} partner={partner} setExchangePartners={setPartner}
                 getPartnersMethod={getExchangePartnerByPartnerId} getPartnersMethodArguments={[partnerId]}
-                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm2>
+                showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div> }

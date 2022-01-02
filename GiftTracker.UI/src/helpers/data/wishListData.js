@@ -23,13 +23,13 @@ const addWishListItem = (itemObj) => new Promise((resolve, reject) => {
 
 const updateWishListItem = (itemId, itemObj) => new Promise((resolve, reject) => {
   axios.put(`${apiURL}/api/exchangePartners/wishListItems/${itemId}`, itemObj)
-    .then((wasUpdated) => resolve(wasUpdated))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const deleteWishListItem = (itemId) => new Promise((resolve, reject) => {
   axios.delete(`${apiURL}/api/exchangePartners/wishListItems/${itemId}`)
-    .then((wasDeleted) => resolve(wasDeleted))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 

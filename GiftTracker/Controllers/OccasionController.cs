@@ -58,7 +58,7 @@ namespace GiftTracker.Controllers
             var result = _occasionRepository.UpdateOccasion(occasionId, occasionObj);
             if (result)
             {
-                return Ok($"Occasion with Id ${occasionId} was updated");
+                return Ok(result);
             }
             else return BadRequest($"Occasion with Id {occasionId} not found / not updated.");
         }
@@ -70,7 +70,7 @@ namespace GiftTracker.Controllers
             var result = _occasionRepository.DeleteOccasion(occasionId);
             if (result)
             {
-                return Ok($"Occasion with Id ${occasionId} was deleted");
+                return Ok(result);
             }
             else return BadRequest($"Occasion with Id ${occasionId} not found / not deleted.");
         }

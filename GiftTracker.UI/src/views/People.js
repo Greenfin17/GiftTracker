@@ -2,21 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getExchangePartnersByUserId, deleteExchangePartner } from '../helpers/data/exchangePartnerData';
-import ExchangePartnerForm2 from '../components/forms/ExchangePartnerForm2';
-import { deleteInterestsByPartnerId } from '../helpers/data/interestData';
+import { getExchangePartnersByUserId } from '../helpers/data/exchangePartnerData';
+import ExchangePartnerForm from '../components/forms/ExchangePartnerForm';
 import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '../components/symbols/Avatar';
+import ConfirmDeleteForm from '../components/forms/ConfirmDeleteForm';
 
 const People = ({
   user
 }) => {
   const [exchangePartners, setExchangePartners] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] =  useState(false);
   const [activeObject, setActiveObject] = useState({
     lastName: '',
     firstName: '',
@@ -26,6 +27,7 @@ const People = ({
     colors: '', 
     sizes: ''
   });
+  const [activePartner, setActivePartner] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,13 +57,8 @@ const People = ({
   };
 
   const handleDeleteClick = (partner) => {
-    deleteInterestsByPartnerId(partner.id).then(() => {
-      deleteExchangePartner(partner.id).then((wasDeleted) => {
-        if (wasDeleted) {
-          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
-        }
-      });
-    });
+    setActivePartner(partner.id);
+    setShowConfirmModal(true);
   };
 
   const handleAddPartnerClick = () => {
@@ -72,6 +69,10 @@ const People = ({
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const closeConfirmModal = () => {
+    setShowConfirmModal(false);
+  }
 
 
   return (
@@ -99,9 +100,17 @@ const People = ({
           </div>
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ExchangePartnerForm2 user={user} partner={activeObject} setExchangePartners={setExchangePartners}
+              <ExchangePartnerForm user={user} partner={activeObject}
                 getPartnersMethod={getExchangePartnersByUserId} getPartnersMethodArguments={[user.id]}
-                showModal={showModal} closeModal={closeModal}></ExchangePartnerForm2>
+                setExchangePartners={setExchangePartners}
+                showModal={showModal} closeModal={closeModal} />
+            </GTModalContent>
+          </GTModal>
+          <GTModal className='gt-modal' isOpen={showConfirmModal}>
+            <GTModalContent className='modal-content'>
+              <ConfirmDeleteForm user={user} partnerId={activePartner} closeModal={closeConfirmModal} 
+                getPartnersMethod={getExchangePartnersByUserId} getPartnersMethodArguments={[user.id]}
+                setExchangePartners={setExchangePartners} />
             </GTModalContent>
           </GTModal>
         </div> }

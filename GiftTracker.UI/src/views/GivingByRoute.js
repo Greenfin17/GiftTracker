@@ -105,7 +105,7 @@ const GivingByRoute = ({
   
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
-      if (wasDeleted.status === 200) {
+      if (wasDeleted) {
         getGiveItemsByOccasionId(occasionId).then((givingArr) => setGivingList(givingArr));
         }
     });

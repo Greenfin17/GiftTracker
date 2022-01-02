@@ -24,13 +24,13 @@ const addReceiveItem = (itemObj) => new Promise((resolve, reject) => {
 
 const updateReceiveItem = (itemId, itemObj) => new Promise((resolve, reject) => {
   axios.put(`${apiURL}/api/users/receiveItems/${itemId}`, itemObj)
-    .then((wasUpdated) => resolve(wasUpdated))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 
 const deleteReceiveItem = (itemId) => new Promise((resolve, reject) => {
   axios.delete(`${apiURL}/api/users/receiveItems/${itemId}`)
-    .then((wasDeleted) => resolve(wasDeleted))
+    .then((response) => resolve(response.data))
     .catch((error) => reject(error));
 });
 

@@ -156,16 +156,6 @@ namespace GiftTracker.DataAccess
             }
             if (!returnVal)
             {
-                sql = @"SELECT Id from Interests 
-                        WHERE ExchangePartnerId = @exPartnerId";
-                result = db.Query<Guid>(sql, parameter);
-                if (result.Any())
-                {
-                    returnVal = true;
-                }
-            }
-            if (!returnVal)
-            {
                 sql = @"SELECT Id from WishListItems 
                         WHERE OwnerId = @exPartnerId";
                 result = db.Query<Guid>(sql, parameter);

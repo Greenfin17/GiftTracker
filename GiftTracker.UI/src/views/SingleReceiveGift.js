@@ -8,7 +8,7 @@ import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-import ReceiveItemForm2 from '../components/forms/ReceiveItemForm2';
+import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import thankedRed from '../resources/icons/noun-thank-3378092-red.min.svg';
 import thankedGreen from '../resources/icons/noun-thank-3378092-green.min.svg';
 
@@ -67,11 +67,11 @@ const SingleReceiveGift = ({
         </div>
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ReceiveItemForm2 user={user} item={receiveItem}
+              <ReceiveItemForm user={user} item={receiveItem}
                 getReceiveItemsMethod={getReceiveItemById}
                 getReceiveItemsMethodArguments={[itemId]}
                 setReceivingList={setReceiveItem}
-                occasionId={receiveItem.occasionId} closeModal={closeModal} />
+                occasionId={receiveItem.occasionId} showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
       </div> }
