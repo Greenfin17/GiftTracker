@@ -79,5 +79,12 @@ namespace GiftTracker.Controllers
             else return BadRequest($"Exchange partner with Id ${partnerId} not deleted");
 
         }
+
+        [HttpGet("{partnerId}/hasData")]
+        public IActionResult PartnerHasData(Guid partnerId)
+        {
+            var result = _exchangePartnerRepository.PartnerHasData(partnerId);
+            return Ok(result);
+        }
     }
 }
