@@ -79,7 +79,7 @@ const ExchangePartnerForm2 = ({
     let mounted = true;
     if (partner.id){
       getPartnerInterests(partner.id).then((responseArr) =>{
-        if (responseArr.length > 0 && mounted) {
+        if (responseArr.length > 0) {
           const tempList = [];
           responseArr.forEach((interest) => {
             const tempObj = {
