@@ -142,7 +142,7 @@ const ReceiveItemForm = ({
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Receive Item Form3
+      <div className='form-heading'>Receive Item Form
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
       <div className='form-recipient-select'>
