@@ -19,7 +19,6 @@ const ConfirmDeleteForm = ({
       if (user && partnerId){
         partnerHasData(partnerId).then((response) => {
           if (mounted) {
-            console.warn(response);
             setHasData(response);
           }
         });
@@ -35,27 +34,15 @@ const ConfirmDeleteForm = ({
         deleteInterestsByPartnerId(partnerId).then(() => {
         deleteExchangePartner(partnerId).then((wasDeleted) => {
           if (wasDeleted) {
-            debugger;
             getPartnersMethod(...getPartnersMethodArguments)
               .then((partnerList) => setExchangePartners(partnerList));
             }
         })});
       }
-      console.warn('confirm-delete');
-    /*
-      deleteInterestsByPartnerId(partner.id).then(() => {
-      deleteExchangePartner(partner.id).then((wasDeleted) => {
-        if (wasDeleted) {
-          getExchangePartnersByUserId(user.id).then((partnerList) => setExchangePartners(partnerList));
-        }
-      });
-    });
-    */
       closeModal();
     };
 
     const handleCancelDelete= () => {
-      console.warn('cancel-delete');
       closeModal();
     };
 

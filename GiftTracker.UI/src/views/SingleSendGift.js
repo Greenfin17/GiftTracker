@@ -31,7 +31,6 @@ const SingleSendGift = ({
   const [showModal, setShowModal] = useState(false);
 
   const handleEditClick = () =>{
-    console.warn('edit');
     setShowModal(true);
   };
 

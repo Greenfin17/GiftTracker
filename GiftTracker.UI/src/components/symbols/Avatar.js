@@ -32,7 +32,6 @@ const defaultAvatar = (imageURL, canvas, context, partner, backgroundColor) => {
       context.clip();
       context.closePath();
       img.onerror = (e) => {
-        console.warn(e.path[0].src);
         drawAvatar(canvas, context, partner, backgroundColor);
       }
       img.src = imageURL;

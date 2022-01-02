@@ -51,7 +51,6 @@ const Occasions = ({
         });
       }
     });
-    console.warn('handleDeleteClick')
   }
   const handleAddOccasionClick = () => {
     setActiveObject({});
