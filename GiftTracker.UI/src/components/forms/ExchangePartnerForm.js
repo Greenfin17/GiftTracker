@@ -77,9 +77,9 @@ const ExchangePartnerForm2 = ({
   // setup list of exchange partner interests
   useEffect(() => {
     let mounted = true;
-    if (partner.id && mounted){
+    if (partner.id){
       getPartnerInterests(partner.id).then((responseArr) =>{
-        if (responseArr.length > 0 && mounted) {
+        if (responseArr.length > 0) {
           const tempList = [];
           responseArr.forEach((interest) => {
             const tempObj = {
@@ -98,7 +98,7 @@ const ExchangePartnerForm2 = ({
       .catch(() => {
         if (mounted) setInterestsList([]);
       });
-    }
+    } else if (mounted) setInterestsList([]);
     return () => {
       mounted = false;
       return mounted;

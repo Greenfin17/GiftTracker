@@ -238,8 +238,8 @@ const GiveItemForm = ({
         }
       });
     } else {
-      updateGiveItem(item.id, itemProfile).then((result) => {
-        if (result) {
+      updateGiveItem(item.id, itemProfile).then((wasUpdated) => {
+        if (wasUpdated) {
           getGiftsMethod(...getGiftsMethodArguments)
           .then((itemsArr) => setGivingList(itemsArr));
         }

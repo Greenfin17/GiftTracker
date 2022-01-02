@@ -83,7 +83,6 @@ const Giving = ({
     if (item) {
       navigate(`/people/${item.recipientId}`);
     }
-    console.warn(item.id);
   }
 
   const handleEditClick = (item) => {

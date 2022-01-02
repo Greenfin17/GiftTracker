@@ -128,5 +128,43 @@ namespace GiftTracker.DataAccess
             }
             return returnVal;
         }
+
+        internal bool PartnerHasData(Guid partnerId)
+        {
+            bool returnVal = false;
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT Id from ReceiveItems
+                        WHERE GiverId = @exPartnerId";
+            var parameter = new
+            {
+                exPartnerId = partnerId
+            };
+            var result = db.Query<Guid>(sql, parameter);
+            if (result.Any())
+            {
+                returnVal = true;
+            }
+            if (!returnVal)
+            {
+                sql = @"SELECT Id from GiveItems
+                        WHERE RecipientID = @exPartnerId";
+                result = db.Query<Guid>(sql, parameter);
+                if (result.Any())
+                {
+                    returnVal = true;
+                }
+            }
+            if (!returnVal)
+            {
+                sql = @"SELECT Id from WishListItems 
+                        WHERE OwnerId = @exPartnerId";
+                result = db.Query<Guid>(sql, parameter);
+                if (result.Any())
+                {
+                    returnVal = true;
+                }
+            }
+            return returnVal;
+        }
     }
 }

@@ -56,8 +56,8 @@ const WishListItemForm = ({
         }
       });
     } else {
-      updateWishListItem(item.id, itemProfile).then((result) => {
-        if (result) {
+      updateWishListItem(item.id, itemProfile).then((wasUpdated) => {
+        if (wasUpdated) {
           getPartnerWishListItems(ownerId, occasionId)
             .then((itemList) => setWishListItems(itemList));
         }

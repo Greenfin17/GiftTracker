@@ -111,14 +111,17 @@ const PartnerLists = ({
   };
 
   const handleDeleteClick = (item) => {
-    deleteWishListItem(item.id)
-      .then(() => getPartnerWishListItems(partnerId, occasionId))
-      .then((itemList) => {
-        if (itemList.length > 0 ){
-          setWishListItems(itemList);
-        } else setWishListItems([]);
-      })
-      .catch(() => setWishListItems([]));
+    deleteWishListItem(item.id).then((wasDeleted) => {
+      if (wasDeleted) {
+        getPartnerWishListItems(partnerId, occasionId)
+        .then((itemList) => {
+          if (itemList.length > 0 ){
+            setWishListItems(itemList);
+          } else setWishListItems([]);
+        })
+        .catch(() => setWishListItems([]));
+      };
+    });
   };
   
   const closeModal = () => {

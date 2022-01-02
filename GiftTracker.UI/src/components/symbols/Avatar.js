@@ -32,7 +32,6 @@ const defaultAvatar = (imageURL, canvas, context, partner, backgroundColor) => {
       context.clip();
       context.closePath();
       img.onerror = (e) => {
-        console.warn(e.path[0].src);
         drawAvatar(canvas, context, partner, backgroundColor);
       }
       img.src = imageURL;
@@ -53,7 +52,6 @@ const pickColor = (firstName) => {
   let index = 0;
   if (firstName) {
     index = ((firstName.toLowerCase().charCodeAt(0) - 97) % 6);
-       // index = firstName[0].toString().toLowerCase() - 26 % 6;
   }
   return colors[index];
 };
@@ -71,16 +69,6 @@ const Avatar = ({
     const contextObj = canvas.getContext('2d');
     setContext(contextObj);
   }, [])
-
-
-  /*
-  const handleImageError = (canvas, context, e, partner) => {
-    console.warn(partner.imageURL);
-    console.warn(e.target.src);
-    e.target.src=defaultAvatar(canvas, context, partner, 'green');
-    // e.target.src='../resources/avatars/' + partner.firstName[0] + '.png'; 
-  };
-  */
 
   return (
     <canvas ref={canvasRef} id={partner.id}>

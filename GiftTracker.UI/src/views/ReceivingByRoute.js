@@ -6,7 +6,7 @@ import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-import ReceiveItemForm2 from '../components/forms/ReceiveItemForm2';
+import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getReceiveItemsByOccasionId, deleteReceiveItem } from '../helpers/data/receivingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -97,7 +97,7 @@ const ReceivingByRoute = ({
   
   const handleDeleteClick = (item) => {
     deleteReceiveItem(item.id).then((wasDeleted) => {
-      if (wasDeleted.status === 200) {
+      if (wasDeleted) {
         getReceiveItemsByOccasionId(occasionId)
           .then((receivingArr) => setReceivingList(receivingArr));
         }
@@ -147,7 +147,7 @@ const ReceivingByRoute = ({
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ReceiveItemForm2 user={user} item={activeObject}
+              <ReceiveItemForm user={user} item={activeObject}
                 getReceiveItemsMethod={getReceiveItemsByOccasionId}
                 getReceiveItemsMethodArguments={[occasionId]}
                 setReceivingList={setReceivingList}

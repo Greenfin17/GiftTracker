@@ -59,7 +59,7 @@ namespace GiftTracker.Controllers
             var result = _wishListItemRepository.UpdateWishListItem(itemId, itemObj);
             if (result)
             {
-                return Ok($"Wish list item with id {itemId} was updated");
+                return Ok(result);
             }
             else return BadRequest($"Wish list item with id {itemId} not found / not updated");
         }
@@ -70,7 +70,7 @@ namespace GiftTracker.Controllers
             var result = _wishListItemRepository.DeleteWishListItem(itemId);
             if (result)
             {
-                return Ok($"Wish list item with Id {itemId} was deleted");
+                return Ok(result);
             }
             else return BadRequest($"Wish list item with Id {itemId} not found / not deleted");
         }

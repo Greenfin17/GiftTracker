@@ -63,7 +63,7 @@ namespace GiftTracker.Controllers
             var result = _exchangePartnerRepository.UpdateExchangePartner(partnerId, partnerObj);
             if (result)
             {
-                return Ok($"Exchange partner with id ${partnerId} has been updated");
+                return Ok(result);
             }
             else return BadRequest($"Exchange partner with id ${partnerId} not updated.");
         }
@@ -74,10 +74,17 @@ namespace GiftTracker.Controllers
             var result = _exchangePartnerRepository.DeletePartner(partnerId);
             if (result)
             {
-                return Ok($"Exchange partner with Id ${partnerId} was deleted.");
+                return Ok(result);
             }
             else return BadRequest($"Exchange partner with Id ${partnerId} not deleted");
 
+        }
+
+        [HttpGet("{partnerId}/hasData")]
+        public IActionResult PartnerHasData(Guid partnerId)
+        {
+            var result = _exchangePartnerRepository.PartnerHasData(partnerId);
+            return Ok(result);
         }
     }
 }
