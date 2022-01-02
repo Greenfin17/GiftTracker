@@ -1,3 +1,5 @@
+@import './singleReceiveGift';
+
 .receiving-view {
     .receiving-div {
     background-color: white;
@@ -19,10 +21,20 @@
     width: 100%;
     margin: .2rem .2rem 0 .4rem;
   }
+  
   .receiving-list-gift-header {
     margin: 5px;
   }
-  .receiving-list-recipient-header {
+ 
+  .receiving-list-from-header {
     margin: 5px;
+  }
+
+  .receiving-list-title {
+    cursor: pointer;
+  }
+
+  .receiving-list-from {
+    cursor: pointer;
   }
 }

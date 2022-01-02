@@ -6,7 +6,7 @@ import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-import ReceiveItemForm from '../components/forms/ReceiveItemForm';
+import ReceiveItemForm2 from '../components/forms/ReceiveItemForm2';
 import { getOccasionsByUserId } from '../helpers/data/occasionData';
 import { getReceiveItemsByOccasionId, deleteReceiveItem } from '../helpers/data/receivingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,7 +80,7 @@ const ReceivingByRoute = ({
 
   const handleGiftClick = (giftId) => {
     if (giftId !== void 0) {
-      navigate(`/gifts/receiveGift/${giftId}`);
+      navigate(`/receiving/receiveGift/${giftId}`);
     }
   };
 
@@ -147,7 +147,10 @@ const ReceivingByRoute = ({
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <ReceiveItemForm user={user} item={activeObject} setReceivingList={setReceivingList}
+              <ReceiveItemForm2 user={user} item={activeObject}
+                getReceiveItemsMethod={getReceiveItemsByOccasionId}
+                getReceiveItemsMethodArguments={[occasionId]}
+                setReceivingList={setReceivingList}
                 occasionId={occasionId} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>

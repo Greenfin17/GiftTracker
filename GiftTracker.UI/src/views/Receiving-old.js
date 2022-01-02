@@ -68,7 +68,7 @@ const Receiving = ({
 
   const handleGiftClick = (giftId) => {
     if (giftId !== void 0) {
-      navigate(`/gifts/receiveGift/${giftId}`);
+      navigate(`/receiving/receiveGift/${giftId}`);
     }
   };
 
