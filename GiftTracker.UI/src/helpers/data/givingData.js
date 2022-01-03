@@ -42,11 +42,18 @@ const deleteGiveItem = (itemId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getTotalSpentByOccasion = (occasionId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/users/giveItems/occasions/${occasionId}/totalSpent`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+});
+
 export {
   getGiveItemById,
   getGiveItemsByOccasionId,
   getGiveItemsByOccasionAndRecipientId,
   addGiveItem,
   updateGiveItem,
-  deleteGiveItem
+  deleteGiveItem,
+  getTotalSpentByOccasion
 };

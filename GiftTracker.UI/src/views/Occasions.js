@@ -69,18 +69,21 @@ const Occasions = ({
       { user &&
       <div className='occasion-div'>
         <ul className='occasion-list'>
-          { occasionList ? occasionList?.map((occasion) => <li key={occasion.id}
+          { occasionList ? occasionList?.map((occasion, index) => <li key={occasion.id}
               className='occasion-list-line' >
-              <OccasionSummaryCard occasion={occasion} />
-              <div className='occasion-list-icons'>
-                <div className='occasion-icon-group'>
-                  <FontAwesomeIcon className='edit-icon' icon={faEdit} 
-                    onClick={() => handleEditClick(occasion)}/>
-                  <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                    onClick={() => handleDeleteClick(occasion)}/>
-                </div>
-              </div> 
-            </li>) : <div>No exchange occasions</div> }
+              <div className='occasion-list-title'>{occasion.occasionName}</div>
+              <div className='occasion-list-data'>
+                <OccasionSummaryCard occasion={occasion} index={index} />
+                <div className='occasion-list-icons'>
+                  <div className='occasion-icon-group'>
+                    <FontAwesomeIcon className='edit-icon' icon={faEdit} 
+                      onClick={() => handleEditClick(occasion)}/>
+                    <FontAwesomeIcon icon={faTrash} className='delete-icon'
+                      onClick={() => handleDeleteClick(occasion)}/>
+                  </div>
+                </div> 
+              </div>
+            </li>) : <div>No Occasions</div> }
           </ul>
         <div className='button-div'>
           <button className='add-occasion-btn' onClick = {handleAddOccasionClick}>Add Occasion</button>

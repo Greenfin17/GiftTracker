@@ -109,5 +109,12 @@ namespace GiftTracker.Controllers
             }
             else return BadRequest($"Give item with Id {itemId} not found / not deleted");
         }
+
+        [HttpGet("occasions/{occasionId}/totalSpent")]
+        public IActionResult TotalSpentByOccasion(Guid occasionId)
+        {
+            var result = _giveItemRepository.TotalSpentByOccasion(occasionId);
+            return Ok(result);
+        }
     }
 }

@@ -185,5 +185,19 @@ namespace GiftTracker.DataAccess
             }
             return returnVal;
         }
+
+        internal decimal TotalSpentByOccasion(Guid occasionId)
+        {
+            var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT SUM(Price) FROM GiveItems
+                        WHERE Purchased = 1
+                        AND OccasionId = @Id";
+            var parameter = new
+            {
+                Id = occasionId
+            };
+            var result = db.QuerySingle<decimal>(sql, parameter);
+            return result;
+        }
     }
 }

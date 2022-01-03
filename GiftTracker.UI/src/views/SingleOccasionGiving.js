@@ -139,7 +139,7 @@ const SingleEventPartnerGiving = ({
       </div>
       { user && occasion && <div className='giving-div'>
         <div className='giving-list-outer-div'>
-          <div className='giving-heading'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]} </div> 
+          <div className='giving-title'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]} </div> 
           { givingList && givingList.length > 0 ? <>
           <table className='giving-list'>
             <thead>

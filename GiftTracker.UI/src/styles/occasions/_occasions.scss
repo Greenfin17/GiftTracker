@@ -1,3 +1,7 @@
+// _occasions.scss
+
+@import './occasionDetail';
+@import './occasionCard';
 
 .occasion-div {
   background-color: white;
@@ -15,27 +19,27 @@
     padding-left: 0;
   }
 
+  .occasion-list-title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
   .occasion-list-line {
-    display: flex;
-    margin: 5px 0;
     border: 1px solid blue;
-    border-radius: 5px;
   }
 
   .occasion-list-data {
-    margin: 5px 5px 5px 20px;
+    margin: 5px; 
     cursor: pointer;
-    flex-basis: 80%;
+    display: flex;
+    flex-flow: row wrap;
   }
 
-  .occasion-title {
-    text-align: center;
-    font-size: 2em;
-  }
-  
   .occasion-list-icons {
     flex-basis: 18%;
     position: relative;
+    margin-top: 50px;
+    padding-left: 50px;
   }
 
   .occasion-icon-group {

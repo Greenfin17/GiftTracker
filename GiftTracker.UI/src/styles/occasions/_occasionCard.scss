@@ -1,0 +1,19 @@
+
+.occasion-card-outer-div {
+  display: flex;
+  flex-flow: row wrap;
+  flex-basis: 80%;
+
+  .occasion-card-data {
+    flex-basis: 60%;
+  }
+  .occasion-card-data-item {
+    margin: 5px;
+  }
+  .occasion-card-graph-div {
+    flex-basis: 40%;
+  }
+  .budget-graph {
+    margin: 5px;
+  }
+}
