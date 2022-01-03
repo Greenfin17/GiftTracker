@@ -19,11 +19,6 @@ const OccasionSummaryCard = ({
   const handleClick = () => {
     navigate(`/occasions/${occasion.id}`);
   };
-  const width = 100;
-  const height = 120;
-  const svg = d3.select(graphRef.current)
-    .attr('width', width)
-    .attr('height', height);
 
   useEffect(() => {
     let mounted = true;
@@ -45,6 +40,11 @@ const OccasionSummaryCard = ({
     const size = 120;
     if (totalSpent){
       // d3.select(`card_${index}`).remove();
+      const width = 100;
+      const height = 120;
+      const svg = d3.select(graphRef.current)
+        .attr('width', width)
+        .attr('height', height);
       d3.selectAll(`.card_${index}> g`).remove();
       d3.selectAll(`.card_${index}> rect`).remove();
       let dataValue = totalSpent / occasion.occasionBudget * height;
@@ -75,7 +75,7 @@ const OccasionSummaryCard = ({
       mounted = false;
       return mounted;
     }
-  }, [index, svg, occasion.occasionBudget, totalSpent])
+  }, [index, occasion.occasionBudget, totalSpent])
 
   return (
     <div className='occasion-card-outer-div' onClick={handleClick}>
