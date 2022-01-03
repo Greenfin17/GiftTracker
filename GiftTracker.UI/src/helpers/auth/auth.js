@@ -44,7 +44,10 @@ const signInUser = async (setUser) => {
 
 const signOutUser = async (setUser) => {
   const auth = getAuth();
-  await auth.signOut().then(() => setUser(false));
+  await auth.signOut().then(() => {
+    sessionStorage.removeItem('token');
+    setUser(false);
+  });
 };
 
 export { signInUser, signOutUser }
