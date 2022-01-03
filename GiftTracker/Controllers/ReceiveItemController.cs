@@ -2,11 +2,13 @@
 using System;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftTracker.Controllers
 {
     [Route("api/users/receiveItems")]
     [ApiController]
+    [Authorize]
     public class ReceiveItemController : ControllerBase
     {
         private ReceiveItemRepository _receiveItemRepository;

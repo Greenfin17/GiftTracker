@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftTracker.Controllers
 {
     [ApiController]
     [Route("api/exchangePartners")]
+    [Authorize]
     public class ExchangePartnerController : ControllerBase
     {
         private ExchangePartnerRepository _exchangePartnerRepository;

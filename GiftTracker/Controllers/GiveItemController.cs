@@ -2,11 +2,12 @@
 using System;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace GiftTracker.Controllers
 {
     [Route("api/users/giveItems")]
     [ApiController]
+    [Authorize]
     public class GiveItemController : ControllerBase
     {
         private GiveItemRepository _giveItemRepository;

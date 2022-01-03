@@ -2,11 +2,13 @@
 using System;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftTracker.Controllers
 {
     [Route("api/exchangePartners/wishListItems")]
     [ApiController]
+    [Authorize]
     public class WishListItemController : ControllerBase
     {
         private WishListItemRepository _wishListItemRepository;
