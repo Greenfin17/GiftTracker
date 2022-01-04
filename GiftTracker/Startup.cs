@@ -41,6 +41,7 @@ namespace GiftTracker
                                    ValidateLifetime = true,
                                    ValidateAudience = true,
                                    ValidateIssuer = true,
+                                   ClockSkew = System.TimeSpan.FromDays(1.0),
                                    ValidAudience = "gifttracker-7b705",
                                    ValidIssuer = "https://securetoken.google.com/gifttracker-7b705"
                                };
