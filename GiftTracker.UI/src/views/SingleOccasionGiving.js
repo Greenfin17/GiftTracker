@@ -94,7 +94,7 @@ const SingleEventPartnerGiving = ({
       itemName: '',
       itemDescription: '',
       merchantItemURL: '',
-      price: 0,
+      price: 0.0,
       purchased: false,
       wrapped: false,
       shipped: false,
