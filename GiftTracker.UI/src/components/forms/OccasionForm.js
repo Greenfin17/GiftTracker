@@ -14,7 +14,7 @@ const OccasionForm = ({
     occasionCreatorId: occasion.occasionCreatorId || '',
     occasionDate : occasion.occasionDate || '',
     occasionLocation : occasion.occasionLocation || '',
-    occasionBudget : occasion.occasionBudget || ''
+    occasionBudget : occasion.occasionBudget || '0.0'
   });
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const OccasionForm = ({
         occasionCreatorId: occasion.occasionCreatorId || '',
         occasionDate : occasion.occasionDate || '',
         occasionLocation : occasion.occasionLocation || '',
-        occasionBudget : occasion.occasionBudget || ''
+        occasionBudget : occasion.occasionBudget || '0.0'
       });
     }
     return () => {
