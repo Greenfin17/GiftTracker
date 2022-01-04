@@ -189,7 +189,7 @@ namespace GiftTracker.DataAccess
         internal decimal TotalSpentByOccasion(Guid occasionId)
         {
             var db = new SqlConnection(_connectionString);
-            var sql = @"SELECT SUM(Price) FROM GiveItems
+            var sql = @"SELECT ISNULL(SUM(Price),0.0) FROM GiveItems
                         WHERE Purchased = 1
                         AND OccasionId = @Id";
             var parameter = new

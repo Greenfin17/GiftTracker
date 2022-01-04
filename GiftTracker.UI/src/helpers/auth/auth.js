@@ -27,7 +27,7 @@ const signInUser = async (setUser) => {
             console.warn('User not found');
           }
       })
-      .catch((error) => {
+      .catch(() => {
         addUserWithGoogleObject(result.user).then(() => {
           getUserByFirebaseUId(result.user.uid).then((response) => {
             if (response !== '')

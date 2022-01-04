@@ -38,13 +38,13 @@ const OccasionSummaryCard = ({
   useEffect(() => {
     let mounted = true;
     const size = 120;
+    // d3.select(`card_${index}`).remove();
+    const width = 100;
+    const height = 120;
+    const svg = d3.select(graphRef.current)
+      .attr('width', width)
+      .attr('height', height);
     if (totalSpent){
-      // d3.select(`card_${index}`).remove();
-      const width = 100;
-      const height = 120;
-      const svg = d3.select(graphRef.current)
-        .attr('width', width)
-        .attr('height', height);
       d3.selectAll(`.card_${index}> g`).remove();
       d3.selectAll(`.card_${index}> rect`).remove();
       let dataValue = totalSpent / occasion.occasionBudget * height;
