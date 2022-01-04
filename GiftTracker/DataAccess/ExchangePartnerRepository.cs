@@ -38,7 +38,8 @@ namespace GiftTracker.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * FROM ExchangePartners
-                        WHERE CreatedById = @CreatedById";
+                        WHERE CreatedById = @CreatedById
+                        ORDER BY LastName, FirstName";
             var partnerList = db.Query<ExchangePartner>(sql, new { CreatedById = creatorId});
             return partnerList;
         }

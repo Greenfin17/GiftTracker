@@ -6,11 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftTracker.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
+
     public class UserController : ControllerBase
 
     {

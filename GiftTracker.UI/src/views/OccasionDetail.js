@@ -53,6 +53,7 @@ const OccasionDetailView = ({
     <div className='page-view occasion-detail-view'>
       { occasion.occasionName && <div className='page-title'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]}</div>}
       { user && <div className='occasion-div'>
+        <div className='section-heading'>Giving Status</div>
         <div className='list-div'>
           <ul className='occasion-detail-ul'>
             { xPartners ? xPartners.map((xPartner) => <li key={xPartner.id}

@@ -2,11 +2,12 @@
 using System;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
-
+using Microsoft.AspNetCore.Authorization;
 namespace GiftTracker.Controllers
 {
     [Route("api/users/giveItems")]
     [ApiController]
+    [Authorize]
     public class GiveItemController : ControllerBase
     {
         private GiveItemRepository _giveItemRepository;
@@ -108,6 +109,13 @@ namespace GiftTracker.Controllers
                 return Ok(result);
             }
             else return BadRequest($"Give item with Id {itemId} not found / not deleted");
+        }
+
+        [HttpGet("occasions/{occasionId}/totalSpent")]
+        public IActionResult TotalSpentByOccasion(Guid occasionId)
+        {
+            var result = _giveItemRepository.TotalSpentByOccasion(occasionId);
+            return Ok(result);
         }
     }
 }

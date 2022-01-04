@@ -62,7 +62,8 @@ namespace GiftTracker.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
             Guid id = new();
-            var sql = @"INSERT INTO Users (FireBaseUID, FirstName, LastName, EmailAddress, ProfilePicURL)
+            var sql = @"IF NOT EXISTS ( SELECT Id FROM Users WHERE FireBaseUID = @FireBaseUID)
+                        INSERT INTO Users (FireBaseUID, FirstName, LastName, EmailAddress, ProfilePicURL)
                         OUTPUT Inserted.Id
                         VALUES
                        (@FirebaseUID, @FirstName, @LastName, @EmailAddress, @ProfilePicURL)";

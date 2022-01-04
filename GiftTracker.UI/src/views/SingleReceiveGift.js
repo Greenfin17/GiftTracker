@@ -41,7 +41,7 @@ const SingleReceiveGift = ({
       mounted = false;
       return mounted;
     }
-  }, [user, itemId])
+  }, [user, itemId]);
   
   return (
     <div className='page-view single-receive-gift-view'>

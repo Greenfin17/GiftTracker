@@ -2,11 +2,13 @@
 using System;
 using GiftTracker.DataAccess;
 using GiftTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftTracker.Controllers
 {
     [ApiController]
     [Route("api/users/occasions")]
+    [Authorize]
     public class OccasionController : ControllerBase
     {
         private OccasionRepository _occasionRepository;

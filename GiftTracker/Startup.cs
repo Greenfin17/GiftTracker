@@ -35,14 +35,14 @@ namespace GiftTracker
                            .AddJwtBearer(options =>
                            {
                                options.IncludeErrorDetails = true;
-                               options.Authority = "https://securetoken.google.com/gifttracker";
+                               options.Authority = "https://securetoken.google.com/gifttracker-7b705";
                                options.TokenValidationParameters = new TokenValidationParameters
                                {
                                    ValidateLifetime = true,
                                    ValidateAudience = true,
                                    ValidateIssuer = true,
-                                   ValidAudience = "gifttracker",
-                                   ValidIssuer = "https://securetoken.google.com/gifttracker"
+                                   ValidAudience = "gifttracker-7b705",
+                                   ValidIssuer = "https://securetoken.google.com/gifttracker-7b705"
                                };
                            });
           
