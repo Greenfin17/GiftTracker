@@ -13,6 +13,7 @@ namespace GiftTracker.Controllers
     [ApiController]
     [Route("api/users")]
     [Authorize]
+
     public class UserController : ControllerBase
 
     {

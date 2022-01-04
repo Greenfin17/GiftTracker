@@ -5,7 +5,6 @@ import { getUserByFirebaseUId,  addUserWithGoogleObject }  from '../data/userDat
 
 axios.interceptors.request.use((request) => {
   const token = sessionStorage.getItem('token');
-
   if (token != null) {
     request.headers.Authorization = `Bearer ${token}`;
   }
@@ -18,15 +17,15 @@ const signInUser = async (setUser) => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   await signInWithPopup(auth, provider).then((result) => {
-    console.warn(result);
     if (result.user) {
-      result.user.getIdToken().then((token) => sessionStorage.setItem('token', token));
-      getUserByFirebaseUId(result.user.uid).then((response) => {
-        if (response !== '')
-        setUser(response);
-        else {
-          console.warn('User not found');
-        }
+      result.user.getIdToken().then((token) => sessionStorage.setItem('token', token))
+        .then(() => {
+          getUserByFirebaseUId(result.user.uid).then((response) => {
+          if (response !== '')
+          setUser(response);
+          else {
+            console.warn('User not found');
+          }
       })
       .catch((error) => {
         addUserWithGoogleObject(result.user).then(() => {
@@ -36,6 +35,7 @@ const signInUser = async (setUser) => {
           })
         });
       });
+    });
     }
   })
   .catch((error) =>
