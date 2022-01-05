@@ -30,7 +30,6 @@ const SingleSendGift = ({
   const [giveItem, setGiveItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const clickable = 'clickable';
 
   const handleEditClick = () =>{
     setShowModal(true);
