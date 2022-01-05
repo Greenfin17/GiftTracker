@@ -5,8 +5,9 @@ import {
   GTModal,
   GTModalContent
 } from '../components/ModalElements';
-import GiveItemForm from '../components/forms/GiveItemForm';
+import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import { getOccasionById } from '../helpers/data/occasionData';
+import getReceiveItemsByOccasionId from '../helpers/data/receivingData';
 import {
   getGiveItemsByOccasionAndRecipientId,
   deleteGiveItem
@@ -16,27 +17,25 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
 
 
-const SingleOccasionPartnerGiving = ({
+const SingleOccasionReceiving = ({
   user
 }) => {
   const { occasionId, partnerId } = useParams();
   const [occasion, setOccasion] = useState();
   const [partner, setPartner] = useState();
-  const [givingList, setGivingList] = useState(false);
+  const [receivingList, setReceivingList] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
     occasionId: '',
-    recipientId: '',
-    wishListItemId: '',
+    giverId: '',
+    giverFirstName: '',
+    giverLastName: '',
     itemName: '',
     itemDescription: '',
-    merchantItemURL: '',
-    price: '0.0',
-    purchased: false,
-    wrapped: false,
-    shipped: false,
-    reaction: ''
+    itemURL: '',
+    remarks: '',
+    thanked: false
   });
   const navigate = useNavigate();
 
@@ -56,11 +55,11 @@ const SingleOccasionPartnerGiving = ({
 
   useEffect(() => {
     let mounted = true;
-    if ( user && occasionId && partnerId) {
-      getGiveItemsByOccasionAndRecipientId(occasionId, partnerId) 
+    if ( user && occasionId ) {
+      getReceiveItemsByOccasionId(occasionId) 
         .then((resultList) => {
           if (mounted) {
-            setGivingList(resultList);
+            setReceivingList(resultList);
           }
         });
     }
@@ -68,50 +67,33 @@ const SingleOccasionPartnerGiving = ({
       mounted = false;
       return mounted;
     }
-  }, [user, occasionId, partnerId]);
+  }, [user, occasionId ]);
 
-  useEffect(() => {
-    let mounted = true;
-    if (user && partnerId ) {
-      getExchangePartnerByPartnerId(partnerId).then((result) => {
-        if (mounted) {
-          setPartner(result);
-        }
-      });
-    }
-    return () => {
-      mounted = false;
-    }
-  }, [user, partnerId]);
 
   const handleAddGiftClick = () => {
     setActiveObject({
-      occasionId: occasionId,
-      recipientId: partnerId,
-      recipientFirstName: partner.firstName,
-      recipientLastName: partner.lastName,
-      wishListItemId: '',
-      itemName: '',
-      itemDescription: '',
-      merchantItemURL: '',
-      price: 0.0,
-      purchased: false,
-      wrapped: false,
-      shipped: false,
-      reaction: ''
+    occasionId: occasionId,
+    giverId: '',
+    giverFirstName: '',
+    giverLastName: '',
+    itemName: '',
+    itemDescription: '',
+    itemURL: '',
+    remarks: '',
+    thanked: false
     });
     setShowModal(true);
   };
 
   const handleGiftClick = (item) => {
     if (item !== void 0) {
-      navigate(`/giving/sendGift/${item.id}`);
+      navigate('/receiving/receiveGift/${item.id');
     }
   };
 
   const handlePartnerClick = (item) => {
     if (item !== void 0) {
-      navigate(`/people/${item.recipientId}`);
+      navigate(`/people/${item.giverId}`);
     }
   };
 
@@ -123,7 +105,7 @@ const SingleOccasionPartnerGiving = ({
   const handleDeleteClick = (item) => {
     deleteGiveItem(item.id).then((wasDeleted) => {
       if (wasDeleted) {
-        getGiveItemsByOccasionAndRecipientId(occasionId, partnerId).then((givingArr) => setGivingList(givingArr));
+        getReceiveItemsByOccasionId(occasionId).then((giftArr) => setReceivingList(giftArr));
         }
     });
   };
@@ -133,26 +115,26 @@ const SingleOccasionPartnerGiving = ({
   };
 
   return (
-    <div className='giving-view'>
+    <div className='receiving-view'>
       <div className='page-title'>
-         Giving
+         Receiving 
       </div>
       { user && occasion && <div className='giving-div'>
-        <div className='giving-list-outer-div'>
+        <div className='receiving-list-outer-div'>
           <div className='giving-title'>{occasion?.occasionName} {occasion?.occasionDate.split('T')[0]} </div> 
-          { givingList && givingList.length > 0 ? <>
-          <table className='giving-list'>
+          { receivingList && receivingList.length > 0 ? <>
+          <table className='receiving-list'>
             <thead>
             <tr className='table-header'>
-              <th className='giving-list-gift-header'>Gift</th>
-              <th className='giving-list-recipient-header'>Recipient</th>
+              <th className='receiving-list-gift-header'>Gift</th>
+              <th className='receiving-list-sender-header'>Sender</th>
             </tr>
             </thead>
             <tbody>
-            { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
-              <td className='giving-list-recipient' onClick={() => handlePartnerClick(item)}>
-                {item.recipientFirstName} {item.recipientLastName}</td>
+            { receivingList.map((item) => <tr key={item.id}>
+              <td className='receiving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
+              <td className='receiving-list-recipient' onClick={() => handlePartnerClick(item)}>
+                {item.giverFirstName} {item.giverLastName}</td>
                 <td>
                 <FontAwesomeIcon className='edit-icon' icon={faEdit} 
                   onClick={() => handleEditClick(item)}/>
@@ -161,17 +143,15 @@ const SingleOccasionPartnerGiving = ({
                 </td>
             </tr>)}
             </tbody>
-          </table> </> :  <> { givingList && <div className='giving-empty-message'>No Gifts!</div> } </> }
+          </table> </> :  <> { receivingList && <div className='receiving-empty-message'>No Gifts!</div> } </> }
           { occasionId && 
           <div className='button-div'>
             <button className='add-give-item-btn' onClick ={handleAddGiftClick}>Add Gift</button>
           </div> }
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
-              <GiveItemForm user={user} item={activeObject} occasionId={occasionId}
-                partnerId={partnerId} showModal={showModal}
-                setGivingList={setGivingList} getGiftsMethod={getGiveItemsByOccasionAndRecipientId}
-                getGiftsMethodArguments={[occasionId, partnerId]} closeModal={closeModal} />
+              <ReceiveItemForm user={user} item={item} occasionId={occasionId}
+              setReceivingList={setReceivingList} closeModal={closeModal} /> /> /> />
             </GTModalContent>
           </GTModal>
         </div>
@@ -180,8 +160,8 @@ const SingleOccasionPartnerGiving = ({
   );
 };
 
-SingleOccasionPartnerGiving.propTypes = {
+SingleOccasionReceiving.propTypes = {
   user: PropTypes.any
 };
 
-export default SingleOccasionPartnerGiving; 
+export default SingleOccasionReceiving; 

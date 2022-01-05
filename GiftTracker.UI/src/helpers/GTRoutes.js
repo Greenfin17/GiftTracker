@@ -15,7 +15,7 @@ import ReceivingByRoute from '../views/ReceivingByRoute';
 import Lists from '../views/Lists';
 import PartnerLists from '../views/PartnerLists';
 import OccasionDetailView from '../views/OccasionDetail';
-import SingleEventPartnerGiving from '../views/SingleOccasionGiving';
+import SingleOccasionPartnerGiving from '../views/SingleOccasionGiving';
 import SingleSendGift from '../views/SingleSendGift';
 import SingleReceiveGift from '../views/SingleReceiveGift';
 import SinglePartner from '../views/SinglePartner';
@@ -53,7 +53,7 @@ const GTRoutes = ({
       <Route path='/lists/:partnerId' element={<PartnerLists user={user} />} />
       <Route path='/lists/:partnerId/:defaultOccasionId' element={<PartnerLists user={user} />} />
       <Route path='/occasions/:occasionId' element={<OccasionDetailView user={user} />} />
-      <Route path='/occasions/:occasionId/people/:partnerId' element={<SingleEventPartnerGiving user={user} />} />
+      <Route path='/occasions/:occasionId/people/:partnerId' element={<SingleOccasionPartnerGiving user={user} />} />
       <Route path='/giving/sendGift/:itemId' element={<SingleSendGift user={user} />} />
       <Route path='/people/:partnerId' element={<SinglePartner user={user} />} />
     </Routes>
