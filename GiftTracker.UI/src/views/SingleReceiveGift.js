@@ -55,7 +55,7 @@ const SingleReceiveGift = ({
           <div className='single-receive-gift-reaction'>Remarks: {receiveItem.remarks}</div> 
           <div className='icon-div'>
             <div className='status-icon-div'>
-              <img className='svg-icon' src={receiveItem.thanked? thankedGreen : thankedRed} alt='Purchased' />
+              <img className='svg-icon' src={receiveItem.thanked? thankedGreen : thankedRed} alt='Thanked status' />
             </div>
             <div className='edit-icon-div'>
               <FontAwesomeIcon className='edit-icon' icon={faEdit} 

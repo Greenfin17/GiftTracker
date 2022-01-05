@@ -16,7 +16,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
 
 
-const SingleEventPartnerGiving = ({
+const SingleOccasionPartnerGiving = ({
   user
 }) => {
   const { occasionId, partnerId } = useParams();
@@ -180,8 +180,8 @@ const SingleEventPartnerGiving = ({
   );
 };
 
-SingleEventPartnerGiving.propTypes = {
+SingleOccasionPartnerGiving.propTypes = {
   user: PropTypes.any
 };
 
-export default SingleEventPartnerGiving; 
+export default SingleOccasionPartnerGiving; 

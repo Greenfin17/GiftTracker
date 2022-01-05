@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { getOccasionById } from '../helpers/data/occasionData';
 import { getExchangePartnersByUserId } from '../helpers/data/exchangePartnerData';
 import GiftStatusIcons from '../components/symbols/GiftStatus';
+import { getReceiveItemsByOccasionId } from '../helpers/data/receivingData';
+import thankedRed from '../resources/icons/noun-thank-3378092-red.min.svg';
+import thankedGreen from '../resources/icons/noun-thank-3378092-green.min.svg';
 const OccasionDetailView = ({
   user
 }) => {
@@ -12,6 +15,7 @@ const OccasionDetailView = ({
   const navigate = useNavigate('/');
   const [occasion, setOccasion] = useState({});
   const [xPartners, setXPartners] = useState([]);
+  const [receivedGifts, setReceivedGifts] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -27,8 +31,6 @@ const OccasionDetailView = ({
     }
   }, [occasionId]);
 
-
-
   useEffect(() => {
     let mounted = true;
     if (user){
@@ -43,10 +45,28 @@ const OccasionDetailView = ({
     }
   }, [user]);
 
+  useEffect(() => {
+    let mounted = true;
+    if (user && occasionId) {
+      getReceiveItemsByOccasionId(occasionId).then((giftList) => {
+        if (mounted) {
+          setReceivedGifts(giftList);
+        }
+      })
+    }
+    return () => {
+      mounted = false;
+    }
+  }, [user, occasionId])
+
   
   const handleClick = (partner)=> {
     navigate(`/occasions/${occasionId}/people/${partner.id}`);
   };
+
+  const handleReceivedGiftClick = (gift) => {
+    navigate(`/occasions/${occasionId}/giftGiver/${gift.giverId}`);
+  }
  
 
   return (
@@ -61,6 +81,18 @@ const OccasionDetailView = ({
               <GiftStatusIcons user={user} occasion={occasion} recipient={xPartner} />
               <div className='partner-name'>{xPartner.firstName} {xPartner.lastName}</div>
               </li>) : '' }</ul>
+        </div>
+        <div className='section-heading'>Receiving Status</div>
+        <div className='list-div'>
+          <ul className='occasion-detail-ul'>
+            { receivedGifts ? receivedGifts.map((receivedGift) => <li key={receivedGift.id}
+              className='gift-status' onClick={() => handleReceivedGiftClick(receivedGift)}>
+                <div className='gift-icon-outer-div gift-status'>
+                  <img className='svg-icon' src={receivedGift.thanked? thankedGreen : thankedRed} alt='Purchased' />
+                </div>
+                <div className='gift-status'>{receivedGift.giverFirstName} {receivedGift.giverLastName}</div>
+              </li>) : '' }
+          </ul>
         </div>
       </div> }
     </div>
