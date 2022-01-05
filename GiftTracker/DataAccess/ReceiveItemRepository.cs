@@ -80,7 +80,7 @@ namespace GiftTracker.DataAccess
             return result;
         }
 
-        internal IEnumerable<ReceiveItem> GetReceiveItemsByOccasionAndReceipientId( Guid recipId, Guid occasionId)
+        internal IEnumerable<ReceiveItem> GetReceiveItemsByOccasionAndReceipientId(Guid recipId, Guid occasionId)
         {
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT RI.Id, OccasionId, GiverId, ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
@@ -97,6 +97,23 @@ namespace GiftTracker.DataAccess
             var result = db.Query<ReceiveItem>(sql, parameters);
             return result;
         }
+
+        internal IEnumerable<ReceiveItemWithDetail> GetReceiveItemsWithDetailByOccasionIdAndGiverId(Guid occasionId, Guid giverId)
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sql = @"SELECT RI.Id, OccasionId, GiverId, EP.FirstName as GiverFirstName, EP.LastName as GiverLastName,
+                        ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
+                        JOIN ExchangePartners EP on GiverId = EP.Id
+                        WHERE OccasionId = @OccasionId AND GiverId = @GiverId";
+            var parameters = new
+            {
+                OccasionId = occasionId,
+                GiverId = giverId
+            };
+            var result = db.Query<ReceiveItemWithDetail>(sql, parameters);
+            return result;
+        }
+    
         internal IEnumerable<ReceiveItem> GetReceiveItemsBySenderAndReceipientId( Guid recipId, Guid giverId)
         {
             using var db = new SqlConnection(_connectionString);

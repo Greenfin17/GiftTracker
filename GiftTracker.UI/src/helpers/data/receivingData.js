@@ -16,6 +16,12 @@ const getReceiveItemsByOccasionId = (occasionId) => new Promise((resolve, reject
     .catch((error) => reject(error));
 });
 
+const getReceiveItemsByOccasionIdAndGiverId = (occasionId, giverId) => new Promise((resolve, reject) => {
+  axios.get(`${apiURL}/api/users/receiveItemsWithDetail/occasions/${occasionId}/giver/${giverId}`)
+    .then((response) => resolve(response.data))
+    .catch((error) => reject(error));
+})
+
 const addReceiveItem = (itemObj) => new Promise((resolve, reject) => {
   axios.post(`${apiURL}/api/users/receiveItems`, itemObj)
     .then((response) => resolve(response.data))
@@ -37,6 +43,7 @@ const deleteReceiveItem = (itemId) => new Promise((resolve, reject) => {
 export {
   getReceiveItemById,
   getReceiveItemsByOccasionId,
+  getReceiveItemsByOccasionIdAndGiverId,
   addReceiveItem,
   updateReceiveItem,
   deleteReceiveItem

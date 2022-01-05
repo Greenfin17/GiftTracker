@@ -75,6 +75,15 @@ namespace GiftTracker.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/api/users/receiveItemsWithDetail/occasions/{occasionId}/giver/{giverId}")]
+
+        public IActionResult GetReceiveItemsWithDetailByOccasionIdAndGiverId(Guid occasionId, Guid giverId)
+        {
+            var result = _receiveItemRepository.GetReceiveItemsWithDetailByOccasionIdAndGiverId(occasionId, giverId);
+            return Ok(result);
+        }
+
+
         [HttpGet("/api/users/{recipientId}/receiveItems/occasion/{occasionId}")]
         public IActionResult GetReceiveItemsByOccasionAndRecipientId(Guid recipientId, Guid occasionId)
         {
