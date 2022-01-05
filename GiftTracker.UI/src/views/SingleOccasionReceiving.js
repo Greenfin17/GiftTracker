@@ -10,18 +10,22 @@ import ReceiveItemForm from '../components/forms/ReceiveItemForm';
 import { getReceiveItemsByOccasionIdAndGiverId, deleteReceiveItem } from '../helpers/data/receivingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { getExchangePartnerByPartnerId } from '../helpers/data/exchangePartnerData';
 
 const SingleOccasionReceiving = ({
   user
 }) => {
   const { occasionId, partnerId } = useParams();
   const [occasion, setOccasion] = useState();
+  const [partner, setPartner] = useState();
   const [receivingList, setReceivingList] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState({
     id: '',
     occasionId: '',
     giverId: '',
+    giverFirstName: '',
+    giverLastName: '',
     itemName: '',
     itemDescription: '',
     itemURL: '',
@@ -51,9 +55,34 @@ const SingleOccasionReceiving = ({
       return mounted;
     }
   }, [user, occasionId, partnerId]);
+  
+  useEffect(() => {
+    let mounted = true;
+    if (user && partnerId ) {
+      getExchangePartnerByPartnerId(partnerId).then((result) => {
+        if (mounted) {
+          setPartner(result);
+        }
+      });
+    }
+    return () => {
+      mounted = false;
+    }
+  }, [user, partnerId]);
+
 
   const handleAddGiftClick = () => {
-    setActiveObject({});
+    setActiveObject({
+    id: '',
+    occasionId: occasionId,
+    giverId: partnerId,
+    giverFirstName: partner.firstName,
+    giverLastName: partner.lastName,
+    itemName: '',
+    itemDescription: '',
+    itemURL: '',
+    remarks: '',
+    });
     setShowModal(true);
   };
 
@@ -126,6 +155,7 @@ const SingleOccasionReceiving = ({
               <ReceiveItemForm user={user} item={activeObject}
                 getReceiveItemsMethod={getReceiveItemsByOccasionIdAndGiverId}
                 getReceiveItemsMethodArguments={[occasionId, partnerId]}
+                partnerId={partnerId}
                 setReceivingList={setReceivingList}
                 occasionId={occasionId} closeModal={closeModal} />
             </GTModalContent>
