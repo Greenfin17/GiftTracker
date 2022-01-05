@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getGiveItemById } from '../helpers/data/givingData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,10 +29,17 @@ const SingleSendGift = ({
   const { itemId } = useParams();
   const [giveItem, setGiveItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleEditClick = () =>{
     setShowModal(true);
   };
+
+  const handleListLinkClick = (giveItem) => { 
+    if (giveItem.wishListItemId !== emptyGuid) {
+      navigate(`/lists/${giveItem.recipientId}/${giveItem.occasionId}`);
+    }
+  }
 
   const closeModal = () =>{
     setShowModal(false);
@@ -61,10 +68,11 @@ const SingleSendGift = ({
           <div className='single-give-gift-name'><h2>{giveItem.itemName}</h2></div> 
           <div className='single-give-gift-description'>{giveItem.itemDescription}</div> 
           <div className='single-give-gift-recipient-div'>To: {giveItem.recipientFirstName} {giveItem.recipientLastName}</div> 
-          <div className='single-give-gift-type'>{ giveItem.wishListItemId === emptyGuid ? 'Surprise Gift' 
+          <div className={`single-give-gift-type ${giveItem.wishListItemId !== emptyGuid ? 'clickable' : '' }`}
+            onClick={() => handleListLinkClick(giveItem)}>{ giveItem.wishListItemId === emptyGuid ? 'Surprise Gift' 
             : 'Wish List Item' } </div> 
           <div className='single-give-gift-price-div'>Price: {currencyFormatter.format(giveItem.price)}</div> 
-          <div className='single-give-gift-URL'>Link: <a href={giveItem.merchantItemURL}>{giveItem.merchantItemURL}</a></div> 
+          <div className='single-give-gift-URL'  >Link: <a href={giveItem.merchantItemURL}>{giveItem.merchantItemURL}</a></div> 
           <div className='single-give-gift-reaction'>Reaction: {giveItem.reaction}</div> 
           <div className='icon-div'>
             <div className='status-icon-div'>

@@ -51,8 +51,7 @@ const SingleReceiveGift = ({
           <div className='single-receive-gift-name'><h2>{receiveItem.itemName}</h2></div> 
           <div className='single-receive-gift-description'>{receiveItem.itemDescription}</div> 
           <div className='single-receive-gift-giver-div'>From: {receiveItem.giverFirstName} {receiveItem.giverLastName}</div> 
-          { receiveItem.itemURL ? <div className='single-receive-gift-URL'>Link: <a href={receiveItem.itemURL}>{receiveItem.itemURL}</a></div>
-            : <div className='single-receive-gift-URL'>No link</div> } 
+          <div className='single-receive-gift-url'>{ receiveItem.itemURL ?  <a href={receiveItem.itemURL}>{receiveItem.itemURL}</a> : 'No link'}</div>
           <div className='single-receive-gift-reaction'>Remarks: {receiveItem.remarks}</div> 
           <div className='icon-div'>
             <div className='status-icon-div'>

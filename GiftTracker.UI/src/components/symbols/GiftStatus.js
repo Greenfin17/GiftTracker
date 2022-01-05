@@ -21,14 +21,18 @@ const GiftStatusIcons = ({
 
   useEffect(() => {
     let mounted = true;
-    getGiveItemsByOccasionAndRecipientId(occasion.id, recipient.id)
-      .then((gifts) => {
-        gifts.forEach((gift) => {
-          if (gift.purchased) setHasPurchased(true);
-          if (gift.wrapped) setHasWrapped(true);
-          if (gift.shipped) setHasShipped(true);
+    if (occasion.id && recipient.id){
+      getGiveItemsByOccasionAndRecipientId(occasion.id, recipient.id)
+        .then((gifts) => {
+          gifts.forEach((gift) => {
+            if (mounted){
+              if (gift.purchased) setHasPurchased(true);
+              if (gift.wrapped) setHasWrapped(true);
+              if (gift.shipped) setHasShipped(true);
+            }
+          });
         });
-      });
+    }
     return () => {
       mounted = false;
       return mounted;
