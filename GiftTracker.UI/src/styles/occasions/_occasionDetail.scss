@@ -12,6 +12,7 @@
     padding: 5px;
     display: flex;
     flex-flow: row wrap;
+    list-style-type: none;
   }
   
   li {
@@ -20,12 +21,13 @@
   }
 
   .gift-icon-outer-div {
-    flex-basis: 50%;
+    flex-basis: 48%;
   }
 
   .partner-name {
-    flex-basis: 50%;
+    flex-basis: 48%;
     font-size: 1.1rem;
+    margin: 0 5px;
   }
   
   .svg-icon {
@@ -35,5 +37,11 @@
 
   li.gift-status {
     cursor: pointer;
+  }
+
+  .occasion-detail-no-data {
+    text-align: center;
+    padding-inline-start: 0;
+    width: 100%;
   }
 }

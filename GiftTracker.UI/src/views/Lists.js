@@ -75,7 +75,8 @@ const Lists = ({
           <ul className='ul-list'>
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' onClick={() => handlePartnerClick(partner)}>
-                <Avatar partner={partner} />
+                <Avatar imageURL={partner.imageURL} firstName={partner.firstName}
+                  width={50} height={50} />
                 <div className='partner-name'>{partner.firstName} {partner.lastName}</div>
               </li>) : <div>No exchange partners</div> }
           </ul>

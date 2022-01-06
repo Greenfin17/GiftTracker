@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Avatar from '../components/symbols/Avatar';
 import ProfileForm from '../components/forms/ProfileForm';
 import {
  GTModal,
@@ -27,8 +28,8 @@ const Profile = ({
           <div className='profile-title'>Profile for {user.firstName} {user.LastName}</div>
           <div className='profile-inner-div'>
             <div className='profile-pic-div'>
-              <img className='profile-pic' src={user.profilePicUrl}
-                    alt='Profile' />
+              <Avatar imageURL={user.profilePicUrl} firstName={user.firstName}
+                      width={120} height={120} />
             </div>
             <div className='profile-info-div'>
               <div className='profile-info-line'>
