@@ -44,6 +44,13 @@
     cursor: pointer;
   }
 
+  .has-thanked_true {
+    color: green;
+  }
+
+  .has-thanked_false {
+    color: red;
+  }
   .receiving-list-from {
     cursor: pointer;
   }

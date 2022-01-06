@@ -174,7 +174,7 @@ const ReceiveItemForm = ({
       <div className='button-div'>
         <button className='close-button' onClick={handleCloseModal}>Close</button>
         <button className='submit-button' onClick={handleSubmit}
-                disabled={itemProfile.giverId === emptyGuid}>Submit</button>
+                disabled={itemProfile.giverId === emptyGuid || !itemProfile.itemName.length}>Submit</button>
       </div>
     </div>
   );

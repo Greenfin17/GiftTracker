@@ -16,6 +16,7 @@ const OccasionForm = ({
     occasionLocation : occasion.occasionLocation || '',
     occasionBudget : occasion.occasionBudget || '0.0'
   });
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   useEffect(() => {
     let mounted = true;
@@ -33,6 +34,35 @@ const OccasionForm = ({
       return mounted;
     };
   }, [user, occasion])
+
+  // disable the submit button if there is no valid occasion date
+  // and no budget value > 0,  to avoid a sql error
+  useEffect(() => {
+    let mounted = true;
+    let validDate = false;
+    let validBudget = false;
+    let validTitle = false;
+    const dateStandard = new Date('1901-01-01');
+    if (occasionProfile?.occasionDate.substring(0,10).length === 10) {
+      if (Date.parse(occasionProfile.occasionDate) > dateStandard.getTime()) {
+        validDate = true;
+      }
+    }
+    if (parseInt(occasionProfile.occasionBudget) >= 0 ){
+      validBudget = true;
+    }
+    if (occasionProfile.occasionName.length > 0) {
+      validTitle = true;
+    }
+    if (mounted) {
+      setDisableSubmit(!(validDate && validBudget && validTitle));
+    }
+    return () => {
+      mounted = false;
+      return mounted;
+    }
+  }, [occasionProfile.occasionDate, occasionProfile.occasionBudget,
+      occasionProfile.occasionName])
 
   const handleChange = (e) => {
     setOccasionProfile((prevState) => ({
@@ -85,8 +115,9 @@ const OccasionForm = ({
                   label='budget' onChange={handleChange} />
       </div>
       <div className='button-div'>
-        <button className='close-button' onClick={closeModal}>Close</button>
-        <button className='submit-button' onClick={handleSubmit}>Submit</button>
+        <button className='close-button'  onClick={closeModal}>Close</button>
+        <button className='submit-button' onClick={handleSubmit}
+                disabled={disableSubmit}>Submit</button>
       </div>
     </div>
   );

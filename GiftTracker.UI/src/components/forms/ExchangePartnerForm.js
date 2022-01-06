@@ -33,7 +33,7 @@ const ExchangePartnerForm2 = ({
     firstName: partner.firstName || '',
     emailAddress: partner.emailAddress || '',
     imageURL: partner.imageURL || '',
-    birthday: partner.birthday || '1901-01-01',
+    birthday: partner.birthday || '',
     colors: partner.colors || '',
     sizes: partner.sizes || ''
   });
@@ -48,7 +48,7 @@ const ExchangePartnerForm2 = ({
     description: ''
   });
   const [interestIndex, setInterestIndex] = useState(-1);
-
+  const [disableSubmit, setDisableSubmit] = useState(true);
   const closeInterestModal = () => {
     setShowInterestModal(!showInterestModal);
   };
@@ -63,7 +63,7 @@ const ExchangePartnerForm2 = ({
         firstName: partner.firstName || '',
         emailAddress: partner.emailAddress || '',
         imageURL : partner.imageURL || '',
-        birthday: partner.birthday || '1901-01-01',
+        birthday: partner.birthday || '',
         colors: partner.colors || '',
         sizes: partner.sizes || '',
       });
@@ -104,6 +104,20 @@ const ExchangePartnerForm2 = ({
       return mounted;
     }
   }, [partner.id, showModal]);
+
+  // disable the submit button if there is no valid birthday
+  // to avoid a sql error
+  useEffect(() => {
+    let mounted = true;
+    const dateStandard = new Date('1901-01-01');
+    if (partnerProfile?.birthday.length === 10 && mounted) {
+      setDisableSubmit(Date.parse(partnerProfile.birthday) < dateStandard.getTime());
+    }
+    return () => {
+      mounted=false;
+      return mounted;
+    }
+  }, [partnerProfile.birthday])
 
   const handleChange = (e) => {
     setPartnerProfile((prevState) => ({
@@ -162,7 +176,7 @@ const ExchangePartnerForm2 = ({
         firstName: partnerProfile.firstName || '',
         emailAddress: partnerProfile.emailAddress || '',
         imageURL: partnerProfile.imageURL || '',
-        birthday: partnerProfile.birthday || '1901-01-01',
+        birthday: partnerProfile.birthday || '',
         colors: partnerProfile.colors || '',
         sizes: partnerProfile.sizes || '',
       };
@@ -213,7 +227,7 @@ const ExchangePartnerForm2 = ({
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Edit Exchange Partner Profile
+      <div className='form-heading'>Exchange Partner Profile
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
       <div className='form-group'>
@@ -256,7 +270,8 @@ const ExchangePartnerForm2 = ({
       <div className='button-div'>
         <button className='add-interest-btn' onClick = {handleAddInterestClick}>Add Interest/Note</button>
         <button className='close-button' onClick={handleCloseForm}>Close</button>
-        <button className='submit-button' onClick={handleSubmit}>Submit</button>
+        <button className='submit-button' disabled={disableSubmit}
+                onClick={handleSubmit}>Submit</button>
       </div>
       <SecondaryGTModal className='gt-modal' isOpen={showInterestModal}>
         <GTModalContent className='modal-content'>
