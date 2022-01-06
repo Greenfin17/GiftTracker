@@ -296,12 +296,12 @@ const GiveItemForm = ({
         </div>
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='wrapped' value={itemProfile.wrapped}
-                  checked={itemProfile.wrapped} label='wrapped' onChange={handleChange} />
+                  checked={itemProfile.wrapped} disabled={!itemProfile.purchased} label='wrapped' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='wrapped'>Wrapped</label>
         </div>
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='shipped' value={itemProfile.shipped}
-                    checked={itemProfile.shipped} label='shipped' onChange={handleChange} />
+                    checked={itemProfile.shipped} disabled={!itemProfile.purchased} label='shipped' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='shipped'>Shipped</label>
         </div>
         <label className='input-label' htmlFor='reaction'>Reaction</label>
