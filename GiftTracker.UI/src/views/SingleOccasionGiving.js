@@ -150,7 +150,7 @@ const SingleOccasionPartnerGiving = ({
             </thead>
             <tbody>
             { givingList.map((item) => <tr key={item.id}>
-              <td className='giving-list-title'onClick={() => handleGiftClick(item)}>{item.itemName} </td>
+              <td className={`giving-list-title has-purchased_${item.purchased}`}onClick={() => handleGiftClick(item)}>{item.itemName} </td>
               <td className='giving-list-recipient' onClick={() => handlePartnerClick(item)}>
                 {item.recipientFirstName} {item.recipientLastName}</td>
                 <td>

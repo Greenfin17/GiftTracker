@@ -41,6 +41,7 @@ const OccasionForm = ({
     let mounted = true;
     let validDate = false;
     let validBudget = false;
+    let validTitle = false;
     const dateStandard = new Date('1901-01-01');
     if (occasionProfile?.occasionDate.substring(0,10).length === 10) {
       if (Date.parse(occasionProfile.occasionDate) > dateStandard.getTime()) {
@@ -50,14 +51,18 @@ const OccasionForm = ({
     if (parseInt(occasionProfile.occasionBudget) >= 0 ){
       validBudget = true;
     }
+    if (occasionProfile.occasionName.length > 0) {
+      validTitle = true;
+    }
     if (mounted) {
-      setDisableSubmit(!(validDate && validBudget));
+      setDisableSubmit(!(validDate && validBudget && validTitle));
     }
     return () => {
       mounted = false;
       return mounted;
     }
-  }, [occasionProfile.occasionDate, occasionProfile.occasionBudget])
+  }, [occasionProfile.occasionDate, occasionProfile.occasionBudget,
+      occasionProfile.occasionName])
 
   const handleChange = (e) => {
     setOccasionProfile((prevState) => ({

@@ -46,4 +46,12 @@
   .giving-list-recipient {
     cursor: pointer;
   }
+  
+  .has-purchased_true {
+    color: green;
+  }
+
+  .has-purchased_false {
+    color: red;
+  }
 }
