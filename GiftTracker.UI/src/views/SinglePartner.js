@@ -69,7 +69,10 @@ const SinglePartner = ({
           <div className='single-partner-data-div'>
               <div className='single-partner-heading-div'>
                 <div className='single-partner-name'><h2>{partner.firstName} {partner.lastName}</h2></div> 
-                <div className='single-partner-image'><Avatar partner={partner}/></div> 
+                <div className='single-partner-image'>
+                  <Avatar imageURL={partner.imageURL} firstName={partner.firstName}
+                          width={80} height={80}/>
+                  </div> 
               </div>
               <div className='single-partner-data-group'>
                 <div className='single-partner-label'>Email:</div> 

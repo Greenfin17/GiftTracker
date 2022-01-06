@@ -86,7 +86,8 @@ const People = ({
             { exchangePartners ? exchangePartners?.map((partner) => <li key={partner.id}
                 className='partner-list-line' >
                 <div className='partner-list-avatar' onClick={() => handlePartnerClick(partner)} >
-                  <Avatar partner={partner} />
+                  <Avatar imageURL={partner.imageURL} firstName={partner.firstName}
+                          width={50} height={50} />
                 </div>
                 <div className='partner-list-name' onClick={() => handlePartnerClick(partner)}>{partner.firstName} {partner.lastName}</div>
                 <div className='icon-div'>

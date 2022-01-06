@@ -65,7 +65,8 @@ const OccasionDetailView = ({
   };
 
   const handleReceivedGiftClick = (gift) => {
-    navigate(`/occasions/${occasionId}/giftGiver/${gift.giverId}`);
+    // navigate(`/occasions/${occasionId}/giftGiver/${gift.giverId}`);
+    navigate(`/receiving/receiveGift/${gift.id}`);
   }
  
 
@@ -76,22 +77,22 @@ const OccasionDetailView = ({
         <div className='section-heading'>Giving Status</div>
         <div className='list-div'>
           <ul className='occasion-detail-ul'>
-            { xPartners ? xPartners.map((xPartner) => <li key={xPartner.id}
+            { xPartners && xPartners.length > 0 ? xPartners.map((xPartner) => <li key={xPartner.id}
               className='gift-status' onClick={() => handleClick(xPartner)}>
               <GiftStatusIcons user={user} occasion={occasion} recipient={xPartner} />
               <div className='partner-name'>{xPartner.firstName} {xPartner.lastName}</div>
-              </li>) : '' }</ul>
+              </li>) : <div className = 'occasion-detail-no-data'>No gift exchange partners</div> }</ul>
         </div>
         <div className='section-heading'>Receiving Status</div>
         <div className='list-div'>
           <ul className='occasion-detail-ul'>
-            { receivedGifts ? receivedGifts.map((receivedGift) => <li key={receivedGift.id}
+            { receivedGifts && receivedGifts.length > 0 ? receivedGifts.map((receivedGift) => <li key={receivedGift.id}
               className='gift-status' onClick={() => handleReceivedGiftClick(receivedGift)}>
                 <div className='gift-icon-outer-div gift-status'>
                   <img className='svg-icon' src={receivedGift.thanked? thankedGreen : thankedRed} alt='Purchased' />
                 </div>
-                <div className='gift-status'>{receivedGift.giverFirstName} {receivedGift.giverLastName}</div>
-              </li>) : '' }
+                <div className='partner-name'>{receivedGift.giverFirstName} {receivedGift.giverLastName}</div>
+              </li>) : <div className = 'occasion-detail-no-data'>No gifts received</div> }
           </ul>
         </div>
       </div> }

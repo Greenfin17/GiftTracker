@@ -54,10 +54,11 @@ const OccasionSummaryCard = ({
       const dataSet = [  totalSpent / occasion.occasionBudget * height];
 
       const margin = { left: 35, top: 5, right: 5, bottom: 5};
+      // make y scale with 5 ticks
       const yScale = d3.scaleLinear()
-        .domain([0, occasion.occasionBudget])
+        .domain([0, occasion.occasionBudget]).nice()
         .range([height - margin.bottom, margin.top]);
-      svg.append('g').call(d3.axisLeft(yScale))
+      svg.append('g').call(d3.axisLeft(yScale).ticks(5))
         .attr('transform', `translate(${margin.left},0)`);
       
       let rect_width = 30;

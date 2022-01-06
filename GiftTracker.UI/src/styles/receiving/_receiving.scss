@@ -1,19 +1,19 @@
 @import './singleReceiveGift';
 
 .receiving-view {
-    .receiving-div {
-    background-color: white;
-    width: 60%;
-    margin: 10px auto 5px;
-    border-radius: 5px;
-    }
-  
-    .receiving-title {
-      text-align: center;
-      padding: 5px 0 5px;
-      font-size: 1.2rem;
-    }
-  
+  .receiving-div {
+  background-color: white;
+  width: 60%;
+  margin: 10px auto 5px;
+  border-radius: 5px;
+  }
+
+  .receiving-title {
+    text-align: center;
+    padding: 5px 0 5px;
+    font-size: 1.2rem;
+  }
+
   .button-div {
     margin: 1em 5px 5px 5px;
   }
@@ -26,6 +26,10 @@
   table.receiving-list {
     width: 100%;
     margin: .2rem .2rem 0 .4rem;
+  }
+
+  .receiving-empty-message {
+    margin: 5px 5px 5px .8rem;
   }
   
   .receiving-list-gift-header {

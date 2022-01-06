@@ -13,7 +13,8 @@
   }
 
   .profile-inner-div {
-    margin: 2em auto;
+    margin: 2rem 5px;
+    width: 95%;
     display: flex;
     flex-flow: wrap;
     background-color: white;
@@ -35,26 +36,25 @@
     flex-basis: 78%;
     margin: 10px 0 0 5px;
   }
-
   .profile-info-line {
     display: flex;
-    margin: 3px 0;
+    flex-flow: row wrap;
+    margin: 5px;
   }
 
   .profile-label {
     flex-basis: 20%;
-    min-width: 8em;
   }
 
   .profile-data {
     flex-basis: 80;
+    margin: 0 0 0 5px;
   }
 
   .profile-photo-url-data {
     max-width: 20em;
-    margin: 3px 0 3px 5px;
-    overflow-x: scroll;
-    white-space: nowrap;
+    margin: 0 0 3px 5px;
+    word-break: break-all;
   }
   
   .button-div {
@@ -66,5 +66,18 @@
     background-color: white;
     margin: 5px 5px 5px 0;
     width: 5em;
+  }
+  @media screen and (max-width: 716px) {
+    .profile-info-div {
+      flex-basis: 95%;
+      margin: 10px 0 0 5px;
+    }
+    
+    .profile-info-line {
+      display: flex;
+      flex-flow: row wrap;
+      margin: 5px;
+    }
+
   }
 }

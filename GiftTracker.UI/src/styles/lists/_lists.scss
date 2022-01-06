@@ -28,14 +28,23 @@
   .lists-list-recipient-header {
     margin: 5px;
   }
+
+  .list-div {
+    padding: 5px 0 10px 0;
+  }
   .ul-list {
     padding-inline-start: 0px;
   }
   
   .partner-list-line {
+    margin: 5px 0 5px 10px;
     display: flex;
     flex-flow: wrap;
     cursor: pointer;
+  }
+
+  .partner-name {
+    margin: 10px 0 0 10px;
   }
   .list-data-div {
     padding-left: 1rem;

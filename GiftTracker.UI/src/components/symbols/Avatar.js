@@ -1,41 +1,44 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const drawAvatar = (canvas, context, partner, backgroundColor) => {
-  canvas.width = 50;
-  canvas.height = 50;
+const drawAvatar = (canvas, context, firstName, backgroundColor, width, height) => {
+  const fontSize = width * .02;
+  canvas.width = width;
+  canvas.height = height;
   context.beginPath();
-  context.arc(25, 25, 20, 0, 2 * Math.PI);
+  context.arc(width / 2, height / 2, .4 * width, 0, Math.PI * 2);
   context.closePath();
   context.fillStyle = backgroundColor;
   context.fill();
-  context.font = '1rem sans-serif';
+  context.font = `${fontSize}rem sans-serif`;
   context.fillStyle = 'white';
   context.textAlign = 'center';
   context.textBaseline = 'bottom';
-  context.fillText(partner.firstName[0], 25, 35);
+  if (firstName?.length > 0) context.fillText(firstName[0], width / 2, .7 * height);
   return canvas.toDataURL('image/png');
 }
 
 // from https://dev.to/dcodeyt/build-a-user-profile-avatar-generator-with-javascript-436m
-const defaultAvatar = (imageURL, canvas, context, partner, backgroundColor) => {
-  if (context && canvas) {
-    canvas.width = 50;
-    canvas.height = 50;
+const defaultAvatar = (imageURL, canvas, context, partner, backgroundColor, width, height) => {
+  if (context && canvas ) {
+    canvas.width = width;
+    canvas.height = height;
+    context.clearRect(0, 0, width, height);
     var img = new Image();
-    if (imageURL.length > 0) {
+    if ( imageURL && imageURL.length > 0) {
        img.onload = () => {
-        context.drawImage(img, 5, 5, 40, 40);
+        context.drawImage(img, width / 10, height / 10, .8 * width, .8 * height);
       }
       context.beginPath();
-      context.arc(25, 25, 20, 0, Math.PI * 2, true);
+      context.arc(width / 2, height / 2, .4 * width, 0, Math.PI * 2, true);
       context.clip();
       context.closePath();
       img.onerror = (e) => {
-        drawAvatar(canvas, context, partner, backgroundColor);
+        // this error doesn't seem to be called right away in the user profile
+        drawAvatar(canvas, context, partner, backgroundColor, width, height);
       }
       img.src = imageURL;
-    } else if (!imageURL) drawAvatar(canvas, context, partner, backgroundColor);
+    } else if (!imageURL) drawAvatar(canvas, context, partner, backgroundColor, width, height);
   }
 };
 
@@ -50,7 +53,7 @@ const colors = [
 
 const pickColor = (firstName) => {
   let index = 0;
-  if (firstName) {
+  if (firstName && firstName.length > 0) {
     index = ((firstName.toLowerCase().charCodeAt(0) - 97) % 6);
   }
   return colors[index];
@@ -58,7 +61,10 @@ const pickColor = (firstName) => {
 
 
 const Avatar = ({
-  partner
+  imageURL,
+  firstName,
+  width,
+  height
 }) => {
 
   const canvasRef = useRef();
@@ -71,14 +77,18 @@ const Avatar = ({
   }, [])
 
   return (
-    <canvas ref={canvasRef} id={partner.id}>
-          {defaultAvatar(partner.imageURL, canvasRef.current, context, partner, pickColor(partner.firstName))}
+    <canvas ref={canvasRef} >
+          {defaultAvatar(imageURL, canvasRef.current, context, firstName,
+            pickColor(firstName), width, height)}
     </canvas>
   );
 };
 
 Avatar.propTypes = {
-  partner: PropTypes.object
+  imageURL: PropTypes.string,
+  firstName: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number
 }
 
 export default Avatar;
