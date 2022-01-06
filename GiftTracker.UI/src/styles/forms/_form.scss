@@ -1,5 +1,4 @@
 // _form.scss
-@import 'giveItemForm';
 @import 'profileForm';
 @import 'interests';
 
@@ -55,6 +54,10 @@
     color: white;
   }
 
+  .submit-button:disabled {
+    background-color: rgb(114, 114, 158);
+  }
+
   .inline-checkbox {
     margin: .2rem 0 0 0;
   }
@@ -63,6 +66,10 @@
     width: 1em;
     height: 1em;
     margin: 0 .2rem 0 0;
+  }
+
+  .form-wish-item-select {
+    margin: 5px 0 0 0;
   }
 }
 

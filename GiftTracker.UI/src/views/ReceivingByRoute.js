@@ -129,7 +129,7 @@ const ReceivingByRoute = ({
             </thead>
             <tbody>
             { receivingList.map((item) => <tr key={item.id}>
-              <td className='receiving-list-title'onClick={() => handleGiftClick(item.id)}>{item.itemName} </td>
+              <td className={`receiving-list-title has-thanked_${item.thanked}`} onClick={() => handleGiftClick(item.id)}>{item.itemName} </td>
               <td className='receiving-list-from' onClick={() => handlePartnerClick(item.giverId)}>
                 {item.giverFirstName} {item.giverLastName} </td>
                 <td>

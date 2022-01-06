@@ -70,7 +70,8 @@ namespace GiftTracker.DataAccess
             var sql = @"SELECT RI.Id, OccasionId, GiverId, EP.FirstName as GiverFirstName, EP.LastName as GiverLastName,
                         ItemName, ItemDescription, ItemURL, Remarks, Thanked FROM ReceiveItems RI
                         JOIN ExchangePartners EP on GiverId = EP.Id
-                        WHERE OccasionId = @OccasionId";
+                        WHERE OccasionId = @OccasionId
+                        ORDER BY EP.LastName, EP.FirstName";
 
             var parameters = new
             {
