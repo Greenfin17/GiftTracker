@@ -106,7 +106,7 @@ const ExchangePartnerForm2 = ({
   }, [partner.id, showModal]);
 
   // disable the submit button if there is no valid birthday
-  // do avoid a sql error
+  // to avoid a sql error
   useEffect(() => {
     let mounted = true;
     const dateStandard = new Date('1901-01-01');
