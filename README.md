@@ -12,7 +12,8 @@ https://gift-tracker.netlify.app/
 
 ## Screenshots
 ![Occasions](https://user-images.githubusercontent.com/51683901/148579862-1a82fb92-1d13-410d-b581-1538705a1df0.PNG)
-![GiftStatus](https://user-images.githubusercontent.com/51683901/148579874-479dd7b4-e39b-416d-8df5-0f7b33521722.PNG)
+![GiftStatus](https://user-images.githubusercontent.com/51683901/148580845-80aa51ef-c2b8-4115-b5d4-890def342cf3.PNG)
+
 
 ## Wireframes
 https://figma.com/file/Xw4hMvIy2iQk9IOhTNFyJq/Gift-Tracker?node-id=8%3A297
