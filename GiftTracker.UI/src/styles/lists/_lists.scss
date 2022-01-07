@@ -1,5 +1,5 @@
 // _lists.scss
-@import 'partnerLists';
+@import './partnerLists';
 
 .lists-view {
     .lists-div {
@@ -36,12 +36,22 @@
     padding-inline-start: 0px;
     margin: 0 5px 0 0;
   }
+
+  .wish-list-title {
+  font-weight: bold;
+  }
   
   .partner-list-line {
     margin: 5px 0 5px 10px;
     display: flex;
     flex-flow: wrap;
     cursor: pointer;
+  }
+
+  .wish-list-url {
+    word-break: break-all;
+    max-height: 5em;
+    overflow-y: hidden;
   }
 
   .partner-name {

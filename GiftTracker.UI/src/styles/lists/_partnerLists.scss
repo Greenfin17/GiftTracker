@@ -1,10 +1,10 @@
-// _partnerLists
-
-.wish-list-ul-list {
-  list-style-type: none;
-}
 // _partnerLists.scss
 
-.wish-list-title {
-  font-weight: bold;
+@media screen and (max-width: 366px ) {
+  .edit-icon {
+    margin: 0;
+  }
+  .delete-icon {
+    margin: 0 2px 0 0;
+  }
 }
