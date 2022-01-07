@@ -48,7 +48,8 @@ const ExchangePartnerForm2 = ({
     description: ''
   });
   const [interestIndex, setInterestIndex] = useState(-1);
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const dateStandard = new Date('1901-01-01');
+  // const [disableSubmit, setDisableSubmit] = useState(true);
   const closeInterestModal = () => {
     setShowInterestModal(!showInterestModal);
   };
@@ -105,19 +106,6 @@ const ExchangePartnerForm2 = ({
     }
   }, [partner.id, showModal]);
 
-  // disable the submit button if there is no valid birthday
-  // to avoid a sql error
-  useEffect(() => {
-    let mounted = true;
-    const dateStandard = new Date('1901-01-01');
-    if (partnerProfile?.birthday.length === 10 && mounted) {
-      setDisableSubmit(Date.parse(partnerProfile.birthday) < dateStandard.getTime());
-    }
-    return () => {
-      mounted=false;
-      return mounted;
-    }
-  }, [partnerProfile.birthday])
 
   const handleChange = (e) => {
     setPartnerProfile((prevState) => ({
@@ -270,8 +258,11 @@ const ExchangePartnerForm2 = ({
       <div className='button-div'>
         <button className='add-interest-btn' onClick = {handleAddInterestClick}>Add Interest/Note</button>
         <button className='close-button' onClick={handleCloseForm}>Close</button>
-        <button className='submit-button' disabled={disableSubmit}
-                onClick={handleSubmit}>Submit</button>
+        <button className='submit-button' onClick={handleSubmit}
+          disabled={!partnerProfile.firstName
+             || !(Date.parse(partnerProfile.birthday) > dateStandard.getTime())
+            }>Submit
+        </button>
       </div>
       <SecondaryGTModal className='gt-modal' isOpen={showInterestModal}>
         <GTModalContent className='modal-content'>
