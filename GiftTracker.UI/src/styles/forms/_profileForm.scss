@@ -52,9 +52,10 @@
   }
 
   .profile-photo-url-data {
-    max-width: 20em;
+    max-width: 90%;
     margin: 0 0 3px 5px;
-    word-break: break-all;
+    white-space: nowrap;
+    overflow-x: hidden;
   }
   
   .button-div {
