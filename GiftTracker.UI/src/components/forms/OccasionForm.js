@@ -43,10 +43,8 @@ const OccasionForm = ({
     let validBudget = false;
     let validTitle = false;
     const dateStandard = new Date('1901-01-01');
-    if (occasionProfile?.occasionDate.substring(0,10).length === 10) {
-      if (Date.parse(occasionProfile.occasionDate) > dateStandard.getTime()) {
-        validDate = true;
-      }
+    if (Date.parse(occasionProfile.occasionDate) > dateStandard.getTime()) {
+      validDate = true;
     }
     if (parseInt(occasionProfile.occasionBudget) >= 0 ){
       validBudget = true;
