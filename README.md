@@ -10,6 +10,10 @@
 
 https://gift-tracker.netlify.app/
 
+## Screenshots
+![Occasions](https://user-images.githubusercontent.com/51683901/148579405-95e88aff-a50b-4c1b-9f1d-7716a716e936.PNG)
+![GiftStatus](https://user-images.githubusercontent.com/51683901/148579418-12e93bec-3da8-404d-890e-026c60214356.PNG)
+
 ## Wireframes
 https://figma.com/file/Xw4hMvIy2iQk9IOhTNFyJq/Gift-Tracker?node-id=8%3A297
 ## ERD
