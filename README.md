@@ -22,4 +22,4 @@ https://figma.com/file/Xw4hMvIy2iQk9IOhTNFyJq/Gift-Tracker?node-id=8%3A297
 https://dbdiagram.io/d/61aec8d08c901501c0e3ba92
 
 ## Loom Video
-https://www.loom.com/share/c9c8f274137f4c2294f34ce4bfa0e5f5
+https://www.loom.com/share/af7971e43c904384b07715d5d54d489f
