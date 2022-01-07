@@ -10,7 +10,16 @@
 
 https://gift-tracker.netlify.app/
 
+## Screenshots
+![Occasions](https://user-images.githubusercontent.com/51683901/148579862-1a82fb92-1d13-410d-b581-1538705a1df0.PNG)
+![GiftStatus](https://user-images.githubusercontent.com/51683901/148581104-fdc6d09c-59b2-45eb-b820-34e7490afde1.PNG)
+
+
 ## Wireframes
 https://figma.com/file/Xw4hMvIy2iQk9IOhTNFyJq/Gift-Tracker?node-id=8%3A297
+
 ## ERD
 https://dbdiagram.io/d/61aec8d08c901501c0e3ba92
+
+## Loom Video
+https://www.loom.com/share/c9c8f274137f4c2294f34ce4bfa0e5f5
