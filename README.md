@@ -12,7 +12,7 @@ https://gift-tracker.netlify.app/
 
 ## Screenshots
 ![Occasions](https://user-images.githubusercontent.com/51683901/148579862-1a82fb92-1d13-410d-b581-1538705a1df0.PNG)
-![GiftStatus](https://user-images.githubusercontent.com/51683901/148580845-80aa51ef-c2b8-4115-b5d4-890def342cf3.PNG)
+![GiftStatus](https://user-images.githubusercontent.com/51683901/148581104-fdc6d09c-59b2-45eb-b820-34e7490afde1.PNG)
 
 
 ## Wireframes
