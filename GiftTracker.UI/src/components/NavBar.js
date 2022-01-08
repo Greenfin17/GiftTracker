@@ -15,9 +15,9 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 import LoginButton from './buttons/LoginButton';
-// import LogoutButton from './buttons/LogoutButton';
-import accountIcon from '../resources/icons/account.min.svg';
 import { signOutUser } from '../helpers/auth/auth';
+import Avatar from '../components/symbols/Avatar'
+
 
 const NavBar = ({
   user,
@@ -58,7 +58,8 @@ const NavBar = ({
             { user && <Dropdown  toggle={toggleDropDown} nav inNavbar isOpen={dropDownOpen} onMouseOver={() => setDropDownOpen(true)}
                                 onMouseLeave={() => setDropDownOpen(false)}>
               <DropdownToggle nav>
-                <img src={accountIcon} className='gt-account-icon' alt='Account menu'/>
+                <Avatar firstName={user.firstName} imageURL={user.profilePicUrl} 
+                        width={50} height={50} />
               </DropdownToggle>
               <DropdownMenu className='gt-profile-dropdown' end>
                 <DropdownItem>

@@ -95,7 +95,8 @@ const Occasions = ({
         <GTModal className='gt-modal' isOpen={showModal}>
           <GTModalContent className='modal-content'>
             <OccasionForm user={user} occasion={activeObject}
-              setOccasionList={setOccasionList} closeModal={closeModal} />
+              setOccasionList={setOccasionList}
+              showModal={showModal} closeModal={closeModal} />
           </GTModalContent>
         </GTModal>
       </div> }

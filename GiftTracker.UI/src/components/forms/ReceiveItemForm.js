@@ -15,6 +15,7 @@ const ReceiveItemForm = ({
   getReceiveItemsMethod,
   getReceiveItemsMethodArguments,
   setReceivingList,
+  showModal,
   closeModal
 }) => {
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
@@ -47,7 +48,7 @@ const ReceiveItemForm = ({
       mounted = false;
       return mounted;
     }
-  }, [user, occasionId, item ]);
+  }, [user, occasionId, item, showModal ]);
 
   
   useEffect(() => {
@@ -188,6 +189,7 @@ ReceiveItemForm.propTypes = {
   getReceiveItemsMethod: PropTypes.func,
   getReceiveItemsMethodArguments: PropTypes.array,
   setReceivingList: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func
 };
 

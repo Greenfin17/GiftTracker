@@ -163,7 +163,8 @@ const PartnerLists = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <WishListItemForm ownerId={partnerId} item={activeObject} occasionId={occasionId}
-                setWishListItems={setWishListItems} closeModal={closeModal} />
+                setWishListItems={setWishListItems}
+                showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
       </div>

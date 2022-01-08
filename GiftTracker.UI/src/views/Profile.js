@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '../components/symbols/Avatar';
 import ProfileForm from '../components/forms/ProfileForm';
 import {
@@ -12,6 +13,7 @@ const Profile = ({
   setUser
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
   
   const toggleModal = () => {
     setModalIsOpen(!modalIsOpen);
@@ -21,11 +23,17 @@ const Profile = ({
     setModalIsOpen(false);
   };
 
+  const closeProfile = () => {
+    navigate('/');
+  }
+
   return (
     <>
       {user &&
         <div className = 'gt-profile-view'>
-          <div className='profile-title'>Profile for {user.firstName} {user.LastName}</div>
+          <div className='profile-title-container'>
+            <div className='profile-title'>Profile for {user.firstName} {user.LastName}</div>
+          </div>
           <div className='profile-inner-div'>
             <div className='profile-pic-div'>
               <Avatar imageURL={user.profilePicUrl} firstName={user.firstName}
@@ -47,6 +55,8 @@ const Profile = ({
               <div className='button-div'>
                 <button className='profile-edit-button'
                   onClick={toggleModal}>edit</button>
+                <button className='profile-close-button'
+                  onClick={closeProfile}>close</button>
               </div>
               <GTModal className='gt-modal' isOpen={modalIsOpen} toggle={toggleModal}>
                 <GTModalContent className='modal-content'>

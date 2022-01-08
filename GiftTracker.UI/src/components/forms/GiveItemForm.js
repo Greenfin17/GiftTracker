@@ -70,7 +70,7 @@ const GiveItemForm = ({
       mounted = false;
       return mounted;
     }
-  }, [user, occasionId, item ]);
+  }, [user, occasionId, item, showModal ]);
 
   // setup select for exchange partners
   useEffect(() => {

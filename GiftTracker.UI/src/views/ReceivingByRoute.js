@@ -151,7 +151,8 @@ const ReceivingByRoute = ({
                 getReceiveItemsMethod={getReceiveItemsByOccasionId}
                 getReceiveItemsMethodArguments={[occasionId]}
                 setReceivingList={setReceivingList}
-                occasionId={occasionId} closeModal={closeModal} />
+                occasionId={occasionId}
+                showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>
