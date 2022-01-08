@@ -4,6 +4,7 @@
   .receiving-div {
   background-color: white;
   width: 60%;
+  max-width: 700px;
   margin: 10px auto 5px;
   border-radius: 5px;
   }
@@ -51,6 +52,7 @@
   .has-thanked_false {
     color: red;
   }
+
   .receiving-list-from {
     cursor: pointer;
   }
