@@ -89,8 +89,9 @@ const SingleSendGift = ({
           <GTModal className='gt-modal' isOpen={showModal}>
             <GTModalContent className='modal-content'>
               <GiveItemForm user={user} item={giveItem} occasionId={giveItem.occasionId}
-                partnerId={giveItem.recipientId} showModal={showModal}
-                setGivingList={setGiveItem} getGiftsMethod={getGiveItemById} closeModal={closeModal} 
+                partnerId={giveItem.recipientId}
+                setGivingList={setGiveItem} getGiftsMethod={getGiveItemById}
+                showModal={showModal} closeModal={closeModal} 
                 getGiftsMethodArguments={[giveItem.id]} />
             </GTModalContent>
           </GTModal>

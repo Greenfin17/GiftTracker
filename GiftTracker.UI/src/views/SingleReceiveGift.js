@@ -69,7 +69,8 @@ const SingleReceiveGift = ({
                 getReceiveItemsMethod={getReceiveItemById}
                 getReceiveItemsMethodArguments={[itemId]}
                 setReceivingList={setReceiveItem}
-                occasionId={receiveItem.occasionId} showModal={showModal} closeModal={closeModal} />
+                occasionId={receiveItem.occasionId}
+                showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
       </div> }
