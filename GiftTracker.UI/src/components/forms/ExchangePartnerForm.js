@@ -73,7 +73,7 @@ const ExchangePartnerForm2 = ({
       mounted = false;
       return mounted;
     }
-  }, [partner])
+  }, [partner, showModal])
 
   // setup list of exchange partner interests
   useEffect(() => {

@@ -6,6 +6,7 @@ const OccasionForm = ({
   user,
   occasion,
   setOccasionList,
+  showModal,
   closeModal
 }) => {
 
@@ -33,7 +34,7 @@ const OccasionForm = ({
       mounted = false;
       return mounted;
     };
-  }, [user, occasion])
+  }, [user, occasion, showModal])
 
   // disable the submit button if there is no valid occasion date
   // and no budget value > 0,  to avoid a sql error
@@ -125,6 +126,7 @@ OccasionForm.propTypes = {
   user: PropTypes.any,
   occasion: PropTypes.object,
   setOccasionList: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func
 };
 

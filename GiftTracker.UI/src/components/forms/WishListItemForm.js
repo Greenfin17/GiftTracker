@@ -10,6 +10,7 @@ const WishListItemForm = ({
   item,
   occasionId,
   setWishListItems,
+  showModal,
   closeModal
 }) => {
   const emptyGuid = '00000000-0000-0000-0000-000000000000';
@@ -37,7 +38,7 @@ const WishListItemForm = ({
       mounted = false;
       return mounted;
     }
-  }, [occasionId, ownerId, item]);
+  }, [occasionId, ownerId, item, showModal]);
 
   const handleChange = (e) => {
     setItemProfile((prevState) => ({
@@ -101,6 +102,7 @@ WishListItemForm.propTypes = {
   item: PropTypes.object,
   occasionId: PropTypes.string,
   setReceivingList: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func
 };
 
