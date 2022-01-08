@@ -13,7 +13,8 @@
   }
 
   .single-receive-gift-url{
-    word-break: break-all;
+    overflow-x: hidden;
+    white-space: nowrap;
   }
 
   .icon-div {

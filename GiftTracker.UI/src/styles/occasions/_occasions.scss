@@ -7,7 +7,16 @@
   background-color: white;
   width: 60%;
   margin: 10px auto 5px;
-  border-radius: 5px;
+  border-radius: 10px;
+
+  .occasion-outer-container {
+    padding-top: 20px;
+  }
+  
+  .occasion-list-div {
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
 
   .add-occasion-btn {
     margin: 5px;
@@ -25,7 +34,7 @@
   }
 
   .occasion-list-line {
-    border: 1px solid blue;
+    border-bottom: 2px solid blue;
   }
 
   .occasion-list-data {

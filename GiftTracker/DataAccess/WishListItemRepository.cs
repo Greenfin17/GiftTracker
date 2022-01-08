@@ -36,7 +36,8 @@ namespace GiftTracker.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
             var sql = @"SELECT * FROM WishListItems
-                        WHERE OwnerId = @OwnerId AND OccasionId = @OccasionId";
+                        WHERE OwnerId = @OwnerId AND OccasionId = @OccasionId
+                        ORDER BY Name";
             var parameters = new
             {
                 OwnerId = partnerId,

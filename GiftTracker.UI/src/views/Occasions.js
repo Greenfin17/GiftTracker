@@ -68,26 +68,30 @@ const Occasions = ({
       </div>
       { user &&
       <div className='occasion-div'>
-        <ul className='occasion-list'>
-          { occasionList ? occasionList?.map((occasion, index) => <li key={occasion.id}
-              className='occasion-list-line' >
-              <div className='occasion-list-title'>{occasion.occasionName}</div>
-              <div className='occasion-list-data'>
-                <OccasionSummaryCard occasion={occasion} index={index} />
-                <div className='occasion-list-icons'>
-                  <div className='occasion-icon-group'>
-                    <FontAwesomeIcon className='edit-icon' icon={faEdit} 
-                      onClick={() => handleEditClick(occasion)}/>
-                    <FontAwesomeIcon icon={faTrash} className='delete-icon'
-                      onClick={() => handleDeleteClick(occasion)}/>
+        <div className='occasion-outer-container'>
+          <div className='occasion-list-div'>
+            <ul className='occasion-list'>
+              { occasionList ? occasionList?.map((occasion, index) => <li key={occasion.id}
+                  className='occasion-list-line' >
+                  <div className='occasion-list-title'>{occasion.occasionName}</div>
+                  <div className='occasion-list-data'>
+                    <OccasionSummaryCard occasion={occasion} index={index} />
+                    <div className='occasion-list-icons'>
+                      <div className='occasion-icon-group'>
+                        <FontAwesomeIcon className='edit-icon' icon={faEdit} 
+                          onClick={() => handleEditClick(occasion)}/>
+                        <FontAwesomeIcon icon={faTrash} className='delete-icon'
+                          onClick={() => handleDeleteClick(occasion)}/>
+                      </div>
+                    </div> 
                   </div>
-                </div> 
-              </div>
-            </li>) : <div>No Occasions</div> }
-          </ul>
-        <div className='button-div'>
-          <button className='add-occasion-btn' onClick = {handleAddOccasionClick}>Add Occasion</button>
-        </div>
+                </li>) : <div>No Occasions</div> }
+              </ul>
+            </div>
+            <div className='button-div'>
+              <button className='add-occasion-btn' onClick = {handleAddOccasionClick}>Add Occasion</button>
+            </div>
+          </div>
         <GTModal className='gt-modal' isOpen={showModal}>
           <GTModalContent className='modal-content'>
             <OccasionForm user={user} occasion={activeObject}

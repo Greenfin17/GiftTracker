@@ -19,7 +19,9 @@
   }
 
   .single-give-gift-URL {
-    word-break: break-all;
+    overflow-x: hidden;
+    white-space: nowrap;
+
   }
 
   .icon-div {
