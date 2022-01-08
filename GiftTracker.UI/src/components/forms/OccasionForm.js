@@ -42,7 +42,7 @@ const OccasionForm = ({
     let validDate = false;
     let validBudget = false;
     let validTitle = false;
-    const dateStandard = new Date('1901-01-01');
+    const dateStandard = new Date('1900-01-01');
     if (Date.parse(occasionProfile.occasionDate) > dateStandard.getTime()) {
       validDate = true;
     }
@@ -95,7 +95,7 @@ const OccasionForm = ({
 
   return (
     <div className='form-outer-div'>
-      <div className='form-heading'>Edit Occasion 
+      <div className='form-heading'>Occasion Form
         <span className='x-out' onClick={closeModal}>x</span>
       </div>
       <div className='form-group'>

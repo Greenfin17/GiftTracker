@@ -48,7 +48,7 @@ const ExchangePartnerForm2 = ({
     description: ''
   });
   const [interestIndex, setInterestIndex] = useState(-1);
-  const dateStandard = new Date('1901-01-01');
+  const dateStandard = new Date('1900-01-01');
   // const [disableSubmit, setDisableSubmit] = useState(true);
   const closeInterestModal = () => {
     setShowInterestModal(!showInterestModal);

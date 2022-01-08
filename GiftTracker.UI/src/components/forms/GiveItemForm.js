@@ -291,7 +291,7 @@ const GiveItemForm = ({
                   label='price' onChange={handleChange} />
         <div className='inline-checkbox'>
           <input className='form-input inline-checkbox-input' type='checkbox' name='purchased' value={itemProfile.purchased}
-                   checked={itemProfile.purchased} label='purchased' onChange={handleChange} />
+                   checked={itemProfile.purchased} disabled={itemProfile.wrapped || itemProfile.shipped} label='purchased' onChange={handleChange} />
           <label className='input-label inline-checkbox-label' htmlFor='purchased'>Purchased</label>
         </div>
         <div className='inline-checkbox'>
