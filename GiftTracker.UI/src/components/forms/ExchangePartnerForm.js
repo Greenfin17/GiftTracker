@@ -56,7 +56,7 @@ const ExchangePartnerForm2 = ({
 
   useEffect(() => {
     let mounted = true;
-    if (mounted) {
+    if (user && showModal && mounted) {
       setPartnerProfile({
         id: partner.id || '',
         createdById: partner.createdById || '',
@@ -73,7 +73,7 @@ const ExchangePartnerForm2 = ({
       mounted = false;
       return mounted;
     }
-  }, [partner, showModal])
+  }, [user, partner, showModal])
 
   // setup list of exchange partner interests
   useEffect(() => {
@@ -268,7 +268,7 @@ const ExchangePartnerForm2 = ({
         <GTModalContent className='modal-content'>
           <PartnerInterestForm interest={activeObject} index={interestIndex}
             interestsList={interestsList} setInterestsList={setInterestsList}
-            closeModal={closeInterestModal}></PartnerInterestForm>
+            showModal={showInterestModal }closeModal={closeInterestModal}></PartnerInterestForm>
         </GTModalContent>
       </SecondaryGTModal>
     </div>

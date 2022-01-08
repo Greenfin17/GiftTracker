@@ -21,7 +21,7 @@ const OccasionForm = ({
 
   useEffect(() => {
     let mounted = true;
-    if (user && mounted) {
+    if (user && showModal && mounted) {
       setOccasionProfile({
         occasionName: occasion.occasionName || '',
         occasionCreatorId: occasion.occasionCreatorId || '',

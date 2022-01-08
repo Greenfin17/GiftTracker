@@ -157,7 +157,8 @@ const SingleOccasionReceiving = ({
                 getReceiveItemsMethodArguments={[occasionId, partnerId]}
                 partnerId={partnerId}
                 setReceivingList={setReceivingList}
-                occasionId={occasionId} closeModal={closeModal} />
+                occasionId={occasionId} 
+                showModal={showModal} closeModal={closeModal} />
             </GTModalContent>
           </GTModal>
         </div>

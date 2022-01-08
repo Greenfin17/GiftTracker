@@ -25,7 +25,7 @@ const WishListItemForm = ({
   
   useEffect(() => {
     let mounted = true;
-    if (item && mounted) {
+    if (item && showModal && mounted) {
       setItemProfile ({
         occasionId: occasionId || emptyGuid,
         ownerId: ownerId || emptyGuid, 

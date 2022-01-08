@@ -7,6 +7,7 @@ const PartnerInterestForm = ({
   index,
   interestsList,
   setInterestsList,
+  showModal,
   closeModal,
   }) => {
  const [interestProfile, setInterestProfile] = useState({
@@ -18,7 +19,7 @@ const PartnerInterestForm = ({
 
  useEffect(() => {
    let mounted = true;
-   if (interest && mounted) {
+   if (interest && showModal && mounted) {
     setInterestProfile({
       id: interest.id || '',
       edited: interest.edited || false,
@@ -30,7 +31,7 @@ const PartnerInterestForm = ({
      mounted = false;
      return mounted;
    }
- }, [interest, index]);
+ }, [interest, index, showModal]);
 
   const handleChange = (e) => {
     setInterestProfile((prevState) => ({
@@ -85,6 +86,7 @@ PartnerInterestForm.propTypes = {
   index: PropTypes.number,
   interestsList: PropTypes.array,
   setInterestsList: PropTypes.func,
+  showModal: PropTypes.bool,
   closeModal: PropTypes.func
 };
 
