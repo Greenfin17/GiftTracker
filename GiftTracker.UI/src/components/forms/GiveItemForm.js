@@ -51,7 +51,7 @@ const GiveItemForm = ({
 
   useEffect(() => {
     let mounted = true;
-    if (user && mounted) {
+    if (user && showModal && mounted) {
       setItemProfile ({
         occasionId: occasionId,
         recipientId: item.recipientId || emptyGuid,
