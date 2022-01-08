@@ -15,7 +15,6 @@ import {
   DropdownToggle,
 } from 'reactstrap';
 import LoginButton from './buttons/LoginButton';
-import accountIcon from '../resources/icons/account.min.svg';
 import { signOutUser } from '../helpers/auth/auth';
 import Avatar from '../components/symbols/Avatar'
 
